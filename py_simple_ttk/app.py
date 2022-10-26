@@ -18,13 +18,14 @@ from tkinter import ttk
 from .utils.scaling import enable_dpi_awareness
 from .utils.ProfilesSystem import ProfilesSystem, UserProfile
 from .widgets import (
-    get_themes_folder,
-    get_bundled_themes_list,
     complex_widget_search,
     EasySizegrip,
     enable_notebook_movement,
-    ScrolledText,
+    get_bundled_themes_list,
+    get_themes_folder,
+    ListWindow,
     ScrolledCanvas,
+    ScrolledText,
     Table,
 )
 

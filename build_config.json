@@ -1,13 +1,14 @@
 {
 	"name":"py_simple_ttk",
 	"author":"Andrew Spangler",
-	"version":"0.1.0",
+	"version":"0.1.1",
 	"license":"GPLv3",
 	"email":"AndrewSpangler@users.noreply.github.com",
 	"description":"Themes don't have to be hard.",
 	"requirements":["py_simple_lorem"],
 	"url":"https://github.com/AndrewSpangler/",
 	"changelog": {
-		"0.1.0": "Modulize"
+		"0.1.1": "Fix missing 'ListWindow' import in app.py",
+		"0.1.0": "Modulize",
 	}
 }
