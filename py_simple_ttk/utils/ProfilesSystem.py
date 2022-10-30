@@ -53,12 +53,16 @@ class UserProfile:
         else:
             raise FileNotFoundError("User path not found.")
 
-    def save(self):
-        with open(self.path, "w+") as f:
+    def save(self, path: str = None, overwrite_path=False):
+        if overwrite_path:
+            self.path = path
+        with open(path or self.path, "w+") as f:
             json.dump(self.data, f, indent=4)
 
-    def load(self):
-        with open(self.path) as f:
+    def load(self, path: str = None, overwrite_path=False):
+        if overwrite_path:
+            self.path = path
+        with open(path or self.path) as f:
             self.data = json.load(f)
         self.username = self.data["username"]
         self.atomic = self.data["atomic"]
@@ -259,13 +263,3 @@ its name untouched. `Returns None`"""
         self.profiles.remove(profile)
         os.remove(profile.path)
         self.handle_refresh_profiles_actions()
-
-
-PROFILES_OBJECTS = [
-    ProfilesSystem,
-    UserProfile,
-]
-PROFILES_FUNCTIONS = [
-    get_profiles_folder,
-    get_profiles_list,
-]

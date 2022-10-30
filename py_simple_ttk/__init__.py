@@ -4,17 +4,12 @@ from .widgets import (
     BrowserLauncherTab,
     center_window,
     check_in_bounds,
-    CHECKBUTTON_WIDGETS,
-    COMBOBOX_WIDGETS,
     CommandLauncherTab,
     complex_widget_search,
-    CONSOLE_WIDGETS,
     ConsoleTab,
     ConsoleWidget,
     copy_to_user_clipboard,
     CopyBox,
-    CORE_FUNCTIONS,
-    CORE_OBJECTS,
     create_round_rectangle,
     default_pack,
     default_separator,
@@ -23,17 +18,18 @@ from .widgets import (
     DialerKeypad,
     EasySizegrip,
     enable_notebook_movement,
-    ENTRY_WIDGETS,
     ExampleTile,
+    focus_next,
     FocusedToplevel,
     force_aspect,
     get_asset,
     get_bundled_themes_list,
     get_generated_font_image,
     get_generated_font_images_lookup,
+    get_local_appdata_folder,
     get_themes_folder,
-    KEYPAD_WIDGETS,
     KeypadButton,
+    LabeledButton,
     LabeledButtonEntry,
     LabeledCheckbutton,
     LabeledCombobox,
@@ -47,25 +43,24 @@ from .widgets import (
     LabeledMultiRadiobutton,
     LabeledMultiScale,
     LabeledOptionMenu,
+    LabeledPathEntry,
     LabeledProgressbar,
     LabeledRadiobutton,
     LabeledScale,
+    Labeler,
     LauncherTab,
-    LISTBOX_WIDGETS,
     ListWindow,
+    MultiWidgetMixin,
     NoticeWindow,
     open_link,
-    OPTIONMENU_WIDGETS,
     PasswordEntry,
     PasswordWindow,
-    PROGRESSBAR_WIDGETS,
     PromptWindow,
-    RADIOBUTTON_WIDGETS,
     recursive_widget_search,
     ResizableCanvas,
     run_cl,
-    SCALE_WIDGETS,
     ScrolledCanvas,
+    ScrolledEntry,
     ScrolledListBox,
     ScrolledText,
     ScrolledTree,
@@ -73,18 +68,15 @@ from .widgets import (
     Tab,
     Table,
     TableTab,
-    TABS,
-    TEXT_WIDGETS,
     TiledCanvas,
     ToolTip,
     TreeTable,
     TreeTableTab,
-    WINDOWS_SYMBOL,
     YesNoCancelWindow,
 )
 
 from .utils.color import (
-    reduce,
+    reduce_255,
     rgb_to_hex,
     rgba_to_hex,
     hex_to_rgb,
@@ -94,7 +86,6 @@ from .utils.color import (
     scalar_to_rgb,
     linear_gradient,
     get_rainbow,
-    COLOR_FUNCTIONS,
 )
 
 from .utils.HTML_Generator import HTML_Generator
@@ -123,9 +114,14 @@ from .utils.ProfilesSystem import (
     UserProfile,
     get_profiles_folder,
     get_profiles_list,
-    PROFILES_OBJECTS,
-    PROFILES_FUNCTIONS,
 )
+from .utils.zip_packager import (
+    package_folder,
+    get_package_file,
+    get_package_manifest,
+    get_package_manifest_json,
+)
+
 from .mega_widgets.chat import ConversationsTab
 from .mega_widgets.notes import NotesTab
 from .mega_widgets.profile_manager import ProfilesWindow
@@ -135,36 +131,6 @@ from .mega_widgets.shopping_list import ShoppingListTab, ShoppingList
 from .mega_widgets.tictactoe import TicTacToeTab, TicTacToe
 
 from .app import App
-
-CANVAS_WIDGETS = [ResizableCanvas, ScrolledCanvas, TiledCanvas, ExampleTile]
-TOPLEVEL_WIDGETS = [
-    FocusedToplevel,
-    NoticeWindow,
-    YesNoCancelWindow,
-    PromptWindow,
-    PasswordWindow,
-    ListWindow,
-]
-MEGA_WIDGETS = [ConversationsTab, NotesTab]
-UTILS = [
-    check_if_module_installed,
-    check_string_contains,
-    dummy_function,
-    get_friendly_time,
-    get_installed_packages,
-    get_unix_timestamp,
-    get_unix_timestring,
-    get_user_home_folder,
-    open_folder_in_explorer,
-    sort_dict_by_keys,
-    timer_decorator,
-]
-FILE_GENERATORS = [
-    HTML_Generator,
-    TXT_Generator,
-    MD_Generator,
-]
-MISC_WIDGETS = [ToolTip, EasySizegrip]
 
 
 if not check_if_module_installed("pillow"):

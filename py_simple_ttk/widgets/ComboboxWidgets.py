@@ -5,6 +5,7 @@ from .MultiWidget import MultiWidgetMixin
 from .WidgetsCore import SuperWidgetMixin
 from typing import Callable
 
+
 class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
     """Labeled Combobox with the Super Widget mixin"""
 
@@ -30,15 +31,15 @@ class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
         self.var = tk.StringVar()
         self.default = values[default] if any(values) else ""
         self.var.set(self.default)
-        Labeler.__init__(self, parent, labeltext, labelside=labelside, header=not is_child)
-        ttk.Combobox.__init__(
-            self, self.frame, textvariable=self.var, **kw
+        Labeler.__init__(
+            self, parent, labeltext, labelside=labelside, header=not is_child
         )
+        ttk.Combobox.__init__(self, self.frame, textvariable=self.var, **kw)
         ttk.Combobox.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         SuperWidgetMixin.__init__(self, **widgetargs)
 
         self.is_child = is_child
-        
+
         self["values"] = values
         self._state = "normal" if custom_values else "readonly"
         self._command = command
@@ -95,5 +96,3 @@ class LabeledMultiCombobox(Labeler, ttk.Frame, MultiWidgetMixin):
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         MultiWidgetMixin.__init__(self, LabeledCombobox, config)
         self.is_child = is_child
-
-COMBOBOX_WIDGETS = [LabeledCombobox, LabeledMultiCombobox]

@@ -1,14 +1,23 @@
 {
 	"name":"py_simple_ttk",
 	"author":"Andrew Spangler",
-	"version":"0.1.1",
+	"version":"0.1.10",
 	"license":"GPLv3",
 	"email":"AndrewSpangler@users.noreply.github.com",
 	"description":"Themes don't have to be hard.",
 	"requirements":["py_simple_lorem"],
 	"url":"https://github.com/AndrewSpangler/",
 	"changelog": {
+		"0.1.10": "Add LabeledPathEntry to EntryWidgets.py",
+		"0.1.9": "Add pencil icons to assets",
+		"0.1.8": "Fix labeled button not running command on press",
+		"0.1.7": "add labeled button",
+		"0.1.6": "Fix missing Labeler import",
+		"0.1.5": "Fix broken package",
+		"0.1.4": "Fix broken package",
+		"0.1.3": "More cleanup, input fixes.py",
+		"0.1.2": "Cleanup, move type lists to generate_readme.py",
 		"0.1.1": "Fix missing 'ListWindow' import in app.py",
-		"0.1.0": "Modulize",
+		"0.1.0": "Modulize"
 	}
 }

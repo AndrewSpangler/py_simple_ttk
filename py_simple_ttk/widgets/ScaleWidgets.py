@@ -119,6 +119,3 @@ class LabeledMultiScale(Labeler, ttk.Frame, MultiWidgetMixin):
         else:
             raise ValueError(f"Bad orientation - {self.orient}")
         self.widgets[key] = w
-
-
-SCALE_WIDGETS = [LabeledScale, LabeledMultiScale]

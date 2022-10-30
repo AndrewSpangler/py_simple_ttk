@@ -28,6 +28,7 @@ from .widgets import (
     ScrolledText,
     Table,
 )
+from .mega_widgets.profile_manager import ProfilesWindow
 
 
 class App:

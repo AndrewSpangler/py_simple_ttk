@@ -9,6 +9,7 @@ from .MultiWidget import MultiWidgetMixin
 
 class LabeledOptionMenu(Labeler, ttk.OptionMenu):
     """Labeled OptionMenu widget"""
+
     def __init__(
         self,
         parent: ttk.Frame,
@@ -64,6 +65,3 @@ class LabeledMultiOptionMenu(Labeler, ttk.Frame, MultiWidgetMixin):
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         MultiWidgetMixin.__init__(self, LabeledOptionMenu, config)
         self.is_child = is_child
-
-
-OPTIONMENU_WIDGETS = [LabeledOptionMenu, LabeledMultiOptionMenu]

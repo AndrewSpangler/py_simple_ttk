@@ -78,6 +78,3 @@ class LabeledMultiCheckbutton(Labeler, ttk.Frame, MultiWidgetMixin):
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         MultiWidgetMixin.__init__(self, LabeledCheckbutton, config)
         self.is_child = is_child
-
-
-CHECKBUTTON_WIDGETS = [LabeledCheckbutton, LabeledMultiCheckbutton]

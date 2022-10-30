@@ -90,5 +90,3 @@ class CopyBox(ttk.Frame):
 
     def disable(self):
         self.text.disable()
-
-TEXT_WIDGETS = [ScrolledText, CopyBox]

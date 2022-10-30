@@ -1,4 +1,4 @@
-def reduce(in_value: int, maxval: int = 255):
+def reduce_255(in_value: int, maxval: int = 255):
     """Limits a val to a range of 0 to 255"""
     return max(0, min(in_value, maxval))
 
@@ -72,17 +72,3 @@ def get_rainbow(steps: int):
     rainbow.extend(linear_gradient("#00FFF", "#0000FF", step))
     rainbow.extend(linear_gradient("#7F00FF", "#FF007f", step))
     return [rgb_to_hex(v) for v in reversed(rainbow)]
-
-
-COLOR_FUNCTIONS = [
-    reduce,
-    rgb_to_hex,
-    rgba_to_hex,
-    hex_to_rgb,
-    hex_to_rgba,
-    get_gradient,
-    rgb_to_scalar,
-    scalar_to_rgb,
-    linear_gradient,
-    get_rainbow,
-]

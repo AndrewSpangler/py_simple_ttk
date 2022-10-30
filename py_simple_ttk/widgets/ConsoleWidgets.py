@@ -63,6 +63,3 @@ keyword argument to handle the entry input."""
         self.console.configure(state=tk.NORMAL)
         self.console.insert(tk.END, val + end)
         self.console.configure(state=tk.DISABLED)
-
-
-CONSOLE_WIDGETS = [ConsoleWidget]

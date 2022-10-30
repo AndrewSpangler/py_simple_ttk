@@ -11,7 +11,7 @@ class ScrolledListBox(Scroller, tk.Listbox, SuperWidgetMixin):
     __desc___ = """Used when you need a listbox with scrolling capabilities is needed"""
 
     @_create_container
-    def __init__(self, parent:ttk.Frame, widgetargs={}, **kw):
+    def __init__(self, parent: ttk.Frame, widgetargs={}, **kw):
         tk.Listbox.__init__(
             self,
             parent,
@@ -29,10 +29,10 @@ class Table(ttk.Frame):
     def __init__(
         self,
         *args,
-        min_column_width:int=100,
-        start_column_width:int=100,
+        min_column_width: int = 100,
+        start_column_width: int = 100,
         on_selection=None,
-        visible_rows=0, #Set above 1 to limit table rows
+        visible_rows=0,  # Set above 1 to limit table rows
         **kw
     ):
         ttk.Frame.__init__(self, *args, **kw)
@@ -45,7 +45,7 @@ class Table(ttk.Frame):
         self.min_column_width, self.start_column_width, self.visible_rows = (
             min_column_width,
             start_column_width,
-            visible_rows
+            visible_rows,
         )
         self._on_selection = on_selection
 
@@ -134,7 +134,7 @@ class Table(ttk.Frame):
             for lb in self.listboxes:
                 self.listboxes[lb].yview_moveto(move_units)
 
-    def use_style(self, style:ttk.Style):
+    def use_style(self, style: ttk.Style):
         """Update to match supplied ttk.Style object. `Returns None`"""
         self.tile_fill = style.lookup("TEntry", "fieldbackground") or style.lookup(
             "TCombobox", "fieldbackground"
@@ -158,6 +158,3 @@ class Table(ttk.Frame):
             else:
                 return None
         return out
-
-
-LISTBOX_WIDGETS = [ScrolledListBox, Table]

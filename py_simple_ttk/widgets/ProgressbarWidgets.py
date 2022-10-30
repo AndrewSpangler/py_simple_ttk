@@ -55,10 +55,10 @@ class LabeledProgressbar(Labeler, ttk.Progressbar):
 
     def clear(self):
         """Sets Progresbar progress to its default value `Returns None`"""
-        self["value"]=self.default
+        self["value"] = self.default
 
     def link(self, widget):
-        """Easily link to other widgets, sets the progressbar var to the passed widget's var. `Returns None`"""   
+        """Easily link to other widgets, sets the progressbar var to the passed widget's var. `Returns None`"""
         self.configure(variable=widget.var)
 
 
@@ -84,7 +84,7 @@ class LabeledMultiProgressbar(Labeler, ttk.Frame, MultiWidgetMixin):
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         MultiWidgetMixin.__init__(self, LabeledProgressbar, config)
 
-    def add(self, parent:ttk.Frame, key:str, args, kwargs, widget_type=None):
+    def add(self, parent: ttk.Frame, key: str, args, kwargs, widget_type=None):
         """Overrides MultiWidgetMixin to deal with vertical orientation `Returns None`"""
         widget_type = widget_type or self.widget_type
         kwargs["orient"] = self.orient
@@ -101,5 +101,3 @@ class LabeledMultiProgressbar(Labeler, ttk.Frame, MultiWidgetMixin):
         """Link to other widgets with a dict of subwidget keys to link to `Returns None`"""
         for k in config:
             self.widgets[k].link(config[k])
-
-PROGRESSBAR_WIDGETS = [LabeledProgressbar, LabeledMultiProgressbar]

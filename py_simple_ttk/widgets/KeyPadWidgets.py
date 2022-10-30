@@ -32,6 +32,7 @@ class BaseKeypad(ttk.Frame):
 
 class DialerKeypad(BaseKeypad):
     """Phone Dialer Keypad"""
+
     __desc__ = """Example 12-button keypad, subclass BaseKeypad and supply a custom layout for more keypads."""
 
     layout = [
@@ -43,6 +44,3 @@ class DialerKeypad(BaseKeypad):
 
     def __init__(self, callback, *args, **kwargs):
         base_keypad.__init__(self, self.layout, callback, *args, **kwargs)
-
-
-KEYPAD_WIDGETS = [KeypadButton, BaseKeypad, DialerKeypad]

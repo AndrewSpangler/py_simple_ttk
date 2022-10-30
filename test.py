@@ -21,7 +21,6 @@ from py_simple_ttk import (
     LabeledCombobox,
     LabeledEntry,
     LabeledMultiCheckbutton,
-    LabeledMultiCheckbutton,
     LabeledMultiCombobox,
     LabeledMultiEntry,
     LabeledMultiOptionMenu,
@@ -29,6 +28,7 @@ from py_simple_ttk import (
     LabeledMultiRadiobutton,
     LabeledMultiScale,
     LabeledOptionMenu,
+    LabeledPathEntry,
     LabeledProgressbar,
     LabeledRadiobutton,
     LabeledScale,
@@ -133,6 +133,14 @@ class FormWidgetDemoTab(Tab):
         default_pack(self.entries)
         default_separator(self)
 
+        self.path_entry = LabeledPathEntry(self, "Labeled Path Entry")
+        default_pack(self.path_entry)
+        self.dir_entry = LabeledPathEntry(
+            self, "Labeled Dir Entry", dialog=tk.filedialog.askdirectory
+        )
+        default_pack(self.dir_entry)
+        default_separator(self)
+
         self.option_menu = LabeledOptionMenu(
             self, "Labeled Option Menu", ["Option 1", "Option 2"]
         )
@@ -196,6 +204,10 @@ class FormWidgetDemoTab(Tab):
         entry_value = self.entry.get()
         self.entry.clear()
         entries_value = json.dumps(self.entries.get(), indent=4)
+
+        path_value = self.path_entry.get()
+        dir_value = self.dir_entry.get()
+
         self.entries.clear()
         option_value = self.option_menu.get()
         self.option_menu.clear()
@@ -206,8 +218,10 @@ class FormWidgetDemoTab(Tab):
         checks_value = json.dumps(self.check_buttons.get(), indent=4)
         self.check_buttons.clear()
         self.copy_box.set(
-            "Entry Value: {}\nMulti Entry Value: {}\nOption Value: {}\nMulti Option Value: {}\nCheck Value: {}\nMulti Check Value: {}".format(
+            "Entry Value: {}\nPath Value: {}\nDir Value: {}\nMulti Entry Value: {}\nOption Value: {}\nMulti Option Value: {}\nCheck Value: {}\nMulti Check Value: {}".format(
                 entry_value,
+                path_value,
+                dir_value,
                 entries_value,
                 option_value,
                 options_value,

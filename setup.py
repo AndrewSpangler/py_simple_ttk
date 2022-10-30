@@ -73,4 +73,7 @@ if __name__ == "__main__":
         name=name,
         author_email=settings["email"],
         long_description=readme,
+        package_dir={name: name},
+        package_data={"": ["*"]},
+        include_package_data=True,
     )

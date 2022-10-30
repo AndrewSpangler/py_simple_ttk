@@ -69,6 +69,3 @@ class LabeledMultiRadiobutton(Labeler, ttk.Frame, MultiWidgetMixin):
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         MultiWidgetMixin.__init__(self, LabeledRadiobutton, config)
         self.is_child = is_child
-
-
-RADIOBUTTON_WIDGETS = [LabeledRadiobutton, LabeledMultiRadiobutton]

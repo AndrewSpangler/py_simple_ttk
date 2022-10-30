@@ -391,30 +391,3 @@ class SuperWidgetMixin:
     def _on_configure(self, event=None):
         if self.on_configure:
             self.on_configure(w, h)
-
-
-CORE_FUNCTIONS = [
-    bbox_to_width_and_height,
-    center_window,
-    check_in_bounds,
-    complex_widget_search,
-    copy_to_user_clipboard,
-    create_round_rectangle,
-    default_pack,
-    default_separator,
-    default_vertical_pack,
-    default_vertical_separator,
-    enable_notebook_movement,
-    focus_next,
-    force_aspect,
-    get_asset,
-    get_bundled_themes_list,
-    get_generated_font_images_lookup,
-    get_local_appdata_folder,
-    get_themes_folder,
-    open_link,
-    recursive_widget_search,
-    run_cl,
-]
-
-CORE_OBJECTS = [MultiWidgetMixin, SuperWidgetMixin]

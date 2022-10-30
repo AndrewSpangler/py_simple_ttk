@@ -8,6 +8,7 @@ from .ConsoleWidgets import ConsoleWidget
 from .ListBoxWidgets import Table
 from .TreeviewWidgets import TreeTable
 
+
 class Tab(ttk.Frame):
     """The core Tab class."""
 
@@ -16,6 +17,7 @@ class Tab(ttk.Frame):
     def __init__(self, notebook: ttk.Notebook, title: str):
         ttk.Frame.__init__(self, notebook)
         notebook.add(self, text=title)
+
 
 class LauncherTab(Tab):
     """Basic Tab for launching tasks from a list."""
@@ -63,7 +65,7 @@ class ConsoleTab(Tab):
 class TableTab(Tab):
     """Basic Table Tab"""
 
-    __desc__="""table_contents is a dictionary whose keys map to lists with the column contents"""
+    __desc__ = """table_contents is a dictionary whose keys map to lists with the column contents"""
 
     def __init__(self, notebook: ttk.Notebook, title: str, table_contents: dict, **kw):
         Tab.__init__(self, notebook, title)
@@ -84,14 +86,3 @@ class TreeTableTab(Tab):
         Tab.__init__(self, notebook, title)
         self.table = TreeTable(self, table_contents=table_contents, **kw)
         self.table.pack(expand=True, fill=tk.BOTH)
-
-
-TABS = [
-    Tab,
-    LauncherTab,
-    BrowserLauncherTab,
-    CommandLauncherTab,
-    ConsoleTab,
-    TableTab,
-    TreeTableTab,
-]

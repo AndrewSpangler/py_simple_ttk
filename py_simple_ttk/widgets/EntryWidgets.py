@@ -3,6 +3,12 @@
 
 import tkinter as tk
 from tkinter import ttk
+from tkinter.filedialog import (
+    askopenfilename,
+    askopenfilenames,
+    asksaveasfilename,
+    askdirectory,
+)
 from typing import Callable
 from .Labeler import Labeler
 from .MultiWidget import MultiWidgetMixin
@@ -19,7 +25,7 @@ class ScrolledEntry(Scroller, ttk.Entry, SuperWidgetMixin):
 want to use the ScrolledText widget. Used when you need a scrollable text entry box."""
 
     @_create_container
-    def __init__(self, parent: ttk.Frame, widgetargs:dict={}, **kw):
+    def __init__(self, parent: ttk.Frame, widgetargs: dict = {}, **kw):
         ttk.Entry.__init__(
             self,
             parent,
@@ -46,7 +52,7 @@ class LabeledEntry(Labeler, ttk.Entry, SuperWidgetMixin):
         is_child: bool = False,
         min_width: int = 0,
         widgetargs={},
-        **kw
+        **kw,
     ):
         self.var = tk.StringVar()
         self.var.set(default)
@@ -113,6 +119,7 @@ class LabeledMultiEntry(Labeler, ttk.Frame, MultiWidgetMixin):
         MultiWidgetMixin.__init__(self, LabeledEntry, config)
         self.is_child = is_child
 
+
 class LabeledButtonEntry(LabeledEntry):
     """LabeledEntry with a ttk.Button on the right"""
 
@@ -123,10 +130,41 @@ class LabeledButtonEntry(LabeledEntry):
         )
         self.button.pack(expand=False, side=tk.RIGHT)
 
+
+class LabeledPathEntry(LabeledEntry):
+    """LabeledEntry with a ttk.Button bound to a file- or folder-picker for easy system path selection."""
+
+    _valid_dialogs = [
+        askopenfilename,
+        asksaveasfilename,
+        askdirectory,
+    ]
+
+    def __init__(
+        self,
+        *args,
+        button_text: str = "...",
+        dialog: tk.filedialog = askopenfilename,
+        dialog_args: dict = {},
+        **kwargs,
+    ):
+        LabeledEntry.__init__(self, *args, **kwargs)
+        if not dialog in self._valid_dialogs:
+            raise ValueError(f"Invalid dialog type supplied")
+
+        def press(*args, **kwargs):
+            self.set(dialog(master=self.winfo_toplevel(), **dialog_args))
+
+        self.button = ttk.Button(self, command=press, text=button_text)
+        self.button.pack(expand=False, side=tk.RIGHT)
+
+
 class LabeledMultiButtonEntry(Labeler, ttk.Frame, MultiWidgetMixin):
     """Labeled MultiWidget LabeledEntry"""
 
-    __desc__ = """Used when you need multiple, vertically stacked Labeled Button Entries"""
+    __desc__ = (
+        """Used when you need multiple, vertically stacked Labeled Button Entries"""
+    )
 
     def __init__(
         self,
@@ -144,6 +182,7 @@ class LabeledMultiButtonEntry(Labeler, ttk.Frame, MultiWidgetMixin):
         MultiWidgetMixin.__init__(self, LabeledButtonEntry, config)
         self.is_child = is_child
 
+
 class PasswordEntry(ttk.Frame):
     """Username / Password Entry"""
 
@@ -155,17 +194,17 @@ entries is disabled."
     def __init__(
         self,
         *args,
-        instruction_text:str="",
-        username_text:str="Username: ",
-        username_enabled:bool=True,
-        password_text:str="Password: ",
-        password_enabled:bool=True,
-        button_text:str="Submit",
+        instruction_text: str = "",
+        username_text: str = "Username: ",
+        username_enabled: bool = True,
+        password_text: str = "Password: ",
+        password_enabled: bool = True,
+        button_text: str = "Submit",
         command=print,
-        password_char:str="*",
-        peek_enabled:bool=True,
-        invert_peek_colors:bool=False,
-        **kwargs
+        password_char: str = "*",
+        peek_enabled: bool = True,
+        invert_peek_colors: bool = False,
+        **kwargs,
     ):
         ttk.Frame.__init__(self, *args, **kwargs)
         self.command = command
@@ -220,12 +259,3 @@ entries is disabled."
         """Calls the provided "command" function with the contents of the entry box. `Returns None`"""
         if self.command:
             self.command((self.username_entry.get(), self.password_entry.get()))
-
-ENTRY_WIDGETS = [
-    ScrolledEntry,
-    LabeledEntry,
-    LabeledMultiEntry,
-    LabeledButtonEntry,
-    LabeledMultiButtonEntry,
-    PasswordEntry,
-]
