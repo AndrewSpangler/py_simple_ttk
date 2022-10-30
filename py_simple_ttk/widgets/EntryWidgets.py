@@ -132,7 +132,9 @@ class LabeledButtonEntry(LabeledEntry):
 
 
 class LabeledPathEntry(LabeledEntry):
-    """LabeledEntry with a ttk.Button bound to a file- or folder-picker for easy system path selection."""
+    """LabeledEntry with a ttk.Button bound to a file- or folder-picker for easy \
+    system path selection. Defaults to tk.filedialog.askopenfilename if no \
+    tk.filedialog specified."""
 
     _valid_dialogs = [
         askopenfilename,
@@ -144,11 +146,12 @@ class LabeledPathEntry(LabeledEntry):
         self,
         *args,
         button_text: str = "...",
-        dialog: tk.filedialog = askopenfilename,
+        dialog=None,
         dialog_args: dict = {},
         **kwargs,
     ):
         LabeledEntry.__init__(self, *args, **kwargs)
+        dialog = dialog or tk.filedialog.askopenfilename
         if not dialog in self._valid_dialogs:
             raise ValueError(f"Invalid dialog type supplied")
 

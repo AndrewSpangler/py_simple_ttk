@@ -1,13 +1,15 @@
 {
 	"name":"py_simple_ttk",
 	"author":"Andrew Spangler",
-	"version":"0.1.10",
+	"version":"0.1.12",
 	"license":"GPLv3",
 	"email":"AndrewSpangler@users.noreply.github.com",
 	"description":"Themes don't have to be hard.",
 	"requirements":["py_simple_lorem"],
 	"url":"https://github.com/AndrewSpangler/",
 	"changelog": {
+		"0.1.12": "Add Constrained + Labeled + Multi Entries (>35 widgets)",
+		"0.1.11": "Fix LabeledPathEntry error when no dialog type was specified",
 		"0.1.10": "Add LabeledPathEntry to EntryWidgets.py",
 		"0.1.9": "Add pencil icons to assets",
 		"0.1.8": "Fix labeled button not running command on press",

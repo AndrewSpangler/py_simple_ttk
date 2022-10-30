@@ -7,36 +7,72 @@ from py_simple_ttk import (
     BrowserLauncherTab,
     CommandLauncherTab,
     ConsoleTab,
+    ConstrainedEntry,
     ConversationsTab,
     CopyBox,
     default_pack,
     default_separator,
     default_vertical_pack,
     default_vertical_separator,
+    DigitsEntry,
     ExampleTile,
+    FloatEntry,
     get_asset,
     GifLoader,
     GifViewer,
+    HexdigitsEntry,
+    IntEntry,
     LabeledCheckbutton,
     LabeledCombobox,
+    LabeledConstrainedEntry,
+    LabeledDigitsEntry,
     LabeledEntry,
+    LabeledFloatEntry,
+    LabeledHexdigitsEntry,
+    LabeledIntEntry,
+    LabeledLettersDigitsEntry,
+    LabeledLettersEntry,
+    LabeledLowercaseDigitsEntry,
+    LabeledLowercaseEntry,
     LabeledMultiCheckbutton,
     LabeledMultiCombobox,
+    LabeledMultiDigitsEntry,
     LabeledMultiEntry,
+    LabeledMultiFloatEntry,
+    LabeledMultiHexdigitsEntry,
+    LabeledMultiIntEntry,
+    LabeledMultiLettersDigitsEntry,
+    LabeledMultiLettersEntry,
+    LabeledMultiLowercaseDigitsEntry,
+    LabeledMultiLowercaseEntry,
+    LabeledMultiOctdigitsEntry,
     LabeledMultiOptionMenu,
+    LabeledMultiPrintableEntry,
     LabeledMultiProgressbar,
     LabeledMultiRadiobutton,
     LabeledMultiScale,
+    LabeledMultiUppercaseDigitsEntry,
+    LabeledMultiUppercaseEntry,
+    LabeledOctdigitsEntry,
     LabeledOptionMenu,
     LabeledPathEntry,
+    LabeledPrintableEntry,
     LabeledProgressbar,
     LabeledRadiobutton,
     LabeledScale,
+    LabeledUppercaseDigitsEntry,
+    LabeledUppercaseEntry,
+    LettersDigitsEntry,
+    LettersEntry,
+    LowercaseDigitsEntry,
+    LowercaseEntry,
     NotesTab,
     NoticeWindow,
+    OctdigitsEntry,
     PasswordEntry,
     PasswordWindow,
     PILLOW_AVAILABLE,
+    PrintableEntry,
     PromptWindow,
     ScrolledText,
     ShoppingListTab,
@@ -46,6 +82,8 @@ from py_simple_ttk import (
     TimecardTab,
     ToolTip,
     TreeTableTab,
+    UppercaseDigitsEntry,
+    UppercaseEntry,
     WattageTab,
     YesNoCancelWindow,
 )
@@ -554,6 +592,117 @@ class PopupsTab(Tab):
             b.pack(side=tk.TOP, fill="x", padx=10, pady=0)
 
 
+class ConstrainedTab(Tab):
+    def __init__(self, notebook):
+        Tab.__init__(self, notebook, "Constrained")
+
+        (left := ttk.Frame(self)).pack(
+            fill="both", expand="true", side="left", pady=10, padx=(20, 10)
+        )
+        (middle := ttk.Frame(self)).pack(
+            fill="both", expand="true", side="left", pady=10, padx=10
+        )
+        (right := ttk.Frame(self)).pack(
+            fill="both", expand="true", side="left", pady=10, padx=(10, 20)
+        )
+
+        self.int = LabeledIntEntry(left, "Int Entry")
+        self.int.pack(side="top", fill="x", expand=False)
+        conf = {"Int 1": ([], {}), "Int 2": ([], {})}
+        self.multi_int = LabeledMultiIntEntry(left, "Multi Int Entry", conf)
+        self.multi_int.pack(side="top", fill="x", expand=False)
+        default_separator(left)
+        self.float = LabeledFloatEntry(left, "Float Entry")
+        self.float.pack(side="top", fill="x", expand=False)
+        conf = {"Float 1": ([], {}), "Float 2": ([], {})}
+        self.multi_float = LabeledMultiFloatEntry(left, "Multi Float Entry", conf)
+        self.multi_float.pack(side="top", fill="x", expand=False)
+        default_separator(left)
+        self.lowercase = LabeledLowercaseEntry(left, "Lowercase Entry")
+        self.lowercase.pack(side="top", fill="x", expand=False)
+        conf = {"Lowercase 1": ([], {}), "Lowercase 2": ([], {})}
+        self.multi_lowercase = LabeledMultiLowercaseEntry(
+            left, "Multi Lowercase Entry", conf
+        )
+        self.multi_lowercase.pack(side="top", fill="x", expand=False)
+        default_separator(left)
+        self.uppercase = LabeledUppercaseEntry(left, "Uppercase Entry")
+        self.uppercase.pack(side="top", fill="x", expand=False)
+        conf = {"Uppercase 1": ([], {}), "Uppercase 2": ([], {})}
+        self.multi_uppercase = LabeledMultiUppercaseEntry(
+            left, "Multi Uppercase Entry", conf
+        )
+        self.multi_uppercase.pack(side="top", fill="x", expand=False)
+
+        # Middle Transistion
+        # #
+        self.letters = LabeledLettersEntry(middle, "Letters Entry")
+        self.letters.pack(side="top", fill="x", expand=False)
+        conf = {"Letters 1": ([], {}), "Letters 2": ([], {})}
+        self.multi_letters = LabeledMultiLettersEntry(
+            middle, "Multi Letters Entry", conf
+        )
+        self.multi_letters.pack(side="top", fill="x", expand=False)
+        default_separator(middle)
+        self.digits = LabeledDigitsEntry(middle, "Digits Entry")
+        self.digits.pack(side="top", fill="x", expand=False)
+        conf = {"Digits 1": ([], {}), "Digits 2": ([], {})}
+        self.multi_digits = LabeledMultiDigitsEntry(middle, "Multi Digits Entry", conf)
+        self.multi_digits.pack(side="top", fill="x", expand=False)
+        default_separator(middle)
+        self.uppercasedigits = LabeledUppercaseDigitsEntry(
+            middle, "Uppercase Digits Entry"
+        )
+        self.uppercasedigits.pack(side="top", fill="x", expand=False)
+        conf = {"Uppercase Digits 1": ([], {}), "Uppercase Digits 2": ([], {})}
+        self.multi_uppercasedigits = LabeledMultiUppercaseDigitsEntry(
+            middle, "Multi Uppercase Digits Entry", conf
+        )
+        self.multi_uppercasedigits.pack(side="top", fill="x", expand=False)
+        default_separator(middle)
+        self.lowercase = LabeledLowercaseDigitsEntry(middle, "Lowercase Digits Entry")
+        self.lowercase.pack(side="top", fill="x", expand=False)
+        conf = {"Lowercase Digits 1": ([], {}), "Lowercase Digits 2": ([], {})}
+        self.multi_lowercase = LabeledMultiLowercaseDigitsEntry(
+            middle, "Multi Lowercase Digits Entry", conf
+        )
+        self.multi_lowercase.pack(side="top", fill="x", expand=False)
+
+        # Right Transition
+        # #
+        self.lettersdigits = LabeledLettersDigitsEntry(right, "Letters Digits Entry")
+        self.lettersdigits.pack(side="top", fill="x", expand=False)
+        conf = {"Letters Digits 1": ([], {}), "Letters Digits 2": ([], {})}
+        self.multi_lettersdigits = LabeledMultiLettersDigitsEntry(
+            right, "Multi Letter Digits Entry", conf
+        )
+        self.multi_lettersdigits.pack(side="top", fill="x", expand=False)
+        default_separator(right)
+        self.hexdigits = LabeledHexdigitsEntry(right, "Hexdigits Entry")
+        self.hexdigits.pack(side="top", fill="x", expand=False)
+        conf = {"Hexdigits 1": ([], {}), "Hexdigits 2": ([], {})}
+        self.multi_hexdigits = LabeledMultiHexdigitsEntry(
+            right, "Multi Hexdigits Entry", conf
+        )
+        self.multi_hexdigits.pack(side="top", fill="x", expand=False)
+        default_separator(right)
+        self.octdigits = LabeledOctdigitsEntry(right, "Octdigits Entry")
+        self.octdigits.pack(side="top", fill="x", expand=False)
+        conf = {"Octdigits 1": ([], {}), "Octdigits 2": ([], {})}
+        self.multi_octdigits = LabeledMultiOctdigitsEntry(
+            right, "Multi Octdigits Entry", conf
+        )
+        self.multi_octdigits.pack(side="top", fill="x", expand=False)
+        default_separator(right)
+        self.printable = LabeledOctdigitsEntry(right, "Printable Entry")
+        self.printable.pack(side="top", fill="x", expand=False)
+        conf = {"Printable 1": ([], {}), "Printable 2": ([], {})}
+        self.multi_printable = LabeledMultiOctdigitsEntry(
+            right, "Multi Printable Entry", conf
+        )
+        self.multi_printable.pack(side="top", fill="x", expand=False)
+
+
 class GifTab(Tab):
     def __init__(self, notebook):
         Tab.__init__(self, notebook, "GIF Viewer")
@@ -586,6 +735,7 @@ class ExampleApp(App):
     def __init__(self):
         App.__init__(self, "ini.json")
 
+        self.constrained_tab = ConstrainedTab(self.notebook)
         self.tictactoe = TicTacToeTab(self.notebook)
         self.shopping_list = ShoppingListTab(self.notebook, self)
         if PILLOW_AVAILABLE:

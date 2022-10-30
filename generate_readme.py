@@ -54,6 +54,62 @@ ENTRY_WIDGETS = [
     LabeledPathEntry,
     PasswordEntry,
 ]
+CONSTRAINEDENTRY_WIDGETS = [
+    ConstrainedEntry,
+    LabeledConstrainedEntry,
+    IntEntry,
+    LabeledIntEntry,
+    LabeledMultiIntEntry,
+    FloatEntry,
+    LabeledFloatEntry,
+    LabeledMultiFloatEntry,
+    LowercaseEntry,
+    LabeledLowercaseEntry,
+    LabeledMultiLowercaseEntry,
+    UppercaseEntry,
+    LabeledUppercaseEntry,
+    LabeledMultiUppercaseEntry,
+    LettersEntry,
+    LabeledLettersEntry,
+    LabeledMultiLettersEntry,
+    DigitsEntry,
+    LabeledDigitsEntry,
+    LabeledMultiDigitsEntry,
+    UppercaseDigitsEntry,
+    LabeledUppercaseDigitsEntry,
+    LabeledMultiUppercaseDigitsEntry,
+    LowercaseDigitsEntry,
+    LabeledLowercaseDigitsEntry,
+    LabeledMultiLowercaseDigitsEntry,
+    LettersDigitsEntry,
+    LabeledLettersDigitsEntry,
+    LabeledMultiLettersDigitsEntry,
+    HexdigitsEntry,
+    LabeledHexdigitsEntry,
+    LabeledMultiHexdigitsEntry,
+    OctdigitsEntry,
+    LabeledOctdigitsEntry,
+    LabeledMultiOctdigitsEntry,
+    PrintableEntry,
+    LabeledPrintableEntry,
+    LabeledMultiPrintableEntry,
+]
+CONSTRAINEDENTRY_FUNCTIONS = [
+    check_entry_type,
+    check_entry_int,
+    check_entry_float,
+    check_entry_contents,
+    check_entry_ascii_lowercase,
+    check_entry_ascii_uppercase,
+    check_entry_ascii_letters,
+    check_entry_ascii_digits,
+    check_entry_ascii_uppercase_digits,
+    check_entry_ascii_lowercase_digits,
+    check_entry_ascii_hexdigits,
+    check_entry_ascii_octdigits,
+    check_entry_ascii_letters_digits,
+    check_entry_ascii_printable,
+]
 CONSOLE_WIDGETS = [ConsoleWidget]
 COMBOBOX_WIDGETS = [LabeledCombobox, LabeledMultiCombobox]
 CHECKBUTTON_WIDGETS = [LabeledCheckbutton, LabeledMultiCheckbutton]
@@ -189,7 +245,10 @@ def generate_readme(tables: dict, changelog: dict):
     gen.handle_class_list(COMBOBOX_WIDGETS, show_submodule=True)
     gen.add_heading_2("Console Widgets", add_toc=True)
     gen.handle_class_list(CONSOLE_WIDGETS, show_submodule=True)
+    gen.add_heading_2("Constraining Functions", add_toc=True)
+    gen.handle_function_list(CONSTRAINEDENTRY_FUNCTIONS)
     gen.add_heading_2("Entry Widgets", add_toc=True)
+    ENTRY_WIDGETS.extend(CONSTRAINEDENTRY_WIDGETS)
     gen.handle_class_list(ENTRY_WIDGETS, show_submodule=True)
     gen.add_heading_2("KeyPad Widgets", add_toc=True)
     gen.handle_class_list(KEYPAD_WIDGETS, show_submodule=True)
