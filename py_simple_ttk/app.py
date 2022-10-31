@@ -24,6 +24,7 @@ from .widgets import (
     get_bundled_themes_list,
     get_themes_folder,
     ListWindow,
+    PromptWindow,
     ScrolledCanvas,
     ScrolledText,
     Table,

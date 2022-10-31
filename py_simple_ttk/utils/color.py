@@ -6,14 +6,17 @@ def reduce_255(in_value: int, maxval: int = 255):
 def rgb_to_hex(rgb: tuple):
     """Converts an rgb tuple to hex"""
     return "#{0:02x}{1:02x}{2:02x}".format(
-        reduce(rgb[0]), reduce(rgb[1]), reduce(rgb[2])
+        reduce_255(rgb[0]), reduce_255(rgb[1]), reduce_255(rgb[2])
     )
 
 
 def rgba_to_hex(rgba: tuple):
     """Converts an rgba tuple to rgba hex"""
     return "#{0:02x}{1:02x}{2:02x}{3:02x}".format(
-        reduce(rgba[0]), reduce(rgba[1]), reduce(rgba[2]), reduce(rgba[3])
+        reduce_255(rgba[0]),
+        reduce_255(rgba[1]),
+        reduce_255(rgba[2]),
+        reduce_255(rgba[3]),
     )
 
 
