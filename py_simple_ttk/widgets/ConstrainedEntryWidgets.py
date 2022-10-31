@@ -104,19 +104,19 @@ class LabeledConstrainedEntry(Labeler, ConstrainedEntry, SuperWidgetMixin):
         self.is_child = is_child
         self._command = command
         if on_keystroke:
-            self.bind("<KeyRelease>", self._on_execute_command)
+            self.entry.bind("<KeyRelease>", self._on_execute_command)
         if bind_enter:
-            self.bind("<Return>", self._on_execute_command)
+            self.entry.bind("<Return>", self._on_execute_command)
         if bind_escape_clear:
-            self.bind("<Escape>", self.clear())
+            self.entry.bind("<Escape>", self.clear())
 
     def enable(self):
         """Enable Entry. `Returns None`"""
-        self["state"] = tk.NORMAL
+        self.entry["state"] = tk.NORMAL
 
     def disable(self):
         """Disable Entry. `Returns None`"""
-        self["state"] = tk.DISABLED
+        self.entry["state"] = tk.DISABLED
 
     def _on_execute_command(self, event=None):
         """Calls the provided "command" function with the contents of the Entry. `Returns None`"""

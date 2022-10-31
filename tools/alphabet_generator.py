@@ -11,7 +11,7 @@ FONTPATH = os.path.abspath(
     "../py_simple_ttk/assets/fonts/Open_Sans/static/OpenSans/OpenSans-Bold.ttf"
 )
 # fmt: off
-FONT_SIZES = [8,10,12,14,16,18,20,22,24,26,28,30,32,36,40,48,64,128,256]
+FONT_SIZES = [8,12,14,16,18,22,24,36,48,64,128]
 # fmt: on
 CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&~`+-.="
 with zipfile.ZipFile(
