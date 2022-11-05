@@ -16,11 +16,15 @@ from .MultiWidget import MultiWidgetMixin
 WINDOWS_SYMBOL = "⊞"
 ROOT = os.path.dirname(os.path.dirname(__file__))
 ASSETS_REL_PATH = "./assets"
-ASSETS_FOLDER = os.path.join(ROOT, ASSETS_REL_PATH)
+
+if getattr(sys, "frozen", False):
+    ASSETS_FOLDER = os.path.abspath(os.path.join(sys._MEIPASS, ASSETS_REL_PATH))
+else:
+    ASSETS_FOLDER = os.path.join(ROOT, ASSETS_REL_PATH)
 
 
 def get_asset(path, folder=ASSETS_FOLDER):
-    """Gets an asset from the included assets folder by relative path"""
+    """Gets an asset from the included assets folder by relative path. Works with pyinstaller."""
     return os.path.abspath(os.path.join(folder, path))
 
 
@@ -131,7 +135,6 @@ def get_generated_font_images_lookup(path=None):
     ) as z:
         with z.open("manifest.txt", "r") as f:
             manifest = f.read().decode().splitlines()
-    # path = path or os.path.join(ASSETS_FOLDER, "generated")
     fonts = {}
     for entry in manifest:
         # if entry.is_file():
@@ -211,6 +214,15 @@ def open_link(link: str):
 def get_local_appdata_folder():
     """Opens user's Windows home folder. Only works on Windows for obvious reasons."""
     return os.path.expandvars("%LOCALAPPDATA%")
+
+
+def set_desktop_background(file: str):
+    if platform.system() == "Windows":
+        import ctypes
+
+        ctypes.windll.user32.SystemParametersInfoW(20, 0, os.path.abspath(file), 0)
+    else:
+        raise NotImplemented
 
 
 def enable_notebook_movement(app):

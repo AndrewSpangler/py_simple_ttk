@@ -36,7 +36,7 @@ def hex_to_rgba(hex: str):
 
 
 def get_gradient(steps: int):
-    """Generates a gradient with a given number of steps"""
+    """Generates a black / white gradient with a given number of steps"""
     return [
         rgb_to_hex(v) for v in reversed(linear_gradient("#FFFFFF", "#000000", steps))
     ]
@@ -67,11 +67,24 @@ def linear_gradient(
 
 def get_rainbow(steps: int):
     """Generates a rainbow with a given number of steps. Steps must be divisible by 4)"""
-    assert steps % 4 == 0, "Steps should be divisible by 4"
-    rainbow = []
-    step = int(steps / 4)
-    rainbow.extend(linear_gradient("#FF0000", "#FFFF00", step))
+    rainbow = [linear_gradient("#FF0000", "#FFFF00", step := int(steps / 4))]
     rainbow.extend(linear_gradient("#7FFF00", "#00FF7F", step))
     rainbow.extend(linear_gradient("#00FFF", "#0000FF", step))
     rainbow.extend(linear_gradient("#7F00FF", "#FF007f", step))
     return [rgb_to_hex(v) for v in reversed(rainbow)]
+
+
+def needs_white_text(color: str, barrier: int = 384) -> bool:
+    """Returns True if luminance is under 50%"""
+    if isinstance(color, str):
+        if color.startswith("#"):
+            if len(color) == 7:
+                return sum(hex_to_rgb(color)) < barrier
+            elif len(color) == 9:
+                return sum(hex_to_rgba(color)[:3]) < barrier
+    elif isinstance(color, list) or isinstance(color, tuple):
+        if len(color) == 3:
+            return sum(color) < barrier
+        elif len(color) == 4:
+            return sum(color) < barrier
+    ValueError(f"Invalid color {color}")

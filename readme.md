@@ -1,4 +1,4 @@
-# py_simple_ttk 0.1.14<a name="mark0"></a>
+# py_simple_ttk 0.1.17<a name="mark0"></a>
 
 ***Themes don't have to be hard.***
 
@@ -190,21 +190,24 @@
 		- [get_profiles_folder](#mark186)
 		- [get_profiles_list](#mark187)
 - [Changelog](#mark188)
-	- [0.1.14](#mark189)
-	- [0.1.13](#mark190)
-	- [0.1.12](#mark191)
-	- [0.1.11](#mark192)
-	- [0.1.10](#mark193)
-	- [0.1.9](#mark194)
-	- [0.1.8](#mark195)
-	- [0.1.7](#mark196)
-	- [0.1.6](#mark197)
-	- [0.1.5](#mark198)
-	- [0.1.4](#mark199)
-	- [0.1.3](#mark200)
-	- [0.1.2](#mark201)
-	- [0.1.1](#mark202)
-	- [0.1.0](#mark203)
+	- [0.1.17](#mark189)
+	- [0.1.16](#mark190)
+	- [0.1.15](#mark191)
+	- [0.1.14](#mark192)
+	- [0.1.13](#mark193)
+	- [0.1.12](#mark194)
+	- [0.1.11](#mark195)
+	- [0.1.10](#mark196)
+	- [0.1.9](#mark197)
+	- [0.1.8](#mark198)
+	- [0.1.7](#mark199)
+	- [0.1.6](#mark200)
+	- [0.1.5](#mark201)
+	- [0.1.4](#mark202)
+	- [0.1.3](#mark203)
+	- [0.1.2](#mark204)
+	- [0.1.1](#mark205)
+	- [0.1.0](#mark206)
 
 ---
 
@@ -357,7 +360,7 @@ def force_aspect(inner_frame: tkinter.ttk.Frame, outer_frame: tkinter.ttk.Frame,
 > 	...
 > ```
 ### py_simple_ttk.widgets.WidgetsCore.get_asset<a name="mark21"></a>[^](#mark7)
-> **Gets an asset from the included assets folder by relative path**
+> **Gets an asset from the included assets folder by relative path. Works with pyinstaller.**
 > 
 > ```python
 def get_asset(path, folder='C:\\Users\\arcti\\github\\py_simple_ttk\\py_simple_ttk\\./assets'):
@@ -2361,7 +2364,7 @@ def hex_to_rgba(hex: str):
 > 	...
 > ```
 ### py_simple_ttk.utils.color.get_gradient<a name="mark173"></a>[^](#mark167)
-> **Generates a gradient with a given number of steps**
+> **Generates a black / white gradient with a given number of steps**
 > 
 > ```python
 def get_gradient(steps: int):
@@ -2554,63 +2557,75 @@ def get_profiles_list(path='./Profiles', verbose=False):
 > ```
 # Changelog<a name="mark188"></a>[^](#mark0)
 
-## 0.1.14<a name="mark189"></a>[^](#mark188)
+## 0.1.17<a name="mark189"></a>[^](#mark188)
+
+Add set_desktop_background to WidgetsCore.py
+
+## 0.1.16<a name="mark190"></a>[^](#mark188)
+
+Add needs_white_text to color.py, add pyinstaller compatibility to WidgetsCore.get_asset
+
+## 0.1.15<a name="mark191"></a>[^](#mark188)
+
+Fix misnamed function in color.py
+
+## 0.1.14<a name="mark192"></a>[^](#mark188)
 
 Fix missing import in app.py
 
-## 0.1.13<a name="mark190"></a>[^](#mark188)
+## 0.1.13<a name="mark193"></a>[^](#mark188)
 
 reduced variety of packaged font images, fixed bug with constrained widgets command not triggering
 
-## 0.1.12<a name="mark191"></a>[^](#mark188)
+## 0.1.12<a name="mark194"></a>[^](#mark188)
 
 Add Constrained + Labeled + Multi Entries (>35 widgets)
 
-## 0.1.11<a name="mark192"></a>[^](#mark188)
+## 0.1.11<a name="mark195"></a>[^](#mark188)
 
 Fix LabeledPathEntry error when no dialog type was specified
 
-## 0.1.10<a name="mark193"></a>[^](#mark188)
+## 0.1.10<a name="mark196"></a>[^](#mark188)
 
 Add LabeledPathEntry to EntryWidgets.py
 
-## 0.1.9<a name="mark194"></a>[^](#mark188)
+## 0.1.9<a name="mark197"></a>[^](#mark188)
 
 Add pencil icons to assets
 
-## 0.1.8<a name="mark195"></a>[^](#mark188)
+## 0.1.8<a name="mark198"></a>[^](#mark188)
 
 Fix labeled button not running command on press
 
-## 0.1.7<a name="mark196"></a>[^](#mark188)
+## 0.1.7<a name="mark199"></a>[^](#mark188)
 
 add labeled button
 
-## 0.1.6<a name="mark197"></a>[^](#mark188)
+## 0.1.6<a name="mark200"></a>[^](#mark188)
 
 Fix missing Labeler import
 
-## 0.1.5<a name="mark198"></a>[^](#mark188)
+## 0.1.5<a name="mark201"></a>[^](#mark188)
 
 Fix broken package
 
-## 0.1.4<a name="mark199"></a>[^](#mark188)
+## 0.1.4<a name="mark202"></a>[^](#mark188)
 
 Fix broken package
 
-## 0.1.3<a name="mark200"></a>[^](#mark188)
+## 0.1.3<a name="mark203"></a>[^](#mark188)
 
 More cleanup, input fixes.py
 
-## 0.1.2<a name="mark201"></a>[^](#mark188)
+## 0.1.2<a name="mark204"></a>[^](#mark188)
 
 Cleanup, move type lists to generate_readme.py
 
-## 0.1.1<a name="mark202"></a>[^](#mark188)
+## 0.1.1<a name="mark205"></a>[^](#mark188)
 
 Fix missing 'ListWindow' import in app.py
 
-## 0.1.0<a name="mark203"></a>[^](#mark188)
+## 0.1.0<a name="mark206"></a>[^](#mark188)
 
 Modulize
 

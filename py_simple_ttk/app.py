@@ -296,11 +296,12 @@ override this function."""
             w.use_style(self.style)
 
     def copy_to_user_clipboard(self, val: str):
+        """Copys a text val to the user's keyboard"""
         self.window.clipboard_clear()
-        self.window.clipboard_append(val)
+        self.window.clipboard_append(str(val))
 
     def bell(self):
-        """Largely redundant as all widgets have access to this method"""
+        """Largely redundant as all widgets have access to this method but allows other tools to make the system bell sound."""
         self.window.bell()
 
     def update_default_title(self, indicate_profile=True):
