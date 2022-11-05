@@ -8,7 +8,7 @@ import time
 import tkinter as tk
 import webbrowser
 import zipfile
-
+from typing import Callable
 from tkinter import ttk
 
 from .MultiWidget import MultiWidgetMixin
@@ -341,31 +341,38 @@ class SuperWidgetMixin:
 
     def __init__(
         self,
-        on_mouse_enter=None,
-        on_mouse_leave=None,
-        on_mouse_move=None,
-        on_mouse_wheel=None,
-        on_left_click=None,
-        on_middle_click=None,
-        on_right_click=None,
-        on_configure=None,
-        bind_mouse_scroll=False,
+        on_mouse_enter: Callable = None,
+        on_mouse_leave: Callable = None,
+        on_mouse_move: Callable = None,
+        on_mouse_wheel: Callable = None,
+        on_left_click: Callable = None,
+        on_double_left_click: Callable = None,
+        on_middle_click: Callable = None,
+        on_double_middle_click: Callable = None,
+        on_right_click: Callable = None,
+        on_double_right_click: Callable = None,
+        on_configure: Callable = None,
     ):
         self.on_mouse_enter = on_mouse_enter
         self.on_mouse_leave = on_mouse_leave
         self.on_mouse_move = on_mouse_move
         self.on_left_click = on_left_click
+        self.on_double_left_click = on_double_left_click
         self.on_middle_click = on_middle_click
+        self.on_double_middle_click = on_double_middle_click
         self.on_right_click = on_right_click
+        self.on_double_right_click = on_double_right_click
         self.on_mouse_wheel = on_mouse_wheel
         self.on_configure = on_configure
-        self.bind_mouse_scroll = bind_mouse_scroll
         self.bind("<Enter>", self._on_mouse_enter, add="+")
         self.bind("<Leave>", self._on_mouse_leave, add="+")
         self.bind("<Motion>", self._on_mouse_move, add="+")
         self.bind("<Button-1>", self._on_left_click, add="+")
+        self.bind("<Double-1>", self._on_double_left_click, add="+")
         self.bind("<Button-2>", self._on_middle_click, add="+")
+        self.bind("<Double-2>", self._on_double_middle_click, add="+")
         self.bind("<Button-3>", self._on_right_click, add="+")
+        self.bind("<Double-3>", self._on_double_right_click)
         self.bind("<Configure>", self._on_configure, add="+")
         self.bind("<MouseWheel>", self._on_mouse_wheel, add="+")
 
@@ -384,22 +391,31 @@ class SuperWidgetMixin:
     def _on_mouse_wheel(self, event):
         if self.on_mouse_wheel:
             self.on_mouse_wheel(event)
-        if self.bind_mouse_scroll:
-            _on_mousewheel(event, self)
 
     def _on_left_click(self, event):
-        x = event.x
         if self.on_left_click:
             self.on_left_click(event)
+
+    def _on_double_left_click(self, event):
+        if self.on_double_left_click:
+            self.on_double_left_click(event)
 
     def _on_middle_click(self, event):
         if self.on_middle_click:
             self.on_middle_click(event)
 
+    def _on_double_middle_click(self, event):
+        if self.on_double_middle_click:
+            self.on_double_middle_click(event)
+
     def _on_right_click(self, event):
         if self.on_right_click:
             self.on_right_click(event)
 
+    def _on_double_right_click(self, event):
+        if self.on_double_right_click:
+            self.on_double_right_click(event)
+
     def _on_configure(self, event=None):
         if self.on_configure:
-            self.on_configure(w, h)
+            self.on_configure(event)

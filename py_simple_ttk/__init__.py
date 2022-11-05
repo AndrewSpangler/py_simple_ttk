@@ -102,6 +102,7 @@ from .widgets import (
     NoticeWindow,
     OctdigitsEntry,
     open_link,
+    OrderedListbox,
     PasswordEntry,
     PasswordWindow,
     PrintableEntry,

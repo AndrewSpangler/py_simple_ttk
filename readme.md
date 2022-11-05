@@ -1,4 +1,4 @@
-# py_simple_ttk 0.1.17<a name="mark0"></a>
+# py_simple_ttk 0.1.18<a name="mark0"></a>
 
 ***Themes don't have to be hard.***
 
@@ -123,91 +123,93 @@
 		- [LabeledButton](#mark119)
 	- [ListBox Widgets](#mark120)
 		- [ScrolledListBox](#mark121)
-		- [Table](#mark122)
-	- [OptionMenu Widgets](#mark123)
-		- [LabeledOptionMenu](#mark124)
-		- [LabeledMultiOptionMenu](#mark125)
-	- [ProgressBar Widgets](#mark126)
-		- [LabeledProgressbar](#mark127)
-		- [LabeledMultiProgressbar](#mark128)
-	- [Radiobutton Widgets](#mark129)
-		- [LabeledRadiobutton](#mark130)
-		- [LabeledMultiRadiobutton](#mark131)
-	- [Scale Widgets](#mark132)
-		- [LabeledScale](#mark133)
-		- [LabeledMultiScale](#mark134)
-	- [Text Widgets](#mark135)
-		- [ScrolledText](#mark136)
-		- [CopyBox](#mark137)
-	- [Toplevel Widgets](#mark138)
-		- [FocusedToplevel](#mark139)
-		- [NoticeWindow](#mark140)
-		- [YesNoCancelWindow](#mark141)
-		- [PromptWindow](#mark142)
-		- [PasswordWindow](#mark143)
-		- [ListWindow](#mark144)
-	- [Misc Widgets](#mark145)
-		- [ToolTip](#mark146)
-		- [EasySizegrip](#mark147)
-- [SuperLib.utils](#mark148)
-	- [Utils](#mark149)
-		- [check_if_module_installed](#mark150)
-		- [check_string_contains](#mark151)
-		- [dummy_function](#mark152)
-		- [get_friendly_time](#mark153)
-		- [get_installed_packages](#mark154)
-		- [get_unix_timestamp](#mark155)
-		- [get_unix_timestring](#mark156)
-		- [get_user_home_folder](#mark157)
-		- [open_folder_in_explorer](#mark158)
-		- [sort_dict_by_keys](#mark159)
-		- [timer_decorator](#mark160)
-	- [File Generators](#mark161)
-		- [HTML_Generator](#mark162)
-		- [TXT_Generator](#mark163)
-		- [MD_Generator](#mark164)
-	- [History Mixin](#mark165)
-		- [HistoryMixin](#mark166)
-	- [Color Functions](#mark167)
-		- [reduce_255](#mark168)
-		- [rgb_to_hex](#mark169)
-		- [rgba_to_hex](#mark170)
-		- [hex_to_rgb](#mark171)
-		- [hex_to_rgba](#mark172)
-		- [get_gradient](#mark173)
-		- [rgb_to_scalar](#mark174)
-		- [scalar_to_rgb](#mark175)
-		- [linear_gradient](#mark176)
-		- [get_rainbow](#mark177)
-- [MegaWidgets](#mark178)
-	- [Notes MegaWidget](#mark179)
-		- [NotesTab](#mark180)
-	- [Conversation MegaWidget](#mark181)
-		- [ConversationsTab](#mark182)
-	- [Profile Management](#mark183)
-		- [ProfilesSystem](#mark184)
-		- [UserProfile](#mark185)
-		- [get_profiles_folder](#mark186)
-		- [get_profiles_list](#mark187)
-- [Changelog](#mark188)
-	- [0.1.17](#mark189)
-	- [0.1.16](#mark190)
-	- [0.1.15](#mark191)
-	- [0.1.14](#mark192)
-	- [0.1.13](#mark193)
-	- [0.1.12](#mark194)
-	- [0.1.11](#mark195)
-	- [0.1.10](#mark196)
-	- [0.1.9](#mark197)
-	- [0.1.8](#mark198)
-	- [0.1.7](#mark199)
-	- [0.1.6](#mark200)
-	- [0.1.5](#mark201)
-	- [0.1.4](#mark202)
-	- [0.1.3](#mark203)
-	- [0.1.2](#mark204)
-	- [0.1.1](#mark205)
-	- [0.1.0](#mark206)
+		- [OrderedListbox](#mark122)
+		- [Table](#mark123)
+	- [OptionMenu Widgets](#mark124)
+		- [LabeledOptionMenu](#mark125)
+		- [LabeledMultiOptionMenu](#mark126)
+	- [ProgressBar Widgets](#mark127)
+		- [LabeledProgressbar](#mark128)
+		- [LabeledMultiProgressbar](#mark129)
+	- [Radiobutton Widgets](#mark130)
+		- [LabeledRadiobutton](#mark131)
+		- [LabeledMultiRadiobutton](#mark132)
+	- [Scale Widgets](#mark133)
+		- [LabeledScale](#mark134)
+		- [LabeledMultiScale](#mark135)
+	- [Text Widgets](#mark136)
+		- [ScrolledText](#mark137)
+		- [CopyBox](#mark138)
+	- [Toplevel Widgets](#mark139)
+		- [FocusedToplevel](#mark140)
+		- [NoticeWindow](#mark141)
+		- [YesNoCancelWindow](#mark142)
+		- [PromptWindow](#mark143)
+		- [PasswordWindow](#mark144)
+		- [ListWindow](#mark145)
+	- [Misc Widgets](#mark146)
+		- [ToolTip](#mark147)
+		- [EasySizegrip](#mark148)
+- [SuperLib.utils](#mark149)
+	- [Utils](#mark150)
+		- [check_if_module_installed](#mark151)
+		- [check_string_contains](#mark152)
+		- [dummy_function](#mark153)
+		- [get_friendly_time](#mark154)
+		- [get_installed_packages](#mark155)
+		- [get_unix_timestamp](#mark156)
+		- [get_unix_timestring](#mark157)
+		- [get_user_home_folder](#mark158)
+		- [open_folder_in_explorer](#mark159)
+		- [sort_dict_by_keys](#mark160)
+		- [timer_decorator](#mark161)
+	- [File Generators](#mark162)
+		- [HTML_Generator](#mark163)
+		- [TXT_Generator](#mark164)
+		- [MD_Generator](#mark165)
+	- [History Mixin](#mark166)
+		- [HistoryMixin](#mark167)
+	- [Color Functions](#mark168)
+		- [reduce_255](#mark169)
+		- [rgb_to_hex](#mark170)
+		- [rgba_to_hex](#mark171)
+		- [hex_to_rgb](#mark172)
+		- [hex_to_rgba](#mark173)
+		- [get_gradient](#mark174)
+		- [rgb_to_scalar](#mark175)
+		- [scalar_to_rgb](#mark176)
+		- [linear_gradient](#mark177)
+		- [get_rainbow](#mark178)
+- [MegaWidgets](#mark179)
+	- [Notes MegaWidget](#mark180)
+		- [NotesTab](#mark181)
+	- [Conversation MegaWidget](#mark182)
+		- [ConversationsTab](#mark183)
+	- [Profile Management](#mark184)
+		- [ProfilesSystem](#mark185)
+		- [UserProfile](#mark186)
+		- [get_profiles_folder](#mark187)
+		- [get_profiles_list](#mark188)
+- [Changelog](#mark189)
+	- [0.1.18](#mark190)
+	- [0.1.17](#mark191)
+	- [0.1.16](#mark192)
+	- [0.1.15](#mark193)
+	- [0.1.14](#mark194)
+	- [0.1.13](#mark195)
+	- [0.1.12](#mark196)
+	- [0.1.11](#mark197)
+	- [0.1.10](#mark198)
+	- [0.1.9](#mark199)
+	- [0.1.8](#mark200)
+	- [0.1.7](#mark201)
+	- [0.1.6](#mark202)
+	- [0.1.5](#mark203)
+	- [0.1.4](#mark204)
+	- [0.1.3](#mark205)
+	- [0.1.2](#mark206)
+	- [0.1.1](#mark207)
+	- [0.1.0](#mark208)
 
 ---
 
@@ -444,7 +446,7 @@ def run_cl(commands: list):
 > This class serves to add bindings for the majority of common tkinter widget events. The bindings are made in add mode to prevent previous / new bindings from causing unintended side-effects.
 > ```py
 > class SuperWidgetMixin(object):
-> 	def __init__(self, on_mouse_enter=None, on_mouse_leave=None, on_mouse_move=None, on_mouse_wheel=None, on_left_click=None, on_middle_click=None, on_right_click=None, on_configure=None, bind_mouse_scroll=False):
+> 	def __init__(self, on_mouse_enter: Callable = None, on_mouse_leave: Callable = None, on_mouse_move: Callable = None, on_mouse_wheel: Callable = None, on_left_click: Callable = None, on_double_left_click: Callable = None, on_middle_click: Callable = None, on_double_middle_click: Callable = None, on_right_click: Callable = None, on_double_right_click: Callable = None, on_configure: Callable = None):
 > 		...
 > ```
 ## Tabs<a name="mark32"></a>[^](#mark4)
@@ -1710,13 +1712,30 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def get(self, first, last=None):
 > 		"""Get list of items from FIRST to LAST (included)."""
 > ```
-### py_simple_ttk.widgets.ListBoxWidgets.Table<a name="mark122"></a>[^](#mark120)
+### py_simple_ttk.widgets.ListBoxWidgets.OrderedListbox<a name="mark122"></a>[^](#mark120)
+> **A Scrolled Re-Orderable Listbox with SuperWidget mixin**
+> 
+> Used when you need a re-orderable listbox for list arrangement etc.
+> ```py
+> class OrderedListbox(ScrolledListBox):
+> 	def __init__(self, parent: tkinter.ttk.Frame, **kw):
+> 		...
+> 	def activate(self, index):
+> 		"""Activate item identified by INDEX."""
+> 	def curselection(self):
+> 		"""Return the indices of currently selected item."""
+> 	def destroy(self):
+> 		"""Destroy this and all descendants widgets."""
+> 	def get(self, first, last=None):
+> 		"""Get list of items from FIRST to LAST (included)."""
+> ```
+### py_simple_ttk.widgets.ListBoxWidgets.Table<a name="mark123"></a>[^](#mark120)
 > **Listboxes bound to scroll in union. Additional bindings will be needed in order to handle clicking.**
 > 
 > Tested on Mac/Windows/Linux. In most cases a TreeTable widget will be superior to this.
 > ```py
 > class Table(Frame):
-> 	def __init__(self, *args, min_column_width: int = 100, start_column_width: int = 100, on_selection=None, visible_rows=0, **kw):
+> 	def __init__(self, *args, min_column_width: int = 100, start_column_width: int = 100, on_selection: Callable = None, visible_rows=0, **kw):
 > 		...
 > 	def build(self, contents: dict):
 > 		"""Rebuild the table"""
@@ -1729,9 +1748,9 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def use_style(self, style: tkinter.ttk.Style):
 > 		"""Update to match supplied ttk.Style object. `Returns None`"""
 > ```
-## OptionMenu Widgets<a name="mark123"></a>[^](#mark4)
+## OptionMenu Widgets<a name="mark124"></a>[^](#mark4)
 
-### py_simple_ttk.widgets.OptionMenuWidgets.LabeledOptionMenu<a name="mark124"></a>[^](#mark123)
+### py_simple_ttk.widgets.OptionMenuWidgets.LabeledOptionMenu<a name="mark125"></a>[^](#mark124)
 > **Labeled OptionMenu widget**
 > 
 > ```py
@@ -1754,7 +1773,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Build a new menu of radiobuttons with *values and optionally
 >         a default value."""
 > ```
-### py_simple_ttk.widgets.OptionMenuWidgets.LabeledMultiOptionMenu<a name="mark125"></a>[^](#mark123)
+### py_simple_ttk.widgets.OptionMenuWidgets.LabeledMultiOptionMenu<a name="mark126"></a>[^](#mark124)
 > **Labeled MultiWidget LabeledOptionMenu**
 > 
 > ```py
@@ -1776,9 +1795,9 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def set(self, config: dict):
 > 		"""Pass a map of widget keys and their values"""
 > ```
-## ProgressBar Widgets<a name="mark126"></a>[^](#mark4)
+## ProgressBar Widgets<a name="mark127"></a>[^](#mark4)
 
-### py_simple_ttk.widgets.ProgressbarWidgets.LabeledProgressbar<a name="mark127"></a>[^](#mark126)
+### py_simple_ttk.widgets.ProgressbarWidgets.LabeledProgressbar<a name="mark128"></a>[^](#mark127)
 > **Labeled Progressbar**
 > 
 > ```py
@@ -1812,7 +1831,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Stop autoincrement mode: cancels any recurring timer event
 >         initiated by start."""
 > ```
-### py_simple_ttk.widgets.ProgressbarWidgets.LabeledMultiProgressbar<a name="mark128"></a>[^](#mark126)
+### py_simple_ttk.widgets.ProgressbarWidgets.LabeledMultiProgressbar<a name="mark129"></a>[^](#mark127)
 > **Labeled MultiWidget LabeledProgressbar**
 > 
 > ```py
@@ -1836,9 +1855,9 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def set(self, config: dict):
 > 		"""Pass a map of widget keys and their values"""
 > ```
-## Radiobutton Widgets<a name="mark129"></a>[^](#mark4)
+## Radiobutton Widgets<a name="mark130"></a>[^](#mark4)
 
-### py_simple_ttk.widgets.RadiobuttonWidgets.LabeledRadiobutton<a name="mark130"></a>[^](#mark129)
+### py_simple_ttk.widgets.RadiobuttonWidgets.LabeledRadiobutton<a name="mark131"></a>[^](#mark130)
 > **Labeled Radiobutton widget**
 > 
 > ```py
@@ -1858,7 +1877,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def set(self, val: bool):
 > 		"""Set Radiobutton value. `Returns None`"""
 > ```
-### py_simple_ttk.widgets.RadiobuttonWidgets.LabeledMultiRadiobutton<a name="mark131"></a>[^](#mark129)
+### py_simple_ttk.widgets.RadiobuttonWidgets.LabeledMultiRadiobutton<a name="mark132"></a>[^](#mark130)
 > **Labeled MultiWidget LabeledRadiobutton**
 > 
 > ```py
@@ -1880,9 +1899,9 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def set(self, config: dict):
 > 		"""Pass a map of widget keys and their values"""
 > ```
-## Scale Widgets<a name="mark132"></a>[^](#mark4)
+## Scale Widgets<a name="mark133"></a>[^](#mark4)
 
-### py_simple_ttk.widgets.ScaleWidgets.LabeledScale<a name="mark133"></a>[^](#mark132)
+### py_simple_ttk.widgets.ScaleWidgets.LabeledScale<a name="mark134"></a>[^](#mark133)
 > **Labeled Scale**
 > 
 > ```py
@@ -1902,7 +1921,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def set(self, val):
 > 		"""Set Scale value. `Returns None`"""
 > ```
-### py_simple_ttk.widgets.ScaleWidgets.LabeledMultiScale<a name="mark134"></a>[^](#mark132)
+### py_simple_ttk.widgets.ScaleWidgets.LabeledMultiScale<a name="mark135"></a>[^](#mark133)
 > **Labeled MultiWidget Labeled Scale**
 > 
 > ```py
@@ -1924,9 +1943,9 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def set(self, config: dict):
 > 		"""Pass a map of widget keys and their values"""
 > ```
-## Text Widgets<a name="mark135"></a>[^](#mark4)
+## Text Widgets<a name="mark136"></a>[^](#mark4)
 
-### py_simple_ttk.widgets.TextWidgets.ScrolledText<a name="mark136"></a>[^](#mark135)
+### py_simple_ttk.widgets.TextWidgets.ScrolledText<a name="mark137"></a>[^](#mark136)
 > **Scrolled Textbox**
 > 
 > Scrolled SuperWidget Text. Configure text by passing the `textkw` argument as a dict formatted like a standard kwarg dict.
@@ -1962,7 +1981,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def window_create(self, index, cnf={}, **kw):
 > 		"""Create a window at INDEX."""
 > ```
-### py_simple_ttk.widgets.TextWidgets.CopyBox<a name="mark137"></a>[^](#mark135)
+### py_simple_ttk.widgets.TextWidgets.CopyBox<a name="mark138"></a>[^](#mark136)
 > **Scrolled Text with "Copy tp Clipboard" Button**
 > 
 > A widget with a scrolled textbox and button that copies the textbox contents to the user's clipboard. Useful for form output, etc.
@@ -1977,9 +1996,9 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def enable(self):
 > 		...
 > ```
-## Toplevel Widgets<a name="mark138"></a>[^](#mark4)
+## Toplevel Widgets<a name="mark139"></a>[^](#mark4)
 
-### py_simple_ttk.widgets.ToplevelWidgets.FocusedToplevel<a name="mark139"></a>[^](#mark138)
+### py_simple_ttk.widgets.ToplevelWidgets.FocusedToplevel<a name="mark140"></a>[^](#mark139)
 > **Base Focused Toplevel Class**
 > 
 > Window that takes focus and center's itself on the current window. Used as a base class for other windows.
@@ -1995,7 +2014,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Set mask for the icon bitmap of this widget. Return the
 >         mask if None is given."""
 > ```
-### py_simple_ttk.widgets.ToplevelWidgets.NoticeWindow<a name="mark140"></a>[^](#mark138)
+### py_simple_ttk.widgets.ToplevelWidgets.NoticeWindow<a name="mark141"></a>[^](#mark139)
 > **Provides the user with a notice.**
 > 
 > `button_action` can call a function to help with determining acceptance vs. the user hitting the exit button.
@@ -2011,7 +2030,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Set mask for the icon bitmap of this widget. Return the
 >         mask if None is given."""
 > ```
-### py_simple_ttk.widgets.ToplevelWidgets.YesNoCancelWindow<a name="mark141"></a>[^](#mark138)
+### py_simple_ttk.widgets.ToplevelWidgets.YesNoCancelWindow<a name="mark142"></a>[^](#mark139)
 > **Provides the user with a yes/no/cancel option.**
 > 
 > `no_destroy` can be set to `True` to allow the window to remain open after a selection is made.
@@ -2027,7 +2046,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Set mask for the icon bitmap of this widget. Return the
 >         mask if None is given."""
 > ```
-### py_simple_ttk.widgets.ToplevelWidgets.PromptWindow<a name="mark142"></a>[^](#mark138)
+### py_simple_ttk.widgets.ToplevelWidgets.PromptWindow<a name="mark143"></a>[^](#mark139)
 > **Prompts the user for a text input**
 > 
 > `no_destroy` can be set to `True` to allow the window to remain open after a selection is made, useful for informing the user a string input was invalid via setting label_var. If the select_type kwarg is set to true the user will be prompted to select a data type (int / string) to return.
@@ -2043,7 +2062,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Set mask for the icon bitmap of this widget. Return the
 >         mask if None is given."""
 > ```
-### py_simple_ttk.widgets.ToplevelWidgets.PasswordWindow<a name="mark143"></a>[^](#mark138)
+### py_simple_ttk.widgets.ToplevelWidgets.PasswordWindow<a name="mark144"></a>[^](#mark139)
 > **Password Entry window.**
 > 
 > Demo Password Entry Window, you will want to copy the source for this widget and rewrite it.
@@ -2059,7 +2078,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Set mask for the icon bitmap of this widget. Return the
 >         mask if None is given."""
 > ```
-### py_simple_ttk.widgets.ToplevelWidgets.ListWindow<a name="mark144"></a>[^](#mark138)
+### py_simple_ttk.widgets.ToplevelWidgets.ListWindow<a name="mark145"></a>[^](#mark139)
 > **Window to select an option from a Scrolled Listbox**
 > 
 > ```py
@@ -2074,9 +2093,9 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 		"""Set mask for the icon bitmap of this widget. Return the
 >         mask if None is given."""
 > ```
-## Misc Widgets<a name="mark145"></a>[^](#mark4)
+## Misc Widgets<a name="mark146"></a>[^](#mark4)
 
-### py_simple_ttk.widgets.ToolTip.ToolTip<a name="mark146"></a>[^](#mark145)
+### py_simple_ttk.widgets.ToolTip.ToolTip<a name="mark147"></a>[^](#mark146)
 > **Easy ToolTip**
 > 
 > Easily show theme-friendly tooltip. Currently only left and right align are supported.
@@ -2085,7 +2104,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def __init__(self, tipwidget, text: str, align='left'):
 > 		...
 > ```
-### py_simple_ttk.widgets.SizegripWidgets.EasySizegrip<a name="mark147"></a>[^](#mark145)
+### py_simple_ttk.widgets.SizegripWidgets.EasySizegrip<a name="mark148"></a>[^](#mark146)
 > **Sizegrip widget with bindings**
 > 
 > Automatically packs self and binds mouse presses for systems that don't bind automatically.
@@ -2096,90 +2115,90 @@ def check_entry_ascii_printable(val: str) -> bool:
 > 	def destroy(self):
 > 		"""Destroy this and all descendants widgets."""
 > ```
-# SuperLib.utils<a name="mark148"></a>[^](#mark0)
+# SuperLib.utils<a name="mark149"></a>[^](#mark0)
 
-## Utils<a name="mark149"></a>[^](#mark148)
+## Utils<a name="mark150"></a>[^](#mark149)
 
-### py_simple_ttk.utils.utils.check_if_module_installed<a name="mark150"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.check_if_module_installed<a name="mark151"></a>[^](#mark150)
 > **Indicates if a packages is installed. `Returns a Boolean`**
 > 
 > ```python
 def check_if_module_installed(package):
 > 	...
 > ```
-### py_simple_ttk.utils.utils.check_string_contains<a name="mark151"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.check_string_contains<a name="mark152"></a>[^](#mark150)
 > **Returns `(True, char_index)` if any character from the list exists in the string otherwise returns `(False, None)`**
 > 
 > ```python
 def check_string_contains(string: str, contains_list: tuple):
 > 	...
 > ```
-### py_simple_ttk.utils.utils.dummy_function<a name="mark152"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.dummy_function<a name="mark153"></a>[^](#mark150)
 > **Dummy function that nicely prints out any passed args and kwargs. `Returns None`**
 > 
 > ```python
 def dummy_function(*args, **kwargs):
 > 	...
 > ```
-### py_simple_ttk.utils.utils.get_friendly_time<a name="mark153"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.get_friendly_time<a name="mark154"></a>[^](#mark150)
 > **Gets a time string in one of several modes. Modes: `all, time, date, nice_date`. `Returns a String`**
 > 
 > ```python
 def get_friendly_time(timestamp, mode='all'):
 > 	...
 > ```
-### py_simple_ttk.utils.utils.get_installed_packages<a name="mark154"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.get_installed_packages<a name="mark155"></a>[^](#mark150)
 > **Get an alphabetized list of available packages. `Returns a List`**
 > 
 > ```python
 def get_installed_packages():
 > 	...
 > ```
-### py_simple_ttk.utils.utils.get_unix_timestamp<a name="mark155"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.get_unix_timestamp<a name="mark156"></a>[^](#mark150)
 > **Get a unix timestamp. `Returns a Float`**
 > 
 > ```python
 def get_unix_timestamp():
 > 	...
 > ```
-### py_simple_ttk.utils.utils.get_unix_timestring<a name="mark156"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.get_unix_timestring<a name="mark157"></a>[^](#mark150)
 > **Get a unix timestring. `Returns a String`**
 > 
 > ```python
 def get_unix_timestring():
 > 	...
 > ```
-### py_simple_ttk.utils.utils.get_user_home_folder<a name="mark157"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.get_user_home_folder<a name="mark158"></a>[^](#mark150)
 > **Cross-platform function to get a user's home folder**
 > 
 > ```python
 def get_user_home_folder():
 > 	...
 > ```
-### py_simple_ttk.utils.utils.open_folder_in_explorer<a name="mark158"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.open_folder_in_explorer<a name="mark159"></a>[^](#mark150)
 > **Cross-platform way to open a folder in the default file manager for a system**
 > 
 > ```python
 def open_folder_in_explorer(path):
 > 	...
 > ```
-### py_simple_ttk.utils.utils.sort_dict_by_keys<a name="mark159"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.sort_dict_by_keys<a name="mark160"></a>[^](#mark150)
 > **Sorts a dictionary by its keys**
 > 
 > ```python
 def sort_dict_by_keys(source: dict, reverse: bool = False):
 > 	...
 > ```
-### py_simple_ttk.utils.utils.timer_decorator<a name="mark160"></a>[^](#mark149)
+### py_simple_ttk.utils.utils.timer_decorator<a name="mark161"></a>[^](#mark150)
 > **Decorator to add timing to a function**
 > 
 > ```python
 def timer_decorator(proc):
 > 	...
 > ```
-## File Generators<a name="mark161"></a>[^](#mark148)
+## File Generators<a name="mark162"></a>[^](#mark149)
 
-### py_simple_ttk.utils.HTML_Generator.HTML_Generator<a name="mark162"></a>[^](#mark161)
+### py_simple_ttk.utils.HTML_Generator.HTML_Generator<a name="mark163"></a>[^](#mark162)
 > ```py
 > class HTML_Generator(object):
 > 	def __init__(self, indent='\t'):
@@ -2229,7 +2248,7 @@ def timer_decorator(proc):
 > 	def start_paragraph(self, text=''):
 > 		...
 > ```
-### py_simple_ttk.utils.TXT_Generator.TXT_Generator<a name="mark163"></a>[^](#mark161)
+### py_simple_ttk.utils.TXT_Generator.TXT_Generator<a name="mark164"></a>[^](#mark162)
 > ```py
 > class TXT_Generator(object):
 > 	def __init__(self, ):
@@ -2243,7 +2262,7 @@ def timer_decorator(proc):
 > 	def save(self, path):
 > 		...
 > ```
-### py_simple_ttk.utils.MD_Generator.MD_Generator<a name="mark164"></a>[^](#mark161)
+### py_simple_ttk.utils.MD_Generator.MD_Generator<a name="mark165"></a>[^](#mark162)
 > ```py
 > class MD_Generator(object):
 > 	def __init__(self, title=None, footnote_title='Notes:', footnote_heading_level=2, numbered_toc=False):
@@ -2305,9 +2324,9 @@ def timer_decorator(proc):
 > 	def set_slogan(self, slogan):
 > 		...
 > ```
-## History Mixin<a name="mark165"></a>[^](#mark148)
+## History Mixin<a name="mark166"></a>[^](#mark149)
 
-### py_simple_ttk.utils.History.HistoryMixin<a name="mark166"></a>[^](#mark165)
+### py_simple_ttk.utils.History.HistoryMixin<a name="mark167"></a>[^](#mark166)
 > **Abstract mixin to add history-tracking to an application**
 > 
 > This object is meant to be used as a mixin rather than instantiated directly most of the time.
@@ -2326,83 +2345,83 @@ def timer_decorator(proc):
 > 	def undo(self):
 > 		...
 > ```
-## Color Functions<a name="mark167"></a>[^](#mark148)
+## Color Functions<a name="mark168"></a>[^](#mark149)
 
-### py_simple_ttk.utils.color.reduce_255<a name="mark168"></a>[^](#mark167)
+### py_simple_ttk.utils.color.reduce_255<a name="mark169"></a>[^](#mark168)
 > **Limits a val to a range of 0 to 255**
 > 
 > ```python
 def reduce_255(in_value: int, maxval: int = 255):
 > 	...
 > ```
-### py_simple_ttk.utils.color.rgb_to_hex<a name="mark169"></a>[^](#mark167)
+### py_simple_ttk.utils.color.rgb_to_hex<a name="mark170"></a>[^](#mark168)
 > **Converts an rgb tuple to hex**
 > 
 > ```python
 def rgb_to_hex(rgb: tuple):
 > 	...
 > ```
-### py_simple_ttk.utils.color.rgba_to_hex<a name="mark170"></a>[^](#mark167)
+### py_simple_ttk.utils.color.rgba_to_hex<a name="mark171"></a>[^](#mark168)
 > **Converts an rgba tuple to rgba hex**
 > 
 > ```python
 def rgba_to_hex(rgba: tuple):
 > 	...
 > ```
-### py_simple_ttk.utils.color.hex_to_rgb<a name="mark171"></a>[^](#mark167)
+### py_simple_ttk.utils.color.hex_to_rgb<a name="mark172"></a>[^](#mark168)
 > **Converts hex to rgb tuple**
 > 
 > ```python
 def hex_to_rgb(hex: str):
 > 	...
 > ```
-### py_simple_ttk.utils.color.hex_to_rgba<a name="mark172"></a>[^](#mark167)
+### py_simple_ttk.utils.color.hex_to_rgba<a name="mark173"></a>[^](#mark168)
 > **Tries to convert rgba hex to rgba, on failure converts rgb hex to rgb and sets a full opacity**
 > 
 > ```python
 def hex_to_rgba(hex: str):
 > 	...
 > ```
-### py_simple_ttk.utils.color.get_gradient<a name="mark173"></a>[^](#mark167)
+### py_simple_ttk.utils.color.get_gradient<a name="mark174"></a>[^](#mark168)
 > **Generates a black / white gradient with a given number of steps**
 > 
 > ```python
 def get_gradient(steps: int):
 > 	...
 > ```
-### py_simple_ttk.utils.color.rgb_to_scalar<a name="mark174"></a>[^](#mark167)
+### py_simple_ttk.utils.color.rgb_to_scalar<a name="mark175"></a>[^](#mark168)
 > **Converts an rgb itterable to scalar list**
 > 
 > ```python
 def rgb_to_scalar(rgb: tuple):
 > 	...
 > ```
-### py_simple_ttk.utils.color.scalar_to_rgb<a name="mark175"></a>[^](#mark167)
+### py_simple_ttk.utils.color.scalar_to_rgb<a name="mark176"></a>[^](#mark168)
 > **Converts rgb scalar to rgb list**
 > 
 > ```python
 def scalar_to_rgb(rgb: tuple):
 > 	...
 > ```
-### py_simple_ttk.utils.color.linear_gradient<a name="mark176"></a>[^](#mark167)
+### py_simple_ttk.utils.color.linear_gradient<a name="mark177"></a>[^](#mark168)
 > **Generates a linear gradient between two colors, accepts html hex or rgb formats**
 > 
 > ```python
 def linear_gradient(start_hex: str = '#000000', finish_hex: str = '#FFFFFF', n: int = 10):
 > 	...
 > ```
-### py_simple_ttk.utils.color.get_rainbow<a name="mark177"></a>[^](#mark167)
+### py_simple_ttk.utils.color.get_rainbow<a name="mark178"></a>[^](#mark168)
 > **Generates a rainbow with a given number of steps. Steps must be divisible by 4)**
 > 
 > ```python
 def get_rainbow(steps: int):
 > 	...
 > ```
-# MegaWidgets<a name="mark178"></a>[^](#mark0)
+# MegaWidgets<a name="mark179"></a>[^](#mark0)
 
-## Notes MegaWidget<a name="mark179"></a>[^](#mark178)
+## Notes MegaWidget<a name="mark180"></a>[^](#mark179)
 
-### py_simple_ttk.mega_widgets.notes.NotesTab<a name="mark180"></a>[^](#mark179)
+### py_simple_ttk.mega_widgets.notes.NotesTab<a name="mark181"></a>[^](#mark180)
 > ```py
 > class NotesTab(Tab):
 > 	def __init__(self, notebook, app):
@@ -2436,9 +2455,9 @@ def get_rainbow(steps: int):
 > 	def start_new_note(self, title=None):
 > 		...
 > ```
-## Conversation MegaWidget<a name="mark181"></a>[^](#mark178)
+## Conversation MegaWidget<a name="mark182"></a>[^](#mark179)
 
-### py_simple_ttk.mega_widgets.chat.ConversationsTab<a name="mark182"></a>[^](#mark181)
+### py_simple_ttk.mega_widgets.chat.ConversationsTab<a name="mark183"></a>[^](#mark182)
 > ```py
 > class ConversationsTab(Tab):
 > 	def __init__(self, notebook, app):
@@ -2476,9 +2495,9 @@ def get_rainbow(steps: int):
 > 	def start_new_conversation(self, title=None):
 > 		...
 > ```
-## Profile Management<a name="mark183"></a>[^](#mark178)
+## Profile Management<a name="mark184"></a>[^](#mark179)
 
-### py_simple_ttk.utils.ProfilesSystem.ProfilesSystem<a name="mark184"></a>[^](#mark183)
+### py_simple_ttk.utils.ProfilesSystem.ProfilesSystem<a name="mark185"></a>[^](#mark184)
 > ```py
 > class ProfilesSystem(object):
 > 	def __init__(self, select_profile_actions: list = [], refresh_profiles_actions: list = [], profiles_dir: str = 'C:\\Users\\arcti\\github\\py_simple_ttk\\Profiles', handle_duplicates: bool = True):
@@ -2520,7 +2539,7 @@ def get_rainbow(steps: int):
 > 	def sort_profiles_by_accessed(self, profiles: list = None):
 > 		"""Sort a list of profiles by last accessed, if no list is provided returns a sorted list of all profiles in the system. `Returns a List`"""
 > ```
-### py_simple_ttk.utils.ProfilesSystem.UserProfile<a name="mark185"></a>[^](#mark183)
+### py_simple_ttk.utils.ProfilesSystem.UserProfile<a name="mark186"></a>[^](#mark184)
 > **A class to represent a User / User's Preferences**
 > 
 > Must pass a unique username and a unique identifier for new profile.
@@ -2541,91 +2560,95 @@ def get_rainbow(steps: int):
 > 	def set_username(self, name: str):
 > 		...
 > ```
-### py_simple_ttk.utils.ProfilesSystem.get_profiles_folder<a name="mark186"></a>[^](#mark185)
+### py_simple_ttk.utils.ProfilesSystem.get_profiles_folder<a name="mark187"></a>[^](#mark186)
 > **Gets the absolute path to the included profiles folder. `Returns a String`**
 > 
 > ```python
 def get_profiles_folder():
 > 	...
 > ```
-### py_simple_ttk.utils.ProfilesSystem.get_profiles_list<a name="mark187"></a>[^](#mark185)
+### py_simple_ttk.utils.ProfilesSystem.get_profiles_list<a name="mark188"></a>[^](#mark186)
 > **Gets a list of profile files at a given path. `Returns a List of Path strings`**
 > 
 > ```python
 def get_profiles_list(path='./Profiles', verbose=False):
 > 	...
 > ```
-# Changelog<a name="mark188"></a>[^](#mark0)
+# Changelog<a name="mark189"></a>[^](#mark0)
 
-## 0.1.17<a name="mark189"></a>[^](#mark188)
+## 0.1.18<a name="mark190"></a>[^](#mark189)
+
+Add Ordered Listbox, add more bindings to SuperWidget, cleanup
+
+## 0.1.17<a name="mark191"></a>[^](#mark189)
 
 Add set_desktop_background to WidgetsCore.py
 
-## 0.1.16<a name="mark190"></a>[^](#mark188)
+## 0.1.16<a name="mark192"></a>[^](#mark189)
 
 Add needs_white_text to color.py, add pyinstaller compatibility to WidgetsCore.get_asset
 
-## 0.1.15<a name="mark191"></a>[^](#mark188)
+## 0.1.15<a name="mark193"></a>[^](#mark189)
 
 Fix misnamed function in color.py
 
-## 0.1.14<a name="mark192"></a>[^](#mark188)
+## 0.1.14<a name="mark194"></a>[^](#mark189)
 
 Fix missing import in app.py
 
-## 0.1.13<a name="mark193"></a>[^](#mark188)
+## 0.1.13<a name="mark195"></a>[^](#mark189)
 
 reduced variety of packaged font images, fixed bug with constrained widgets command not triggering
 
-## 0.1.12<a name="mark194"></a>[^](#mark188)
+## 0.1.12<a name="mark196"></a>[^](#mark189)
 
 Add Constrained + Labeled + Multi Entries (>35 widgets)
 
-## 0.1.11<a name="mark195"></a>[^](#mark188)
+## 0.1.11<a name="mark197"></a>[^](#mark189)
 
 Fix LabeledPathEntry error when no dialog type was specified
 
-## 0.1.10<a name="mark196"></a>[^](#mark188)
+## 0.1.10<a name="mark198"></a>[^](#mark189)
 
 Add LabeledPathEntry to EntryWidgets.py
 
-## 0.1.9<a name="mark197"></a>[^](#mark188)
+## 0.1.9<a name="mark199"></a>[^](#mark189)
 
 Add pencil icons to assets
 
-## 0.1.8<a name="mark198"></a>[^](#mark188)
+## 0.1.8<a name="mark200"></a>[^](#mark189)
 
 Fix labeled button not running command on press
 
-## 0.1.7<a name="mark199"></a>[^](#mark188)
+## 0.1.7<a name="mark201"></a>[^](#mark189)
 
 add labeled button
 
-## 0.1.6<a name="mark200"></a>[^](#mark188)
+## 0.1.6<a name="mark202"></a>[^](#mark189)
 
 Fix missing Labeler import
 
-## 0.1.5<a name="mark201"></a>[^](#mark188)
+## 0.1.5<a name="mark203"></a>[^](#mark189)
 
 Fix broken package
 
-## 0.1.4<a name="mark202"></a>[^](#mark188)
+## 0.1.4<a name="mark204"></a>[^](#mark189)
 
 Fix broken package
 
-## 0.1.3<a name="mark203"></a>[^](#mark188)
+## 0.1.3<a name="mark205"></a>[^](#mark189)
 
 More cleanup, input fixes.py
 
-## 0.1.2<a name="mark204"></a>[^](#mark188)
+## 0.1.2<a name="mark206"></a>[^](#mark189)
 
 Cleanup, move type lists to generate_readme.py
 
-## 0.1.1<a name="mark205"></a>[^](#mark188)
+## 0.1.1<a name="mark207"></a>[^](#mark189)
 
 Fix missing 'ListWindow' import in app.py
 
-## 0.1.0<a name="mark206"></a>[^](#mark188)
+## 0.1.0<a name="mark208"></a>[^](#mark189)
 
 Modulize
 

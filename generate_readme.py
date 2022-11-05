@@ -43,7 +43,7 @@ SCALE_WIDGETS = [LabeledScale, LabeledMultiScale]
 RADIOBUTTON_WIDGETS = [LabeledRadiobutton, LabeledMultiRadiobutton]
 PROGRESSBAR_WIDGETS = [LabeledProgressbar, LabeledMultiProgressbar]
 OPTIONMENU_WIDGETS = [LabeledOptionMenu, LabeledMultiOptionMenu]
-LISTBOX_WIDGETS = [ScrolledListBox, Table]
+LISTBOX_WIDGETS = [ScrolledListBox, OrderedListbox, Table]
 KEYPAD_WIDGETS = [KeypadButton, BaseKeypad, DialerKeypad]
 ENTRY_WIDGETS = [
     ScrolledEntry,

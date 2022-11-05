@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py_simple_ttk"
-version = "0.1.17"
+version = "0.1.18"
 description = "Themes don't have to be hard."
 readme = "README.md"
 requires-python = ">=3.8"

@@ -69,6 +69,7 @@ from py_simple_ttk import (
     NotesTab,
     NoticeWindow,
     OctdigitsEntry,
+    OrderedListbox,
     PasswordEntry,
     PasswordWindow,
     PILLOW_AVAILABLE,
@@ -716,7 +717,6 @@ class PillowTab(Tab):
         Tab.__init__(self, notebook, "Pillow Widgets")
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill=tk.BOTH, expand=True)
-
         self.gif_tab = GifTab(self.notebook)
 
 
@@ -729,12 +729,25 @@ class ToolsTab(Tab):
         self.timecard_tab = TimecardTab(self.notebook)
 
 
+class ListboxTab(Tab):
+    def __init__(self, notebook: ttk.Notebook):
+        Tab.__init__(self, notebook, "Listboxes")
+        self.frame = ttk.Frame(self)
+        self.frame.pack(fill=tk.BOTH, expand=True)
+        lb = OrderedListbox(self.frame)
+        lb.pack(fill="x", side="top")
+        for l in [lb]:
+            for i in range(300):
+                l.insert("end", i)
+
+
 class ExampleApp(App):
     """Example Implementation"""
 
     def __init__(self):
         App.__init__(self, "ini.json")
 
+        self.listbox_tab = ListboxTab(self.notebook)
         self.constrained_tab = ConstrainedTab(self.notebook)
         self.tictactoe = TicTacToeTab(self.notebook)
         self.shopping_list = ShoppingListTab(self.notebook, self)

@@ -33,18 +33,9 @@ from .Tabs import (
     TableTab,
     TreeTableTab,
 )
-from .CheckbuttonWidgets import (
-    LabeledCheckbutton,
-    LabeledMultiCheckbutton,
-)
-from .ComboboxWidgets import (
-    LabeledCombobox,
-    LabeledMultiCombobox,
-)
-from .OptionMenuWidgets import (
-    LabeledOptionMenu,
-    LabeledMultiOptionMenu,
-)
+from .CheckbuttonWidgets import LabeledCheckbutton, LabeledMultiCheckbutton
+from .ComboboxWidgets import LabeledCombobox, LabeledMultiCombobox
+from .OptionMenuWidgets import LabeledOptionMenu, LabeledMultiOptionMenu
 from .EntryWidgets import (
     LabeledEntry,
     LabeledMultiEntry,
@@ -108,23 +99,13 @@ from .ConstrainedEntryWidgets import (
     LabeledPrintableEntry,
     LabeledMultiPrintableEntry,
 )
-from .KeyPadWidgets import (
-    BaseKeypad,
-    DialerKeypad,
-    KeypadButton,
-)
-from .ProgressbarWidgets import (
-    LabeledProgressbar,
-    LabeledMultiProgressbar,
-)
+from .KeyPadWidgets import BaseKeypad, DialerKeypad, KeypadButton
+from .ProgressbarWidgets import LabeledProgressbar, LabeledMultiProgressbar
 from .ScaleWidgets import LabeledScale, LabeledMultiScale
-from .RadiobuttonWidgets import (
-    LabeledRadiobutton,
-    LabeledMultiRadiobutton,
-)
+from .RadiobuttonWidgets import LabeledRadiobutton, LabeledMultiRadiobutton
 from .TextWidgets import ScrolledText, CopyBox
 from .ConsoleWidgets import ConsoleWidget
-from .ListBoxWidgets import ScrolledListBox, Table
+from .ListBoxWidgets import ScrolledListBox, OrderedListbox, Table
 from .TreeviewWidgets import TreeTable, ScrolledTree
 from .ToplevelWidgets import (
     FocusedToplevel,

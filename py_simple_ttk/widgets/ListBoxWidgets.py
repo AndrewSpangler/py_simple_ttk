@@ -1,24 +1,47 @@
 import platform
 import tkinter as tk
 from tkinter import ttk
+from typing import Callable
 from .WidgetsCore import SuperWidgetMixin
 from .Scroller import Scroller, _create_container
+from .Labeler import Labeler
 
 
 class ScrolledListBox(Scroller, tk.Listbox, SuperWidgetMixin):
     """Scrolled Listbox with SuperWidget mixin"""
 
-    __desc___ = """Used when you need a listbox with scrolling capabilities is needed"""
+    __desc___ = """Used when you need a listbox with scrollwheel binding / automatic scrollbars."""
 
     @_create_container
-    def __init__(self, parent: ttk.Frame, widgetargs={}, **kw):
-        tk.Listbox.__init__(
-            self,
-            parent,
-            **kw,
-        )
+    def __init__(self, parent: ttk.Frame, widgetargs: dict = {}, **kw):
+        tk.Listbox.__init__(self, parent, **kw)
         Scroller.__init__(self, parent)
         SuperWidgetMixin.__init__(self, **widgetargs)
+
+
+class OrderedListbox(ScrolledListBox):
+    """A Scrolled Re-Orderable Listbox with SuperWidget mixin"""
+
+    __desc__ = """Used when you need a re-orderable listbox for list arrangement etc."""
+
+    def __init__(self, parent: ttk.Frame, **kw):
+        if "selectmode" in kw and not kw["selectmode"] == "single":
+            raise ValueError('"selectmode" can only be "single"')
+        ScrolledListBox.__init__(self, parent, selectmode="single", **kw)
+        self.bind("<Button-1>", self._click)
+        self.bind("<B1-Motion>", self._move)
+        self._index = None
+
+    def _click(self, event):
+        self._index = self.nearest(event.y)
+
+    def _move(self, event):
+        if (index := self.nearest(event.y)) == self._index:
+            return
+        i = self.get(index)
+        self.delete(index)
+        self.insert(index + (1 if index < self._index else -1), i)
+        self._index = index
 
 
 class Table(ttk.Frame):
@@ -31,9 +54,9 @@ class Table(ttk.Frame):
         *args,
         min_column_width: int = 100,
         start_column_width: int = 100,
-        on_selection=None,
+        on_selection: Callable = None,
         visible_rows=0,  # Set above 1 to limit table rows
-        **kw
+        **kw,
     ):
         ttk.Frame.__init__(self, *args, **kw)
         self.scrollbar = ttk.Scrollbar(self)
