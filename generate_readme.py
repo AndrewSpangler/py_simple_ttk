@@ -122,7 +122,8 @@ TOPLEVEL_WIDGETS = [
     PasswordWindow,
     ListWindow,
 ]
-MEGA_WIDGETS = [ConversationsTab, NotesTab]
+
+MEGA_WIDGETS = [ConversationsTab, NotesTab, ConfigurableLauncher, LauncherTools]
 UTILS = [
     check_if_module_installed,
     check_string_contains,
@@ -209,7 +210,7 @@ ini_conf = """
 | enable_fullscreen  | Enable Window Fullscreen option (Boolean) |
 | enable_themes_menu | Enable Themes Dropdown (Boolean)          |
 | movable_tabs       | Enable Moveable Notebook Tabs (Boolean)   |
-| enable_users       | Enable a User Profiles System             |
+| enable_profiles    | Enable a User Profiles System             |
 +--------------------+-------------------------------------------+
 """.strip()
 

@@ -30,6 +30,7 @@ from .widgets import (
     Table,
 )
 from .mega_widgets.profile_manager import ProfilesWindow
+from .mega_widgets.launcher import LauncherTools
 
 
 class App:
@@ -103,11 +104,12 @@ class App:
 
         # User Profiles
         self.profiles_enabled = False
-        if self.ini_data.get("enable_users", False):
+        if self.ini_data.get("enable_users", False) or self.ini_data.get(
+            "enable_profiles", False
+        ):
             self.profiles_enabled = True
             self.profiles = ProfilesSystem()
             print("User profiles enabled")
-            print(f"Found existing profiles")
             print(f"Loading most recently used profile")
             self._select_profile(self.profiles.get_last_used_profile())
 
@@ -166,6 +168,9 @@ class App:
                 label="Profile Manager", command=lambda: ProfilesWindow(self)
             )
             self.menu.add_cascade(menu=prof_menu, label="Profiles")
+            if self.ini_data.get("enable_launcher"):
+                LauncherTools(self)
+
         if self.ini_data.get("enable_themes_menu"):
             self.theme_menu = tk.Menu(self.menu, tearoff=tk.OFF)
             for t in self.available_themes:

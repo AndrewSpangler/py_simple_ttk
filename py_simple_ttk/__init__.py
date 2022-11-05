@@ -182,7 +182,7 @@ from .mega_widgets.timecard_maker import TimecardTab, TimecardMaker
 from .mega_widgets.wattage_calculator import WattageTab, WattageCalculator
 from .mega_widgets.shopping_list import ShoppingListTab, ShoppingList
 from .mega_widgets.tictactoe import TicTacToeTab, TicTacToe
-
+from .mega_widgets.launcher import ConfigurableLauncher, LauncherTools
 from .app import App
 
 

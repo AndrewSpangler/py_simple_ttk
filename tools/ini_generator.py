@@ -18,8 +18,9 @@ json_data = {
     "start_fullscreen": False,
     "enable_fullscreen": True,
     "enable_themes_menu": True,
-    "movable_tabs":True,
-    "enable_users":True, #Enables a user profiles system.
+    "enable_launcher": True,
+    "movable_tabs": True,
+    "enable_profiles": True,  # Enables a user profiles system.
     "conversations_enabled": False,
     "notes_enabled": False,
 }

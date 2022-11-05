@@ -12,7 +12,8 @@
     "enable_fullscreen": true,
     "scaling": 1.5,
     "enable_themes_menu": true,
-    "enable_users": true,
+    "enable_profiles": true,
+    "enable_launcher": true,
     "movable_tabs": true,
     "conversations_enabled": false,
     "notes_enabled": false

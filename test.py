@@ -62,6 +62,7 @@ from py_simple_ttk import (
     LabeledScale,
     LabeledUppercaseDigitsEntry,
     LabeledUppercaseEntry,
+    LauncherTools,
     LettersDigitsEntry,
     LettersEntry,
     LowercaseDigitsEntry,
