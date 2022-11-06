@@ -10,12 +10,14 @@ from py_simple_ttk import (
     ConstrainedEntry,
     ConversationsTab,
     CopyBox,
+    Counter,
     default_pack,
     default_separator,
     default_vertical_pack,
     default_vertical_separator,
     DigitsEntry,
     ExampleTile,
+    FloatCounter,
     FloatEntry,
     get_asset,
     GifLoader,
@@ -25,8 +27,10 @@ from py_simple_ttk import (
     LabeledCheckbutton,
     LabeledCombobox,
     LabeledConstrainedEntry,
+    LabeledCounter,
     LabeledDigitsEntry,
     LabeledEntry,
+    LabeledFloatCounter,
     LabeledFloatEntry,
     LabeledHexdigitsEntry,
     LabeledIntEntry,
@@ -36,8 +40,10 @@ from py_simple_ttk import (
     LabeledLowercaseEntry,
     LabeledMultiCheckbutton,
     LabeledMultiCombobox,
+    LabeledMultiCounter,
     LabeledMultiDigitsEntry,
     LabeledMultiEntry,
+    LabeledMultiFloatCounter,
     LabeledMultiFloatEntry,
     LabeledMultiHexdigitsEntry,
     LabeledMultiIntEntry,
@@ -89,6 +95,7 @@ from py_simple_ttk import (
     WattageTab,
     YesNoCancelWindow,
 )
+
 
 from math import sin
 
@@ -742,14 +749,56 @@ class ListboxTab(Tab):
                 l.insert("end", i)
 
 
+class CounterTab(Tab):
+    def __init__(self, notebook: ttk.Notebook):
+        Tab.__init__(self, notebook, "Counters")
+        self.frame = ttk.Frame(self)
+        self.frame.pack(fill=tk.BOTH, expand=True)
+        self.labeled_counter = LabeledCounter(self.frame, "Labeled Counter")
+        default_pack(self.labeled_counter)
+        self.labeled_float_counter = LabeledFloatCounter(
+            self.frame, "Labeled Counter", integer_level=2, step=0.2
+        )
+        default_pack(self.labeled_float_counter)
+        self.labeled_multi_counter = LabeledMultiCounter(
+            self.frame,
+            "LabeledMultiCounter",
+            {"Counter A": ((), {}), "Counter B": ((), {})},
+        )
+        default_pack(self.labeled_multi_counter)
+        self.labeled_multi_float_counter = LabeledMultiFloatCounter(
+            self.frame,
+            "LabeledMultiFloatCounter",
+            {"Counter A": ((), {}), "Counter B": ((), {})},
+        )
+        default_pack(self.labeled_multi_float_counter)
+
+
+class BasicWidgetsTab(Tab):
+    def __init__(self, notebook: ttk.Notebook):
+        Tab.__init__(self, notebook, "Basic Widgets")
+        self.notebook = ttk.Notebook(self)
+        self.notebook.pack(fill="both", expand=True)
+
+        self.constrained_tab = ConstrainedTab(self.notebook)
+        self.form_tab = FormWidgetDemoTab(self.notebook)
+        self.counter_tab = CounterTab(self.notebook)
+        self.listbox_tab = ListboxTab(self.notebook)
+        self.table_tab = DemoTableTab(self.notebook)
+        self.textbox_tab = TextBoxTestTab(self.notebook)
+        self.loading_bar = LoadingBarDemo(self.notebook)
+        self.combo_tab = ComboRadioTab(self.notebook)
+        self.popups_tab = PopupsTab(self.notebook, self)
+        self.password_tab = PasswordEntryTab(self.notebook)
+
+
 class ExampleApp(App):
     """Example Implementation"""
 
     def __init__(self):
         App.__init__(self, "ini.json")
 
-        self.listbox_tab = ListboxTab(self.notebook)
-        self.constrained_tab = ConstrainedTab(self.notebook)
+        self.basic = BasicWidgetsTab(self.notebook)
         self.tictactoe = TicTacToeTab(self.notebook)
         self.shopping_list = ShoppingListTab(self.notebook, self)
         if PILLOW_AVAILABLE:
@@ -757,20 +806,12 @@ class ExampleApp(App):
         self.tools = ToolsTab(self.notebook)
         self.note_tab = NotesTab(self.notebook, self)
         self.chat_tab = ConversationsTab(self.notebook, self)
-        self.table_tab = DemoTableTab(self.notebook)
-        self.textbox_tab = TextBoxTestTab(self.notebook)
         self.canvas_tab = CanvasTab(self.notebook)
         self.tooltip_demp = ToolTipTab(self.notebook)
-        self.loading_bar = LoadingBarDemo(self.notebook)
         self.links_tab = BrowserLauncherTab(self.notebook, "Quick Links", links)
         self.apps_tab = CommandLauncherTab(self.notebook, "Applications", apps)
-        self.form_tab = FormWidgetDemoTab(self.notebook)
-        self.combo_tab = ComboRadioTab(self.notebook)
-        self.popups_tab = PopupsTab(self.notebook, self)
-        self.password_tab = PasswordEntryTab(self.notebook)
         self.console_tab = ConsoleTab(self.notebook)
         self.console_tab.console.command = self.console_tab.console.print
-
         self.use_theme()  # Do this last to apply theme to text boxes
 
 

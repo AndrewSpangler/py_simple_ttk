@@ -122,3 +122,11 @@ from .ScrolledCanvas import ScrolledCanvas, TiledCanvas, ExampleTile
 from .SizegripWidgets import EasySizegrip
 from .ToolTip import ToolTip
 from .ButtonWidgets import LabeledButton
+from .CounterWidgets import (
+    Counter,
+    FloatCounter,
+    LabeledCounter,
+    LabeledFloatCounter,
+    LabeledMultiCounter,
+    LabeledMultiFloatCounter,
+)
