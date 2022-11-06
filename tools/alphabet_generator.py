@@ -11,9 +11,63 @@ FONTPATH = os.path.abspath(
     "../py_simple_ttk/assets/fonts/Open_Sans/static/OpenSans/OpenSans-Bold.ttf"
 )
 # fmt: off
-FONT_SIZES = [8,12,14,16,18,22,24,36,48,64,128,256]
+FONT_SIZES = [8,12,14,16,18,22,24,32,36,48,64,128,256]
 # fmt: on
 CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&~`+-.="
+
+COLORS = [
+    "aqua",
+    "black",
+    "blue",
+    "brown",
+    "crimson",
+    "cyan",
+    "darkgray",
+    "darkgreen",
+    "darkorange",
+    "darkslateblue",
+    "darkslategray",
+    "darkturquoise",
+    "darkviolet",
+    "dimgray",
+    "gray",
+    "green",
+    "greenyellow",
+    "indigo",
+    "lavender",
+    "lightblue",
+    "lightgrey",
+    "lightpink",
+    "lightskyblue",
+    "lightslategray",
+    "lightsteelblue",
+    "limegreen",
+    "linen",
+    "magenta",
+    "navy",
+    "orange",
+    "pink",
+    "plum",
+    "powderblue",
+    "purple",
+    "red",
+    "royalblue",
+    "salmon",
+    "sienna",
+    "silver",
+    "skyblue",
+    "slateblue",
+    "slategray",
+    "steelblue",
+    "tan",
+    "thistle",
+    "turquoise",
+    "violet",
+    "white",
+    "whitesmoke",
+    "yellow",
+]
+
 with zipfile.ZipFile(
     zipfile_data := io.BytesIO(),
     "w",
@@ -28,7 +82,7 @@ with zipfile.ZipFile(
         draw.text(
             (halfsiz := siz / 2, halfsiz - (siz / 8) * int(c == "J")),
             c,
-            fill=clr,
+            fill=ImageColor.colormap[clr],
             font=fnt,
             anchor="mm",
         )
@@ -37,7 +91,7 @@ with zipfile.ZipFile(
         return name
 
     colors, manifest = [], []
-    for color, code in ImageColor.colormap.items():
+    for color in COLORS:
         for size in FONT_SIZES:
             font = ImageFont.truetype(FONTPATH, size)
             for char in CHARACTERS:

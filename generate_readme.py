@@ -197,29 +197,35 @@ demonstrating many of py_simple_ttk's features, a configuration file system, and
 requirements_text = ""
 
 ini_conf = """
-+--------------------+-------------------------------------------+
-|        Key         |                   Value                   |
-+--------------------+-------------------------------------------+
-| application        | Application Name (String)                 |
-| version            | Application Version (String)              |
-| icon               | Application Icon Path (String)            |
-| width              | Startup Window Width (Int)                |
-| height             | Startup Window Height (Int)               |
-| minwidth           | Window Minimum Width (Int)                |
-| minheight          | Window Minimum Height (Int)               |
-| scaling            | Window Scaling (Float)                    |
-| scale_minsize      | Scale application Minimum Size (Boolean)  |
-| scale_startsize    | Scale application Start Size (Boolean)    |
-| resizable_width    | Enable Window Width Resizing (Boolean)    |
-| resizable_height   | Enable Window Height Resizing (Boolean)   |
-| start_maximized    | Start Window Maximized (Boolean)          |
-| enable_maximized   | Enable Window Maximized (Boolean)         |
-| start_fullscreen   | Start Window in Fullscreen mode (Boolean) |
-| enable_fullscreen  | Enable Window Fullscreen option (Boolean) |
-| enable_themes_menu | Enable Themes Dropdown (Boolean)          |
-| movable_tabs       | Enable Moveable Notebook Tabs (Boolean)   |
-| enable_profiles    | Enable a User Profiles System             |
-+--------------------+-------------------------------------------+
++------------------------+-------------------------------------------+
+|        Key             |                   Value                   |
++------------------------+-------------------------------------------+
+| application            | Application Name (String)                 |
+| version                | Application Version (String)              |
+| icon                   | Application Icon Path (String)            |
+| width                  | Startup Window Width (Int)                |
+| height                 | Startup Window Height (Int)               |
+| minwidth               | Window Minimum Width (Int)                |
+| minheight              | Window Minimum Height (Int)               |
+| scaling                | Window Scaling (Float)                    |
+| scale_minsize          | Scale application Minimum Size (Boolean)  |
+| scale_startsize        | Scale application Start Size (Boolean)    |
+| resizable_width        | Enable Window Width Resizing (Boolean)    |
+| resizable_height       | Enable Window Height Resizing (Boolean)   |
+| enable_sizegrip        | Enable Window EasySizegrip (Boolean)      |
+| start_maximized        | Start Window Maximized (Boolean)          |
+| enable_maximized       | Enable Window Maximized (Boolean)         |
+| start_fullscreen       | Start Window in Fullscreen mode (Boolean) |
+| enable_fullscreen      | Enable Window Fullscreen option (Boolean) |
+| ignored_themes         | Themes to not display in menu (List)      |
+| enable_themes_menu     | Enable Themes Dropdown (Boolean)          |
+| enable_launcher        | Enable Dynamic Launcher System (Boolean)  |
+| movable_tabs           | Enable Moveable Notebook Tabs (Boolean)   |
+| enable_profiles        | Enable a User Profiles System (Boolean)   |
+| conversations_enabled  | Enable Convo System (Boolean)             |
+| notes_enabled          | Enable Note System (Boolean)              |
+| theme_textboxes        | Apply theme colors to tk.Text (Boolean)   ||
++------------------------+-------------------------------------------+
 """.strip()
 
 
@@ -235,7 +241,7 @@ def generate_readme(tables: dict, changelog: dict):
     gen.add_heading_1("Requirements", add_toc=True)
     gen.add_paragraph(requirements_text)
     gen.add_heading_1("Configuring ini.json", add_toc=True)
-    gen.add_code_block(ini_conf)
+    gen.add_code_block(ini_conf, lang="")
     gen.add_heading_1("Widgets", add_toc=True)
     gen.increase_toc_depth()
     gen.add_heading_2("Button Widgets", add_toc=True)

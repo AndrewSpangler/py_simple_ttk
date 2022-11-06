@@ -13,6 +13,7 @@ json_data = {
     "scale_startsize": True,
     "resizable_width": True,
     "resizable_height": True,
+    "enable_sizegrip": True,
     "start_maximized": False,
     "enable_maximized": True,
     "start_fullscreen": False,
@@ -23,6 +24,8 @@ json_data = {
     "enable_profiles": True,  # Enables a user profiles system.
     "conversations_enabled": False,
     "notes_enabled": False,
+    "theme_textboxes": True,
+    "ignored_themes": ["kroc"],
 }
 
 print(json.dumps(json_data, indent=4))

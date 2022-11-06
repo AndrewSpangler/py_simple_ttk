@@ -14,6 +14,7 @@ from .. import (
     ScrolledListBox,
     YesNoCancelWindow,
     OrderedListbox,
+    Counter,
 )
 
 
@@ -48,6 +49,7 @@ class _LauncherButtonEditorWindow(FocusedToplevel):
         FocusedToplevel.__init__(self, window=window)
         self._finish_setup()
         self.on_submit = on_submit
+        self.config = config
         self.name = LabeledEntry(self.frame, "Button Label", default=name)
         self.name.pack(fill="x", padx=20, pady=(20, 0))
         self.location = LabeledEntry(self.frame, "Location", default=config["location"])
@@ -73,7 +75,8 @@ class _LauncherButtonEditorWindow(FocusedToplevel):
         if err:
             NoticeWindow(window=self.window, text=err)
             return err
-        self.on_submit(name, {"location": location, "type": self.type.get().lower()})
+        self.config.update({"location": location, "type": self.type.get().lower()})
+        self.on_submit(name, self.config)
         self.destroy()
 
 
@@ -135,7 +138,7 @@ class _LauncherEditorWindow(FocusedToplevel):
 
     def _add(self):
         _LauncherButtonEditorWindow(
-            self, "", {"type": "url", "location": ""}, self._handle_add
+            self, "", {"type": "url", "location": "", "columns": 1}, self._handle_add
         )
 
     def _edit(self, event=None):
@@ -205,9 +208,24 @@ class ConfigurableLauncher(Tab):
         notebook: ttk.Notebook,
         key: str,
         enable_delete: bool = False,
+        min_columns: int = 1,
+        max_columns: int = 6,
     ):
         if not hasattr(app, "profiles"):
             raise ValueError("Application profiles not enabled")
+        profile = app.profiles.current_profile
+        if not profile.get_preference("launchers"):
+            profile.set_preference("launchers", {})
+        if not profile.get_preference("launcher_widths"):
+            profile.set_preference("launcher_widths", {})
+        launchers = profile.get_preference("launchers")
+        launcher_widths = profile.get_preference("launcher_widths")
+        if not key in launcher_widths:
+            launcher_widths[key] = 1
+            profile.set_preference("launcher_widths", launcher_widths)
+        if not launchers[key]:
+            launchers[key] = {}
+            profile.set_preference("launchers", launchers)
         self.app, self.key, self.enable_delete = (app, key, enable_delete)
         self.app.profiles.add_select_profile_action(self._refresh)
         self.actions = {
@@ -217,14 +235,22 @@ class ConfigurableLauncher(Tab):
         }
         Tab.__init__(self, notebook, key)
         (header := ttk.Frame(self)).pack(side="top", fill="x")
+        self.body = None  # ttk.Frame placeholder
         ttk.Button(header, text="Edit", command=self._edit).pack(side="left")
+        self.columns = Counter(
+            header,
+            min_value=min_columns,
+            max_value=max_columns,
+            command=self._schedule_columns,
+            default=launcher_widths[key],
+        )
         if enable_delete:
             ttk.Button(header, text="Delete", command=self._delete).pack(side="right")
-        launchers = self.app.profiles.current_profile.get_preference("launchers")
-        if not launchers[self.key]:
-            launchers[self.key] = {}
-            self.app.profiles.current_profile.set_preference("launchers", launchers)
-        self.body = None  # ttk.Frame placeholder
+            self.columns.pack(side="top")
+        else:
+            self.columns.pack(side="right")
+
+        self._scheduled = None  # Placeholder for scheduled column count save (Reduces number of writes to disk)
         self._refresh()
 
     def _refresh(self, event=None) -> None:
@@ -232,14 +258,21 @@ class ConfigurableLauncher(Tab):
             self.body.destroy()
         self.body = ttk.Frame(self)
         self.body.pack(fill="both", expand=True, side="top")
+        cols = []
+        for _ in range(self.columns.get()):
+            (c := ttk.Frame(self.body)).pack(side="left", fill="both", expand=True)
+            cols.append(c)
+
         data = self.app.profiles.current_profile.get_preference("launchers")[self.key]
-        for i in data:
+        i = 0
+        for k in data:
             button = ttk.Button(
-                self.body,
-                text=i,
-                command=lambda i=i: self.actions[data[i]["type"]](data[i]["location"]),
+                cols[i % len(cols)],
+                text=k,
+                command=lambda k=k: self.actions[data[k]["type"]](data[k]["location"]),
             )
             button.pack(fill="x", expand=False, side=tk.TOP)
+            i += 1
 
     def _edit(self) -> None:
         _LauncherEditorWindow(self.app, self.key, self._refresh)
@@ -252,6 +285,13 @@ class ConfigurableLauncher(Tab):
             launchers = self.app.profiles.current_profile.get_preference("launchers")
             launchers.pop(self.key)
             self.app.profiles.current_profile.set_preference("launchers", launchers)
+            launcher_widths = self.app.profiles.current_profile.get_preference(
+                "launcher_widths"
+            )
+            launcher_widths.pop(self.key)
+            self.app.profiles.current_profile.set_preference(
+                "launcher_widths", launcher_widths
+            )
             self.destroy()
 
         YesNoCancelWindow(
@@ -260,6 +300,29 @@ class ConfigurableLauncher(Tab):
             text=f"Are you sure you want to delete launcher {self.key}?",
             on_yes=on_delete,
         )
+
+    def _save_columns(self, event=None):
+        print("Saving")
+        self._unschedule_columns()
+        launcher_widths = self.app.profiles.current_profile.get_preference(
+            "launcher_widths"
+        )
+        launcher_widths[self.key] = self.columns.get()
+        self.app.profiles.current_profile.set_preference(
+            "launcher_widths", launcher_widths
+        )
+
+    def _unschedule_columns(self):
+        if not self._scheduled is None:
+            scheduled = self._scheduled
+            self._scheduled = None
+            if scheduled:
+                self.after_cancel(scheduled)
+
+    def _schedule_columns(self, event=None):
+        self._refresh()
+        self._unschedule_columns()
+        self._scheduled = self.after(500, self._save_columns)
 
 
 class LauncherTools:

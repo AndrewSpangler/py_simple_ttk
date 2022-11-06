@@ -13,20 +13,17 @@ class Counter(ttk.Frame):
     def __init__(
         self,
         parent: ttk.Frame,
-        default: int = 0,
+        default: int = 1,
         min_value: int = None,
         max_value: int = None,
         step: int = 1,
         state: str = "normal",
         command: Callable = None,
-        depth: int = 3,
-        # tens: bool = False,
-        # hundreds: bool = False,
-        # thousands: bool = False,
+        depth: int = 1,
         **kwargs,
     ):
         ttk.Frame.__init__(self, parent, **kwargs)
-        self.var = tk.IntVar(value=default)
+        self.var = tk.IntVar()
         buttons = []
         if not depth or depth < 1:
             raise ValueError("Counter depth cannot be less than 1")
@@ -36,7 +33,7 @@ class Counter(ttk.Frame):
                     self,
                     text="<" * (i + 1),
                     command=lambda i=i: self._dec(10**i),
-                    width=i + 2,
+                    width=i + 1.1,
                 )
             )
         buttons.append(l := ttk.Label(self, textvariable=self.var))
@@ -46,30 +43,32 @@ class Counter(ttk.Frame):
                     self,
                     text=">" * (i + 1),
                     command=lambda i=i: self._inc(10**i),
-                    width=i + 2,
+                    width=i + 1.1,
                 )
             )
         self.get = self.var.get
-        self.state, self.command, self.buttons = state, command, buttons
+        self._state, self.command, self.buttons = state, command, buttons
         self.default, self.step = default, step
         self.min_value, self.max_value = min_value, max_value
         self._handle_state()
         for b in self.buttons:
-            b.pack(side="left")
+            b.pack(side="left", ipadx=0, padx=0)
             b.bind("<MouseWheel>", self._on_mousewheel)
         self.buttons.remove(l)
+        self.set(default, no_command=True)
 
-    def set(self, val: int, adjust: int = 0) -> int:
-        if not self.state == "normal":
+    def set(self, val: int, adjust: int = 0, no_command: bool = False) -> int:
+        if not self._state == "normal":
             return
         val = int(val) + adjust
-        if not self.min_value is None:
-            val = max(val, min_value)
         if not self.max_value is None:
-            val = min(val, max_value)
+            val = min(val, self.max_value)
+        if not self.min_value is None:
+            val = max(val, self.min_value)
         self.var.set(val)
-        if self.command:
-            self.command(val)
+        if not no_command:
+            if self.command:
+                self.command(val)
         return val
 
     def _inc(self, amount: int = 1) -> int:
@@ -83,16 +82,16 @@ class Counter(ttk.Frame):
         return self.set(self.default)
 
     def enable(self) -> None:
-        self.state = "normal"
+        self._state = "normal"
         self._handle_state()
 
     def disable(self) -> None:
-        self.state = "disable"
+        self._state = "disable"
         self._handle_state()
 
     def _handle_state(self) -> None:
         for b in self.buttons:
-            b.configure(state=self.state)
+            b.configure(state=self._state)
 
     def _on_mousewheel(self, event=None) -> None:
         if platform.system() in ["Windows", "Darwin"]:

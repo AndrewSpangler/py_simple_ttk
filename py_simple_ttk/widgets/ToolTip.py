@@ -65,8 +65,8 @@ class ToolTip(ToolTipBase):
     """Easy ToolTip"""
 
     __desc__ = """Easily show theme-friendly tooltip. Currently only left and right align are supported."""
-    
-    def __init__(self, tipwidget, text:str, align=tk.LEFT):
+
+    def __init__(self, tipwidget, text: str, align=tk.LEFT):
         ToolTipBase.__init__(self, tipwidget, align)
         self.text = text
 

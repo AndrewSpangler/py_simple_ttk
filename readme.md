@@ -1,4 +1,4 @@
-# py_simple_ttk 0.1.22<a name="mark0"></a>
+# py_simple_ttk 0.1.25<a name="mark0"></a>
 
 ***Themes don't have to be hard.***
 
@@ -198,29 +198,32 @@
 		- [get_profiles_folder](#mark194)
 		- [get_profiles_list](#mark195)
 - [Changelog](#mark196)
-	- [0.1.22](#mark197)
-	- [0.1.21](#mark198)
-	- [0.1.20](#mark199)
-	- [0.1.19](#mark200)
-	- [0.1.18](#mark201)
-	- [0.1.17](#mark202)
-	- [0.1.16](#mark203)
-	- [0.1.15](#mark204)
-	- [0.1.14](#mark205)
-	- [0.1.13](#mark206)
-	- [0.1.12](#mark207)
-	- [0.1.11](#mark208)
-	- [0.1.10](#mark209)
-	- [0.1.9](#mark210)
-	- [0.1.8](#mark211)
-	- [0.1.7](#mark212)
-	- [0.1.6](#mark213)
-	- [0.1.5](#mark214)
-	- [0.1.4](#mark215)
-	- [0.1.3](#mark216)
-	- [0.1.2](#mark217)
-	- [0.1.1](#mark218)
-	- [0.1.0](#mark219)
+	- [0.1.25](#mark197)
+	- [0.1.24](#mark198)
+	- [0.1.23](#mark199)
+	- [0.1.22](#mark200)
+	- [0.1.21](#mark201)
+	- [0.1.20](#mark202)
+	- [0.1.19](#mark203)
+	- [0.1.18](#mark204)
+	- [0.1.17](#mark205)
+	- [0.1.16](#mark206)
+	- [0.1.15](#mark207)
+	- [0.1.14](#mark208)
+	- [0.1.13](#mark209)
+	- [0.1.12](#mark210)
+	- [0.1.11](#mark211)
+	- [0.1.10](#mark212)
+	- [0.1.9](#mark213)
+	- [0.1.8](#mark214)
+	- [0.1.7](#mark215)
+	- [0.1.6](#mark216)
+	- [0.1.5](#mark217)
+	- [0.1.4](#mark218)
+	- [0.1.3](#mark219)
+	- [0.1.2](#mark220)
+	- [0.1.1](#mark221)
+	- [0.1.0](#mark222)
 
 ---
 
@@ -234,30 +237,36 @@ py_simple_ttk exists because I got tired of rewriting the same code over and ove
 
 # Configuring ini.json<a name="mark3"></a>[^](#mark0)
 
-```python
-+--------------------+-------------------------------------------+
-|        Key         |                   Value                   |
-+--------------------+-------------------------------------------+
-| application        | Application Name (String)                 |
-| version            | Application Version (String)              |
-| icon               | Application Icon Path (String)            |
-| width              | Startup Window Width (Int)                |
-| height             | Startup Window Height (Int)               |
-| minwidth           | Window Minimum Width (Int)                |
-| minheight          | Window Minimum Height (Int)               |
-| scaling            | Window Scaling (Float)                    |
-| scale_minsize      | Scale application Minimum Size (Boolean)  |
-| scale_startsize    | Scale application Start Size (Boolean)    |
-| resizable_width    | Enable Window Width Resizing (Boolean)    |
-| resizable_height   | Enable Window Height Resizing (Boolean)   |
-| start_maximized    | Start Window Maximized (Boolean)          |
-| enable_maximized   | Enable Window Maximized (Boolean)         |
-| start_fullscreen   | Start Window in Fullscreen mode (Boolean) |
-| enable_fullscreen  | Enable Window Fullscreen option (Boolean) |
-| enable_themes_menu | Enable Themes Dropdown (Boolean)          |
-| movable_tabs       | Enable Moveable Notebook Tabs (Boolean)   |
-| enable_profiles    | Enable a User Profiles System             |
-+--------------------+-------------------------------------------+
+```
++------------------------+-------------------------------------------+
+|        Key             |                   Value                   |
++------------------------+-------------------------------------------+
+| application            | Application Name (String)                 |
+| version                | Application Version (String)              |
+| icon                   | Application Icon Path (String)            |
+| width                  | Startup Window Width (Int)                |
+| height                 | Startup Window Height (Int)               |
+| minwidth               | Window Minimum Width (Int)                |
+| minheight              | Window Minimum Height (Int)               |
+| scaling                | Window Scaling (Float)                    |
+| scale_minsize          | Scale application Minimum Size (Boolean)  |
+| scale_startsize        | Scale application Start Size (Boolean)    |
+| resizable_width        | Enable Window Width Resizing (Boolean)    |
+| resizable_height       | Enable Window Height Resizing (Boolean)   |
+| enable_sizegrip        | Enable Window EasySizegrip (Boolean)      |
+| start_maximized        | Start Window Maximized (Boolean)          |
+| enable_maximized       | Enable Window Maximized (Boolean)         |
+| start_fullscreen       | Start Window in Fullscreen mode (Boolean) |
+| enable_fullscreen      | Enable Window Fullscreen option (Boolean) |
+| ignored_themes         | Themes to not display in menu (List)      |
+| enable_themes_menu     | Enable Themes Dropdown (Boolean)          |
+| enable_launcher        | Enable Dynamic Launcher System (Boolean)  |
+| movable_tabs           | Enable Moveable Notebook Tabs (Boolean)   |
+| enable_profiles        | Enable a User Profiles System (Boolean)   |
+| conversations_enabled  | Enable Convo System (Boolean)             |
+| notes_enabled          | Enable Note System (Boolean)              |
+| theme_textboxes        | Apply theme colors to tk.Text (Boolean)   ||
++------------------------+-------------------------------------------+
 ```
 # Widgets<a name="mark4"></a>[^](#mark0)
 
@@ -832,7 +841,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 
 ```py
 class Counter(Frame):
-	def __init__(self, parent: tkinter.ttk.Frame, default: int = 0, min_value: int = None, max_value: int = None, step: int = 1, state: str = 'normal', command: Callable = None, depth: int = 3, **kwargs):
+	def __init__(self, parent: tkinter.ttk.Frame, default: int = 1, min_value: int = None, max_value: int = None, step: int = 1, state: str = 'normal', command: Callable = None, depth: int = 1, **kwargs):
 		...
 	def clear(self) -> int:
 		...
@@ -842,7 +851,7 @@ class Counter(Frame):
 		...
 	def enable(self) -> None:
 		...
-	def set(self, val: int, adjust: int = 0) -> int:
+	def set(self, val: int, adjust: int = 0, no_command: bool = False) -> int:
 		...
 ```
 ### FloatCounter<a name="mark70"></a>[^](#mark68)
@@ -880,7 +889,7 @@ class LabeledCounter(Labeler, Counter, SuperWidgetMixin):
 		...
 	def enable(self) -> None:
 		...
-	def set(self, val: int, adjust: int = 0) -> int:
+	def set(self, val: int, adjust: int = 0, no_command: bool = False) -> int:
 		...
 ```
 ### LabeledFloatCounter<a name="mark72"></a>[^](#mark68)
@@ -2711,95 +2720,107 @@ def get_profiles_list(path='./Profiles', verbose=False):
 ```
 # Changelog<a name="mark196"></a>[^](#mark0)
 
-## 0.1.22<a name="mark197"></a>[^](#mark196)
+## 0.1.25<a name="mark197"></a>[^](#mark196)
+
+Reduce packaged fonts color pallete
+
+## 0.1.24<a name="mark198"></a>[^](#mark196)
+
+Update readme generator with more config keys, fix ini readme md code block being marked as python
+
+## 0.1.23<a name="mark199"></a>[^](#mark196)
+
+Add columns to Configurable Launcher
+
+## 0.1.22<a name="mark200"></a>[^](#mark196)
 
 Fix readme
 
-## 0.1.21<a name="mark198"></a>[^](#mark196)
+## 0.1.21<a name="mark201"></a>[^](#mark196)
 
 Fix readme
 
-## 0.1.20<a name="mark199"></a>[^](#mark196)
+## 0.1.20<a name="mark202"></a>[^](#mark196)
 
 Add counter widget.
 
-## 0.1.19<a name="mark200"></a>[^](#mark196)
+## 0.1.19<a name="mark203"></a>[^](#mark196)
 
 Add dynamic launcher system.
 
-## 0.1.18<a name="mark201"></a>[^](#mark196)
+## 0.1.18<a name="mark204"></a>[^](#mark196)
 
 Add Ordered Listbox, add more bindings to SuperWidget, cleanup
 
-## 0.1.17<a name="mark202"></a>[^](#mark196)
+## 0.1.17<a name="mark205"></a>[^](#mark196)
 
 Add set_desktop_background to WidgetsCore.py
 
-## 0.1.16<a name="mark203"></a>[^](#mark196)
+## 0.1.16<a name="mark206"></a>[^](#mark196)
 
 Add needs_white_text to color.py, add pyinstaller compatibility to WidgetsCore.get_asset
 
-## 0.1.15<a name="mark204"></a>[^](#mark196)
+## 0.1.15<a name="mark207"></a>[^](#mark196)
 
 Fix misnamed function in color.py
 
-## 0.1.14<a name="mark205"></a>[^](#mark196)
+## 0.1.14<a name="mark208"></a>[^](#mark196)
 
 Fix missing import in app.py
 
-## 0.1.13<a name="mark206"></a>[^](#mark196)
+## 0.1.13<a name="mark209"></a>[^](#mark196)
 
 reduced variety of packaged font images, fixed bug with constrained widgets command not triggering
 
-## 0.1.12<a name="mark207"></a>[^](#mark196)
+## 0.1.12<a name="mark210"></a>[^](#mark196)
 
 Add Constrained + Labeled + Multi Entries (>35 widgets)
 
-## 0.1.11<a name="mark208"></a>[^](#mark196)
+## 0.1.11<a name="mark211"></a>[^](#mark196)
 
 Fix LabeledPathEntry error when no dialog type was specified
 
-## 0.1.10<a name="mark209"></a>[^](#mark196)
+## 0.1.10<a name="mark212"></a>[^](#mark196)
 
 Add LabeledPathEntry to EntryWidgets.py
 
-## 0.1.9<a name="mark210"></a>[^](#mark196)
+## 0.1.9<a name="mark213"></a>[^](#mark196)
 
 Add pencil icons to assets
 
-## 0.1.8<a name="mark211"></a>[^](#mark196)
+## 0.1.8<a name="mark214"></a>[^](#mark196)
 
 Fix labeled button not running command on press
 
-## 0.1.7<a name="mark212"></a>[^](#mark196)
+## 0.1.7<a name="mark215"></a>[^](#mark196)
 
 add labeled button
 
-## 0.1.6<a name="mark213"></a>[^](#mark196)
+## 0.1.6<a name="mark216"></a>[^](#mark196)
 
 Fix missing Labeler import
 
-## 0.1.5<a name="mark214"></a>[^](#mark196)
+## 0.1.5<a name="mark217"></a>[^](#mark196)
 
 Fix broken package
 
-## 0.1.4<a name="mark215"></a>[^](#mark196)
+## 0.1.4<a name="mark218"></a>[^](#mark196)
 
 Fix broken package
 
-## 0.1.3<a name="mark216"></a>[^](#mark196)
+## 0.1.3<a name="mark219"></a>[^](#mark196)
 
 More cleanup, input fixes.py
 
-## 0.1.2<a name="mark217"></a>[^](#mark196)
+## 0.1.2<a name="mark220"></a>[^](#mark196)
 
 Cleanup, move type lists to generate_readme.py
 
-## 0.1.1<a name="mark218"></a>[^](#mark196)
+## 0.1.1<a name="mark221"></a>[^](#mark196)
 
 Fix missing 'ListWindow' import in app.py
 
-## 0.1.0<a name="mark219"></a>[^](#mark196)
+## 0.1.0<a name="mark222"></a>[^](#mark196)
 
 Modulize
 
