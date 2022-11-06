@@ -25,33 +25,32 @@ own multiwidgets."""
         is_child: bool = False,
         **kw,
     ):
-        self.var = tk.IntVar()
+        self.var = tk.IntVar(value=default)
         self.default = default
-        self.var.set(default)
         self.replace_output = replace_output
         self.is_child = is_child
         Labeler.__init__(self, parent, labeltext, header=not is_child)
         ttk.Checkbutton.__init__(self, self.frame, variable=self.var, **kw)
         ttk.Checkbutton.pack(self, fill="x", expand=False, side=tk.TOP)
 
-    def enable(self):
+    def enable(self) -> None:
         """Enable Checkbutton. `Returns None`"""
         self["state"] = tk.NORMAL
 
-    def disable(self):
+    def disable(self) -> None:
         """Disable Checkbutton. `Returns None`"""
         self["state"] = tk.DISABLED
 
-    def get(self):
+    def get(self) -> bool:
         """Get Checkbutton value. `Returns a Boolean unless replace_output is set`"""
         v = self.var.get()
         return self.replace_output[v] if self.replace_output else v
 
-    def set(self, val: bool):
+    def set(self, val: bool) -> None:
         """Set Checkbutton value. `Returns None`"""
         self.var.set(val)
 
-    def clear(self):
+    def clear(self) -> None:
         """Sets the Checkbutton to its default value, usually *False* `Returns None`"""
         self.var.set(self.default)
 

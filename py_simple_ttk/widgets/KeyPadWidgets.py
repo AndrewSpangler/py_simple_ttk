@@ -1,4 +1,5 @@
 from tkinter import ttk
+from typing import Callable
 
 
 class KeypadButton(ttk.Button):
@@ -6,9 +7,9 @@ class KeypadButton(ttk.Button):
 
     __desc__ = """Keypad button that automatically packs itself based on given coordinates. This object is not usually directly instantiated."""
 
-    def __init__(self, frame, value, coords, callback):
+    def __init__(self, frame, value, coords, command):
         ttk.Button.__init__(
-            self, frame, text=value, command=lambda: callback(self.value)
+            self, frame, text=value, command=lambda: command(self.value)
         )
         self.value = value
         self.coords = coords
@@ -20,13 +21,13 @@ class BaseKeypad(ttk.Frame):
 
     __desc__ = """Either instantiate directly with a custom layout or subclass with each subclass supplying a custom layout for more keypads. Subclass KeypadButton and supply the class as the "button_type" kwarg for custom buttons."""
 
-    def __init__(self, layout, callback, button_class=KeypadButton, *args, **kwargs):
+    def __init__(self, layout, command, button_class=KeypadButton, *args, **kwargs):
         ttk.Frame.__init__(self, *args, **kwargs)
         self.buttons = []
         for r in layout:
             for i in r:
                 self.buttons.append(
-                    button_class(self, i, (r.index(i), layout.index(r)), callback)
+                    button_class(self, i, (r.index(i), layout.index(r)), command)
                 )
 
 
@@ -42,5 +43,5 @@ class DialerKeypad(BaseKeypad):
         ["*", "0", "#"],
     ]
 
-    def __init__(self, callback, *args, **kwargs):
-        base_keypad.__init__(self, self.layout, callback, *args, **kwargs)
+    def __init__(self, command: Callable, *args, **kwargs):
+        BaseKeypad.__init__(self, self.layout, command, *args, **kwargs)

@@ -44,17 +44,17 @@ class TicTacToe:
         self.round_number = 0  # Used to keep track of who goes first
         self.new_game()
 
-    def new_game(self):
+    def new_game(self) -> None:
         self.round_number += 1
         self.game_over = False
         self.winner = None
         self.turn_number = 1
         self.board = [[None for _ in range(3)] for __ in range(3)]
 
-    def get_current_player(self):
+    def get_current_player(self) -> str:
         return list(self.players.keys())[(self.turn_number + self.round_number) % 2]
 
-    def place_piece(self, row, col):
+    def place_piece(self, row, col) -> list:
         """Place a piece at a given location"""
         if self.board[row][col]:
             return  # Just do nothing
@@ -75,7 +75,7 @@ class TicTacToe:
                 return None
         return firstpiece
 
-    def check_board(self):
+    def check_board(self) -> list:
         """Check if game is won. A list of tuples containing start and end win locations"""
         win_coords = []
 
@@ -116,7 +116,7 @@ class TicTacToe:
 
         return win_coords
 
-    def set_winner(self, player):
+    def set_winner(self, player) -> None:
         """Sets the winner and a flag to indicate the game is done."""
         if not self.winner:
             self.game_over = True
@@ -200,7 +200,7 @@ class TicTacToeWidget(ttk.Frame):
 
         self.draw_game()
 
-    def draw_game(self):
+    def draw_game(self) -> None:
         """Redraws the canvas"""
 
         self.canvas.delete("all")
@@ -224,10 +224,10 @@ class TicTacToeWidget(ttk.Frame):
                         anchor="center",
                     )
 
-    def draw_game_over(self, coords):
+    def draw_game_over(self, coords: tuple) -> None:
         """Draws the game-over screen."""
 
-        def draw_center_text(text):
+        def draw_center_text(text: str) -> None:
             """Creates text with a drop-shadow"""
             self.canvas.create_text(
                 CANVAS_SIZE / 2 + ROUND_END_DROP_SHADOW_OFFSET[0],
@@ -258,7 +258,7 @@ class TicTacToeWidget(ttk.Frame):
             print(f"Drawing tie game")
             draw_center_text("Tie\nGame")
 
-    def on_move(self, event):
+    def on_move(self, event) -> None:
         """Handles drawing preview items when mouse moves"""
         if not self.game.game_over:
             self.draw_game()
@@ -278,7 +278,7 @@ class TicTacToeWidget(ttk.Frame):
             except ZeroDivisionError as e:
                 pass
 
-    def on_click(self, event):
+    def on_click(self, event) -> None:
         """Handles left click"""
         if self.game.game_over:
             self.game.new_game()

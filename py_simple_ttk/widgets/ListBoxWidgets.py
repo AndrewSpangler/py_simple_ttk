@@ -32,10 +32,10 @@ class OrderedListbox(ScrolledListBox):
         self.bind("<B1-Motion>", self._move)
         self._index = None
 
-    def _click(self, event):
+    def _click(self, event) -> None:
         self._index = self.nearest(event.y)
 
-    def _move(self, event):
+    def _move(self, event) -> None:
         if (index := self.nearest(event.y)) == self._index:
             return
         i = self.get(index)
@@ -72,7 +72,7 @@ class Table(ttk.Frame):
         )
         self._on_selection = on_selection
 
-    def clear(self):
+    def clear(self) -> None:
         """Clears the table"""
         for lb in self.listboxes:
             self.listboxes[lb].destroy()
@@ -82,7 +82,7 @@ class Table(ttk.Frame):
         for w in self.listbox_frame.winfo_children():
             w.destroy()
 
-    def build(self, contents: dict):
+    def build(self, contents: dict) -> None:
         """Rebuild the table"""
         self.clear()
         self.categories = [k for k in contents.keys()]
@@ -119,7 +119,7 @@ class Table(ttk.Frame):
                     lb.bind(k, self._on_mouse_wheel)
             i += 1
 
-    def _on_press(self, event):
+    def _on_press(self, event) -> None:
         if event:
             root = self.winfo_toplevel()
             cursor_y = root.winfo_pointery()
@@ -136,7 +136,7 @@ class Table(ttk.Frame):
             if self._on_selection:
                 self._on_selection(self.listboxes.get(index))
 
-    def _on_mouse_wheel(self, event):
+    def _on_mouse_wheel(self, event) -> str:
         l = self.listboxes[self.categories[0]]
         if platform.system() in ["Windows" or "Darwin"]:
             delta = event.delta
@@ -152,12 +152,12 @@ class Table(ttk.Frame):
             self.listboxes[listbox].yview_moveto(l.yview()[0])
         return "break"
 
-    def _on_scroll_bar(self, move_type, move_units, __=None):
+    def _on_scroll_bar(self, move_type, move_units, __=None) -> None:
         if move_type == "moveto":
             for lb in self.listboxes:
                 self.listboxes[lb].yview_moveto(move_units)
 
-    def use_style(self, style: ttk.Style):
+    def use_style(self, style: ttk.Style) -> None:
         """Update to match supplied ttk.Style object. `Returns None`"""
         self.tile_fill = style.lookup("TEntry", "fieldbackground") or style.lookup(
             "TCombobox", "fieldbackground"
@@ -170,7 +170,7 @@ class Table(ttk.Frame):
 
         self.listbox_frame.configure(bg=bg)
 
-    def get(self):
+    def get(self) -> list:
         """Gets the currently selected items from the table. `Returns a List of Strings`"""
         out = []
         for lb in self.listboxes:

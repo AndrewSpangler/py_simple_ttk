@@ -1,3 +1,4 @@
+import tempfile
 import tkinter as tk
 from tkinter import ttk
 from ..widgets.Tabs import Tab
@@ -12,13 +13,15 @@ MODULE_PREFIX = "Shopping."
 
 
 class ShoppingListTab(Tab):
+    """An example shopping list Tab"""
+
     def __init__(self, notebook: ttk.Notebook, app):
         Tab.__init__(self, notebook, "Shopping List")
         ShoppingList(self, app).pack(fill=tk.BOTH, expand=True)
 
 
 class ShoppingList(ttk.Frame):
-    def __init__(self, parent, app):
+    def __init__(self, parent: ttk.Frame, app):
         ttk.Frame.__init__(self, parent)
         self.app = app
         self.source_favorites_list = []
@@ -95,7 +98,7 @@ class ShoppingList(ttk.Frame):
         export_button.pack(side=tk.BOTTOM, pady=10, padx=10, fill="x")
         self.update()
 
-    def update(self):
+    def update(self) -> None:
         self.update_favorites()
         self.favorites_table.clear()
         self.favorites_table.build({"Favorites": self.favorites_list})
@@ -111,58 +114,52 @@ class ShoppingList(ttk.Frame):
             prof.data["preferences"][MODULE_PREFIX + "cart"] = self.shopping_list
             prof.save()
 
-    def update_favorites(self):
+    def update_favorites(self) -> None:
         self.favorites_list.clear()
         self.source_favorites_list = sorted(self.source_favorites_list)
         for item in self.source_favorites_list:
             if not item in self.shopping_list:
                 self.favorites_list.append(item)
 
-    def add_to_shopping_list(self, item: str):
+    def add_to_shopping_list(self, item: str) -> None:
         if item:
             item = item.strip()
             self.shopping_list.append(item)
         self.shopping_box.clear()
         self.update()
 
-    def add_fav_to_shopping_list(self):
+    def add_fav_to_shopping_list(self) -> None:
         fav = self.favorites_table.get()
         if fav:
             fav = fav[0].strip()
             self.add_to_shopping_list(fav)
         self.update()
 
-    def remove_item_from_shopping_list(self):
+    def remove_item_from_shopping_list(self) -> None:
         item = self.shopping_table.get()
         if item:
             self.shopping_list.remove(item[0])
         self.update()
 
-    def add_to_favorites_list(self, item: str):
+    def add_to_favorites_list(self, item: str) -> None:
         item = item.strip()
         if item and not item in self.source_favorites_list:
             self.source_favorites_list.append(item)
         self.favorites_box.clear()
         self.update()
 
-    def clear_shopping_list(self):
+    def clear_shopping_list(self) -> None:
         self.shopping_list.clear()
         self.update()
 
-    def forget_favorite(self):
+    def forget_favorite(self) -> None:
         fav = self.favorites_table.get()
         if fav:
             fav = fav[0].strip()
             self.source_favorites_list.remove(fav)
         self.update()
 
-    def export_txt(self):
-        pass
-
-    def export_json(self):
-        pass
-
-    def export_html(self):
+    def export_html(self) -> None:
         print("Exporting Shopping List")
         generator = HTML_Generator()
         r = len(self.shopping_list)
@@ -173,14 +170,5 @@ class ShoppingList(ttk.Frame):
             if i < r - 1:
                 generator.end_div()
                 generator.add_divider()
-        print(generator.assemble())
-        import tempfile
-
         file = tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".html")
         generator.save(file.name)
-        import webbrowser
-
-        webbrowser.open(file.name)
-
-    def export_csv(self):
-        pass

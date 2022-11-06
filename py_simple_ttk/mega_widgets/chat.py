@@ -4,8 +4,7 @@ import os, time, json
 import tkinter as tk
 from tkinter import ttk, simpledialog, filedialog
 import tkinter.font as tkFont
-
-
+from typing import Callable
 from .. import (
     Tab,
     ScrolledCanvas,
@@ -56,7 +55,7 @@ CONVERSATIONS_FOLDER = os.path.abspath("Conversations")
 CONVERSATION_FILE_ENDING = "_meta.json"
 
 
-def get_conversations_list():
+def get_conversations_list() -> list:
     conversations = []
     for entry in os.scandir(CONVERSATIONS_FOLDER):
         if entry.is_file():
@@ -66,7 +65,7 @@ def get_conversations_list():
     return conversations
 
 
-def convert_messages_to_html(conversation):
+def convert_messages_to_html(conversation) -> str:
     generator = HTML_Generator()
 
     for m in conversation.messages:
@@ -80,7 +79,7 @@ def convert_messages_to_html(conversation):
     return generator.assemble()
 
 
-def convert_messages_to_txt(conversation):
+def convert_messages_to_txt(conversation) -> str:
     generator = TXT_Generator()
     generator.add_body_line(f"Conversation - {conversation.title}")
     for m in conversation.messages:
@@ -91,73 +90,16 @@ def convert_messages_to_txt(conversation):
     return generator.assemble()
 
 
-class Conversation:
-    def __init__(self, title, atomic, messages=[]):
-        self.title = title
-        self.messages = messages
-        self.atomic = atomic
-        self.conversation_path = os.path.join(
-            CONVERSATIONS_FOLDER, atomic + CONVERSATION_FILE_ENDING
-        )
-
-    def add_message(self, message):
-        self.messages.append(message)
-        self.save()
-
-    def delete_message(self, message):
-        self.messages.remove(message)
-        self.save()
-
-    def pin_message(self, message):
-        message.pinned = True
-        self.save()
-
-    def unpin_message(self, message):
-        message.pinned = False
-        self.save()
-
-    def toggle_pinned(self, message):
-        message.pinned = not message.pinned
-        self.save()
-
-    def save(self, path=None):
-        path = path or self.conversation_path
-        metadata = {
-            "atomic": self.atomic,
-            "title": self.title,
-            "messages": [m.to_json() for m in self.messages],
-        }
-        with open(path, "w+") as f:
-            json.dump(metadata, f)
-
-    def rename(self, title):
-        """Returns false on invalid name"""
-        if self.title:
-            self.title = title
-            self.save()
-            return True
-        else:
-            return False
-
-    def delete(self):
-        os.remove(self.conversation_path)
-
-
-class LoadedConversation(Conversation):
-    def __init__(self, conversationstab, path):
-        with open(path, "r") as f:
-            meta_json = json.load(f)
-        messages = [LoadedMessage(conversationstab, m) for m in meta_json["messages"]]
-        Conversation.__init__(
-            self,
-            meta_json["title"],
-            meta_json["atomic"],
-            messages=messages,
-        )
-
-
 class MessageObject:
-    def __init__(self, content, user, icon, timestamp, pinned=False, active=False):
+    def __init__(
+        self,
+        content: str,
+        user: str,
+        icon,
+        timestamp,
+        pinned: bool = False,
+        active: bool = False,
+    ):
         self.content = content
         self.user = user
         self.icon = icon
@@ -187,8 +129,73 @@ class MessageObject:
         }
 
 
+class Conversation:
+    def __init__(self, title: str, atomic: str, messages: list = []):
+        self.title = title
+        self.messages = messages
+        self.atomic = atomic
+        self.conversation_path = os.path.join(
+            CONVERSATIONS_FOLDER, atomic + CONVERSATION_FILE_ENDING
+        )
+
+    def add_message(self, message: MessageObject):
+        self.messages.append(message)
+        self.save()
+
+    def delete_message(self, message: MessageObject):
+        self.messages.remove(message)
+        self.save()
+
+    def pin_message(self, message: MessageObject):
+        message.pinned = True
+        self.save()
+
+    def unpin_message(self, message: MessageObject):
+        message.pinned = False
+        self.save()
+
+    def toggle_pinned(self, message: MessageObject):
+        message.pinned = not message.pinned
+        self.save()
+
+    def save(self, path: str = None):
+        path = path or self.conversation_path
+        metadata = {
+            "atomic": self.atomic,
+            "title": self.title,
+            "messages": [m.to_json() for m in self.messages],
+        }
+        with open(path, "w+") as f:
+            json.dump(metadata, f)
+
+    def rename(self, title: str):
+        """Returns false on invalid name"""
+        if self.title:
+            self.title = title
+            self.save()
+            return True
+        else:
+            return False
+
+    def delete(self):
+        os.remove(self.conversation_path)
+
+
+class LoadedConversation(Conversation):
+    def __init__(self, conversationstab, path: str):
+        with open(path, "r") as f:
+            meta_json = json.load(f)
+        messages = [LoadedMessage(conversationstab, m) for m in meta_json["messages"]]
+        Conversation.__init__(
+            self,
+            meta_json["title"],
+            meta_json["atomic"],
+            messages=messages,
+        )
+
+
 class LoadedMessage(MessageObject):
-    def __init__(self, conversationstab, json_data):
+    def __init__(self, conversationstab, json_data: dict):
         content = json_data["content"]
         user = json_data["user"]
         # icon = json_data["icon"]
@@ -199,7 +206,7 @@ class LoadedMessage(MessageObject):
 
 
 class BaseBubbleTab(Tab):
-    def __init__(self, notebook, manager, app, name, conversation):
+    def __init__(self, notebook, manager, app, name: str, conversation):
         Tab.__init__(self, notebook, name)
         self.app = app
         self.manager = manager
@@ -313,16 +320,16 @@ class BaseBubbleTab(Tab):
             scrollregion=(0, 0, running_total_height, running_total_height)
         )
 
-    def deactivate_message(self, m):
+    def deactivate_message(self, m: MessageObject):
         m.active = False
         for r in list(m.active_references.keys()):
             ref = m.active_references.pop(r)
             self.canvas.delete(ref)
 
-    def activate_message(self, m):
+    def activate_message(self, m: MessageObject):
         pass  # Override in subclass
 
-    def _on_action(self, event, on_find_action=None):
+    def _on_action(self, event, on_find_action: Callable = None):
         x, y = event.x, self.get_adjusted_y_view(event)
         found = False
         for m in self.conversation.messages:

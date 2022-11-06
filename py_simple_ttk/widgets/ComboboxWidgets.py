@@ -28,9 +28,8 @@ class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
         widgetargs={},
         **kw
     ):
-        self.var = tk.StringVar()
         self.default = values[default] if any(values) else ""
-        self.var.set(self.default)
+        self.var = tk.StringVar(value=self.default)
         Labeler.__init__(
             self, parent, labeltext, labelside=labelside, header=not is_child
         )
@@ -50,27 +49,27 @@ class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
         if bind_escape_clear:
             self.bind("<Escape>", self.clear())
 
-    def disable(self):
+    def disable(self) -> None:
         """Disable Combobox. `Returns None`"""
         self["state"] = tk.DISABLED
 
-    def enable(self):
+    def enable(self) -> None:
         """Enable Combobox. `Returns None`"""
         self["state"] = self._state
 
-    def get(self):
+    def get(self) -> str:
         """Get Combobox value. `Returns a String`"""
         return self.var.get()
 
-    def set(self, val: str):
+    def set(self, val: str) -> None:
         """Set Combobox value. `Returns None`"""
         self.var.set(val)
 
-    def clear(self):
+    def clear(self) -> None:
         """Sets Combobox to its default value. `Returns None`"""
         self.var.set(self.default)
 
-    def _on_execute_command(self, event=None):
+    def _on_execute_command(self, event=None) -> None:
         """Calls the provided "command" function with the contents of the Entry. `Returns None`"""
         if self._command:
             self._command(self.get())

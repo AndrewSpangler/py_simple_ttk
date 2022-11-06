@@ -23,18 +23,18 @@ else:
     ASSETS_FOLDER = os.path.join(ROOT, ASSETS_REL_PATH)
 
 
-def get_asset(path, folder=ASSETS_FOLDER):
+def get_asset(path, folder: str = ASSETS_FOLDER) -> str:
     """Gets an asset from the included assets folder by relative path. Works with pyinstaller."""
     return os.path.abspath(os.path.join(folder, path))
 
 
-def get_themes_folder():
+def get_themes_folder() -> str:
     """Gets the absolute path to the included themes folder"""
     return os.path.abspath(os.path.join(ASSETS_FOLDER, "themes"))
 
 
-def get_bundled_themes_list(verbose=False):
-    def determine_theme(fp):
+def get_bundled_themes_list(verbose: bool = False) -> list:
+    def determine_theme(fp: str):
         return fp.endswith(".tcl") and not fp.endswith("pkgIndex.tcl")
 
     themes = []
@@ -51,7 +51,9 @@ def get_bundled_themes_list(verbose=False):
     return themes
 
 
-def force_aspect(inner_frame: ttk.Frame, outer_frame: ttk.Frame, ratio=(16 / 9)):
+def force_aspect(
+    inner_frame: ttk.Frame, outer_frame: ttk.Frame, ratio: float = (16 / 9)
+) -> None:
     """Forces an inner frame to maintain an aspect ratio regardless of the outer frame's size"""
 
     def force_ratio(event):
@@ -73,7 +75,7 @@ def force_aspect(inner_frame: ttk.Frame, outer_frame: ttk.Frame, ratio=(16 / 9))
     outer_frame.bind("<Configure>", force_ratio)
 
 
-def center_window(main_window: tk.Tk, spawn_window: tk.Toplevel):
+def center_window(main_window: tk.Tk, spawn_window: tk.Toplevel) -> None:
     """Centers spawn window on main window. Call win.update_idletasks() on either window before calling this if said window is not yet shown."""
     pos_x, width = main_window.winfo_x(), main_window.winfo_width()
     pos_y, height = main_window.winfo_y(), main_window.winfo_height()
@@ -83,49 +85,58 @@ def center_window(main_window: tk.Tk, spawn_window: tk.Toplevel):
     )
 
 
-def focus_next(event):
+def focus_next(event) -> object:
     """Forces focus to the widget after the one that triggered the event"""
-    event.widget.tk_focusNext().focus()
+    (widget := event.widget.tk_focusNext()).focus()
+    return widget
 
 
-def default_separator(f: ttk.Frame, padx: int = 35, pady=(10, 5)):
+def default_separator(
+    f: ttk.Frame, padx: tuple = 35, pady: tuple = (10, 5)
+) -> ttk.Separator:
     """Apply a consistent horizontal separator."""
-    ttk.Separator(f, orient="horizontal").pack(fill="x", padx=padx, pady=pady)
+    (separator := ttk.Separator(f, orient="horizontal")).pack(
+        fill="x", padx=padx, pady=pady
+    )
+    return separator
 
 
-def default_pack(widget, bottom: bool = False, padx=5):
+def default_pack(widget, bottom: bool = False, padx: tuple = 5) -> None:
     """Apply a consistent descending packing method."""
     widget.pack(fill="x", expand=False, side=tk.TOP, padx=padx, pady=(0, 5 * bottom))
 
 
-def default_vertical_separator(frame: ttk.Frame, pady: int = 15, padx: int = 10):
+def default_vertical_separator(
+    frame: ttk.Frame, pady: tuple = 15, padx: tuple = 10
+) -> ttk.Separator:
     """Apply a consistent vertical separator."""
-    ttk.Separator(frame, orient="vertical").pack(
+    (separator := ttk.Separator(frame, orient="vertical")).pack(
         fill="y", padx=padx, pady=pady, expand=False, side=tk.LEFT
     )
+    return separator
 
 
 def default_vertical_pack(
-    widget, expand: bool = False, fill: str = tk.BOTH, padx: int = 0
-):
+    widget, expand: bool = False, fill: str = tk.BOTH, padx: tuple = 0
+) -> None:
     """Apply a consistent packing method to vertically packed widgets."""
     widget.pack(fill=fill, expand=expand, side=tk.LEFT, padx=padx)
 
 
-def copy_to_user_clipboard(widget, value):
+def copy_to_user_clipboard(widget, value: str) -> None:
     """Copies a string to the user's clipboard."""
     widget.clipboard_clear()
     widget.clipboard_append(value)
 
 
-def check_in_bounds(pos: tuple, bounds: tuple):
+def check_in_bounds(pos: tuple, bounds: tuple) -> bool:
     """Checks if a position is within a given bounds. Pos is generally a mouse event position tuple, bounds is generally a canvas.bbox(), but a (left, top, right, bottom) tuple will work too."""
     x, y = pos
     lb, tb, rb, bb = bounds
     return all((x > lb, x < rb, y > tb, y < bb))
 
 
-def get_generated_font_images_lookup(path=None):
+def get_generated_font_images_lookup(path: str = None) -> dict:
     """Makes a lookup for the pre-generated open-sans font monograms that ship with py_simple_ttk."""
     with zipfile.ZipFile(
         os.path.join(
@@ -149,7 +160,7 @@ def get_generated_font_images_lookup(path=None):
     return fonts
 
 
-def get_generated_font_image(file: str):
+def get_generated_font_image(file: str) -> bytes:
     with zipfile.ZipFile(
         os.path.join(ROOT, "assets/generated.zip"),
         "r",
@@ -158,7 +169,7 @@ def get_generated_font_image(file: str):
             return f.read()
 
 
-def get_generated_font_images(files: list):
+def get_generated_font_images(files: list) -> list:
     out = []
     with zipfile.ZipFile(
         os.path.join(ROOT, "assets/generated.zip"),
@@ -170,12 +181,14 @@ def get_generated_font_images(files: list):
     return out
 
 
-def bbox_to_width_and_height(bbox: tuple):
+def bbox_to_width_and_height(bbox: tuple) -> tuple:
     """Takes a bbox and converts it to a width and height tuple."""
-    return bbox[2] - bbox[0], bbox[3] - bbox[1]
+    return (bbox[2] - bbox[0], bbox[3] - bbox[1])
 
 
-def recursive_widget_search(node_widget, widget_type_to_find, found_list=[]):
+def recursive_widget_search(
+    node_widget, widget_type_to_find: type, found_list: list = []
+) -> list:
     """Adds widgets of a given type to a list as it travels up, away from the root of a widget tree. This method can be slow on large widget trees but is useful for retheming tk widgets with ttk formatting on theme changes. `Returns a list of widgets`"""
     for w in node_widget.winfo_children():
         if isinstance(w, widget_type_to_find):
@@ -185,7 +198,9 @@ def recursive_widget_search(node_widget, widget_type_to_find, found_list=[]):
     return found_list  # The only time this return is ever used is at the end of the first call
 
 
-def complex_widget_search(node_widget, widget_types_to_find: list, found_lists={}):
+def complex_widget_search(
+    node_widget, widget_types_to_find: list, found_lists: dict = {}
+) -> dict:
     """A more robust version of the widget search with lists for multiple widget types found in one go"""
     if not found_lists:
         for w in widget_types_to_find:
@@ -200,18 +215,18 @@ def complex_widget_search(node_widget, widget_types_to_find: list, found_lists={
     return found_lists  # The only time this return is ever used is at the end of the first call
 
 
-def run_cl(commands: list):
+def run_cl(commands: list) -> None:
     """Runs something via command line. `Returns None`"""
     subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
-def open_link(link: str):
+def open_link(link: str) -> None:
     """Opens a link in the user's default web browser. `Returns None`"""
     print(f"Opening {link} in default web browser")
     webbrowser.open_new_tab(link)
 
 
-def get_local_appdata_folder():
+def get_local_appdata_folder() -> str:
     """Opens user's Windows home folder. Only works on Windows for obvious reasons."""
     return os.path.expandvars("%LOCALAPPDATA%")
 
@@ -225,7 +240,7 @@ def set_desktop_background(file: str):
         raise NotImplemented
 
 
-def enable_notebook_movement(app):
+def enable_notebook_movement(app) -> None:
     """Copyright CJB 2010-07-31: https://wiki.tcl-lang.org/page/Drag+and+Drop+Notebook+Tabs Enables Tab dragging in subsequently created notebooks. Only run this function once."""
     tcl_configuration = """
     namespace eval tabdrag {}
@@ -313,7 +328,15 @@ def enable_notebook_movement(app):
 
 
 def create_round_rectangle(
-    canvas, x1, y1, x2, y2, r=20, fill="", outline="#000000", **kwargs
+    canvas,
+    x1: float,
+    y1: float,
+    x2: float,
+    y2: float,
+    r: float = 20,
+    fill: str = "",
+    outline: str = "#000000",
+    **kwargs,
 ):
     """Draws a rounded rectangle of a given radius on a tk.canvas"""
     x1r = x1 + r
@@ -376,46 +399,46 @@ class SuperWidgetMixin:
         self.bind("<Configure>", self._on_configure, add="+")
         self.bind("<MouseWheel>", self._on_mouse_wheel, add="+")
 
-    def _on_mouse_enter(self, event):
+    def _on_mouse_enter(self, event) -> None:
         if self.on_mouse_enter:
             self.on_mouse_enter(event)
 
-    def _on_mouse_leave(self, event):
+    def _on_mouse_leave(self, event) -> None:
         if self.on_mouse_leave:
             self.on_mouse_leave(event)
 
-    def _on_mouse_move(self, event):
+    def _on_mouse_move(self, event) -> None:
         if self.on_mouse_move:
             self.on_mouse_move(event)
 
-    def _on_mouse_wheel(self, event):
+    def _on_mouse_wheel(self, event) -> None:
         if self.on_mouse_wheel:
             self.on_mouse_wheel(event)
 
-    def _on_left_click(self, event):
+    def _on_left_click(self, event) -> None:
         if self.on_left_click:
             self.on_left_click(event)
 
-    def _on_double_left_click(self, event):
+    def _on_double_left_click(self, event) -> None:
         if self.on_double_left_click:
             self.on_double_left_click(event)
 
-    def _on_middle_click(self, event):
+    def _on_middle_click(self, event) -> None:
         if self.on_middle_click:
             self.on_middle_click(event)
 
-    def _on_double_middle_click(self, event):
+    def _on_double_middle_click(self, event) -> None:
         if self.on_double_middle_click:
             self.on_double_middle_click(event)
 
-    def _on_right_click(self, event):
+    def _on_right_click(self, event) -> None:
         if self.on_right_click:
             self.on_right_click(event)
 
-    def _on_double_right_click(self, event):
+    def _on_double_right_click(self, event) -> None:
         if self.on_double_right_click:
             self.on_double_right_click(event)
 
-    def _on_configure(self, event=None):
+    def _on_configure(self, event) -> None:
         if self.on_configure:
             self.on_configure(event)

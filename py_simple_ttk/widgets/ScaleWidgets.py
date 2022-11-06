@@ -19,17 +19,12 @@ class LabeledScale(Labeler, ttk.Scale):
         default: float = 0,
         orient: bool = tk.HORIZONTAL,
         is_child: bool = False,
-        from_=0,
-        to=100,
         **kwargs,
     ):
-        self.var = tk.DoubleVar()
-        self.var.set(default)
+        self.var = tk.DoubleVar(value=(default := float(default)))
         self.default = default
         self.is_child = is_child
         self._command = command
-        kwargs["from_"] = from_
-        kwargs["to"] = to
         if orient == tk.HORIZONTAL:
             Labeler.__init__(self, parent, labeltext, header=not is_child)
             ttk.Scale.__init__(
@@ -52,27 +47,27 @@ class LabeledScale(Labeler, ttk.Scale):
         else:
             raise ValueError(f"Unknown orientation - {orient}")
 
-    def enable(self):
+    def enable(self) -> None:
         """Disable Scale. `Returns None`"""
         self["state"] = tk.NORMAL
 
-    def disable(self):
+    def disable(self) -> None:
         """Enable Scale. `Returns None`"""
         self["state"] = tk.DISABLED
 
-    def get(self):
+    def get(self) -> float:
         """Get Scale value. `Returns a Float`"""
         return self.var.get()
 
-    def set(self, val):
+    def set(self, val) -> None:
         """Set Scale value. `Returns None`"""
         self.var.set(val)
 
-    def clear(self):
+    def clear(self) -> None:
         """Sets Scale to its default value. `Returns None`"""
         self.var.set(self.default)
 
-    def _on_update(self, val):
+    def _on_update(self, val) -> None:
         if self._command:
             self._command(val)
 
@@ -100,14 +95,14 @@ class LabeledMultiScale(Labeler, ttk.Frame, MultiWidgetMixin):
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         MultiWidgetMixin.__init__(self, LabeledScale, config)
 
-    def _on_command(self, key):
+    def _on_command(self, key) -> Callable:
         def do_command(val):
             if self._command:
                 return self._command({key: val})
 
         return do_command
 
-    def add(self, parent, key, args, kwargs, widget_type=None):
+    def add(self, parent, key, args, kwargs, widget_type=None) -> object:
         """Override MultiWidgetMixin for vertical orientation"""
         widget_type = widget_type or self.widget_type
         kwargs["orient"] = self.orient
@@ -119,3 +114,4 @@ class LabeledMultiScale(Labeler, ttk.Frame, MultiWidgetMixin):
         else:
             raise ValueError(f"Bad orientation - {self.orient}")
         self.widgets[key] = w
+        return w

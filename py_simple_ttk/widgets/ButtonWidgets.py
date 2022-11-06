@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Labeler import Labeler
+from typing import Callable
 
 
 class LabeledButton(Labeler, ttk.Button):
@@ -10,21 +11,15 @@ class LabeledButton(Labeler, ttk.Button):
         self,
         parent: ttk.Frame,
         labeltext: str,
+        text: str = "",
         is_child: bool = False,
-        command=None,
+        command: Callable = None,
+        default: str = "",
         **kw,
     ):
         self.is_child = is_child
-        self.var = tk.StringVar()
-        self.default = None
-        if kw.get("text"):
-            self.var.set((text := kw.pop("text")))
-            if not kw.get("default"):
-                self.default = text
-        if kw.get("default"):
-            self.default = kw.pop("default")
-        if self.default is None:
-            self.default = ""
+        self.var = tk.StringVar(value=text if text else default)
+        self.default = default
         self._command = command
         Labeler.__init__(self, parent, labeltext, header=not is_child, labelside="top")
         ttk.Button.__init__(

@@ -19,7 +19,7 @@ class LabeledRadiobutton(Labeler, ttk.Frame):
         is_child: bool = False,
         **kw
     ):
-        self.var = tk.StringVar()
+        self.var = tk.IntVar()
         self.default = options[default]
         self.var.set(self.default)
         self.is_child = is_child
@@ -30,23 +30,23 @@ class LabeledRadiobutton(Labeler, ttk.Frame):
             b = ttk.Radiobutton(self, text=o, value=o, variable=self.var, **kw)
             b.pack(fill="x", expand=False, side=tk.TOP, padx=(20, 0))
 
-    def enable(self):
+    def enable(self) -> None:
         """Disable Radiobutton. `Returns None`"""
         self["state"] = tk.NORMAL
 
-    def disable(self):
+    def disable(self) -> None:
         """Enable Radiobutton. `Returns None`"""
         self["state"] = tk.DISABLED
 
-    def get(self):
+    def get(self) -> bool:
         """Get Radiobutton value. `Returns a Bool`"""
-        return self.var.get()
+        return bool(self.var.get())
 
-    def set(self, val: bool):
+    def set(self, val: bool) -> None:
         """Set Radiobutton value. `Returns None`"""
         self.var.set(val)
 
-    def clear(self):
+    def clear(self) -> None:
         """Sets Radiobutton to its default value. `Returns None`"""
         self.var.set(self.default)
 

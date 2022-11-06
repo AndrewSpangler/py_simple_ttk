@@ -1,4 +1,5 @@
 import os, json
+from typing import Callable
 from .utils import get_unix_timestring, get_unix_timestamp
 
 PROFILES_REL_PATH = "./Profiles"
@@ -8,12 +9,12 @@ PROFILES_FOLDER = PROFILES_REL_PATH
 #   os.makedirs(PROFILES_FOLDER,exist_ok=True)
 
 
-def get_profiles_folder():
+def get_profiles_folder() -> str:
     """Gets the absolute path to the included profiles folder. `Returns a String`"""
     return os.path.abspath(PROFILES_FOLDER)
 
 
-def get_profiles_list(path=PROFILES_REL_PATH, verbose=False):
+def get_profiles_list(path: str = PROFILES_REL_PATH, verbose: bool = False) -> list:
     """Gets a list of profile files at a given path. `Returns a List of Path strings`"""
     profiles = []
     for entry in os.scandir(path):
@@ -31,7 +32,7 @@ class UserProfile:
     __desc__ = """Must pass a unique username and a unique \
     identifier for new profile."""
 
-    def __init__(self, path, username: str = None, atomic: str = None):
+    def __init__(self, path: str, username: str = None, atomic: str = None):
         self.path = path
         self.username = username
         self.atomic = atomic
@@ -52,13 +53,13 @@ class UserProfile:
         else:
             raise FileNotFoundError("User path not found.")
 
-    def save(self, path: str = None, overwrite_path=False):
+    def save(self, path: str = None, overwrite_path: bool = False) -> None:
         if overwrite_path:
             self.path = path
         with open(path or self.path, "w+") as f:
             json.dump(self.data, f, indent=4)
 
-    def load(self, path: str = None, overwrite_path=False):
+    def load(self, path: str = None, overwrite_path: bool = False) -> None:
         if overwrite_path:
             self.path = path
         with open(path or self.path) as f:
@@ -66,19 +67,19 @@ class UserProfile:
         self.username = self.data["username"]
         self.atomic = self.data["atomic"]
 
-    def set_username(self, name: str):
+    def set_username(self, name: str) -> None:
         self.username = name
         self.data["username"] = name
         self.save()
 
-    def set_preference(self, key: str, value: str):
+    def set_preference(self, key: str, value: str) -> None:
         self.data["preferences"][key] = value
         self.save()
 
-    def get_preference(self, key: str):
+    def get_preference(self, key: str) -> object:
         return self.data["preferences"].get(key, None)
 
-    def clear_preferences(self, preferences: list = None):
+    def clear_preferences(self, preferences: list = None) -> None:
         if preferences:
             for p in preferences:
                 self.data["preferences"].pop(p)
@@ -125,41 +126,41 @@ class ProfilesSystem:
             self.create_profile("Default")
         self.clear_select_profile_actions(self.select_profile_actions)
 
-    def add_select_profile_action(self, action):
+    def add_select_profile_action(self, action: Callable) -> None:
         """Add an action to the profile switch actions"""
         self.select_profile_actions.append(action)
 
-    def add_select_profile_actions(self, actions: list):
+    def add_select_profile_actions(self, actions: list) -> None:
         """Add a list of actions to the profile switch actions"""
         self.select_profile_actions.extend(actions)
 
-    def clear_select_profile_actions(self, new: list = []):
+    def clear_select_profile_actions(self, new: list = []) -> None:
         """Clear out the profile switch actions, optionally replacing them with new ones"""
         self.select_profile_actions = new.copy()
 
-    def handle_select_profile_actions(self):
+    def handle_select_profile_actions(self) -> None:
         """Handle on-profile-selection actions"""
         for action in self.select_profile_actions:
             action(self.current_profile)
 
-    def add_refresh_profiles_action(self, action):
+    def add_refresh_profiles_action(self, action: Callable) -> None:
         """Add an action to the profiles list refresh actions"""
         self.refresh_profiles_actions.append(action)
 
-    def add_refresh_profiles_actions(self, actions: list):
+    def add_refresh_profiles_actions(self, actions: list) -> None:
         """Add a list of actions to the profiles list refresh actions"""
         self.refresh_profiles_actions.extend(actions)
 
-    def clear_refresh_profile_actions(self, new: list = []):
+    def clear_refresh_profile_actions(self, new: list = []) -> None:
         """Clear out the profiles list refresh actions, optionally replacing them with new ones"""
         self.refresh_profiles_actions = new.copy()
 
-    def handle_refresh_profiles_actions(self):
+    def handle_refresh_profiles_actions(self) -> None:
         """Handle on-refresh-profiles actions"""
         for action in self.refresh_profiles_actions:
             action(self.current_profile)
 
-    def select_profile(self, profile: UserProfile):
+    def select_profile(self, profile: UserProfile) -> None:
         """Change the currently selected profile"""
         if not profile:
             raise ValueError(f"Profile cannot be Nonetype.")
@@ -170,7 +171,7 @@ class ProfilesSystem:
         profile.save()
         self.handle_select_profile_actions()
 
-    def get_profile_by_username(self, name: str):
+    def get_profile_by_username(self, name: str) -> UserProfile:
         print(f"Looking for profile - {name}")
         prof = None
         for p in self.profiles:
@@ -182,10 +183,10 @@ class ProfilesSystem:
         else:
             raise ValueError(f"Unable to find profile")
 
-    def select_profile_by_username(self, name: str):
+    def select_profile_by_username(self, name: str) -> None:
         self.select_profile(self.get_profile_by_username(name))
 
-    def create_profile(self, name: str):
+    def create_profile(self, name: str) -> UserProfile:
         """Creates a profile with a given name. `Raises ValueError` if the profile name already exists. `Returns a UserProfile`"""
         for p in self.profiles:
             if p.username == name:
@@ -196,25 +197,27 @@ class ProfilesSystem:
         self.profiles.append(self.current_profile)
         return self.current_profile
 
-    def sort_profiles_by_accessed(self, profiles: list = None):
+    def sort_profiles_by_accessed(self, profiles: list = None) -> None:
         """Sort a list of profiles by last accessed, if no list is provided returns a sorted list of all profiles in the system. `Returns a List`"""
         profiles = profiles or self.profiles
         return list(
             reversed(sorted(profiles, key=lambda x: float(x.data["last_accessed"])))
         )
 
-    def get_last_used_profile(self, profiles: list = None):
+    def get_last_used_profile(self, profiles: list = None) -> UserProfile:
         """Returns the most recently accessed profile"""
         profiles = profiles or self.profiles
         return self.sort_profiles_by_accessed(profiles)[0] if profiles else None
 
-    def check_if_name_exists_in_profiles(self, name: str, profiles: list = None):
+    def check_if_name_exists_in_profiles(
+        self, name: str, profiles: list = None
+    ) -> bool:
         """Check if a name exists in a list of profiles, if no list is provided uses the list of all profiles. `Returns a Bool`"""
         profiles = profiles or self.profiles
         names = [p.username for p in profiles]
         return name in names
 
-    def handle_duplicate_profile_names(self, name: str):
+    def handle_duplicate_profile_names(self, name: str) -> None:
         """Makes profile names unique if they have identical names. \
 The most recently accessed profile (according to the file json) keeps \
 its name untouched. `Returns None`"""
@@ -246,11 +249,11 @@ its name untouched. `Returns None`"""
                     index += 1
         self.profiles = self.sort_profiles_by_accessed()
 
-    def get_profile_names(self):
+    def get_profile_names(self) -> list:
         """Returns an alphabetically sorted list of profile names"""
         return list(sorted(p.username for p in self.profiles))
 
-    def delete_profile(self, profile: UserProfile):
+    def delete_profile(self, profile: UserProfile) -> None:
         if not profile in self.profiles:
             raise ValueError(
                 "Attempted to delete profile that is not in the profiles list."

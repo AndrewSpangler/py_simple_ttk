@@ -66,7 +66,7 @@ class _LauncherButtonEditorWindow(FocusedToplevel):
         )
         self.protocol("WM_DELETE_WINDOW", self._exit)
 
-    def _exit(self, *args, **kwargs):
+    def _exit(self, *args, **kwargs) -> None:
         err = False
         if not (name := self.name.get()):
             err = "Name cannot be empty"
@@ -106,7 +106,7 @@ class _LauncherEditorWindow(FocusedToplevel):
         self._refresh()
         self.protocol("WM_DELETE_WINDOW", self._exit)
 
-    def _exit(self, event=None):
+    def _exit(self, event=None) -> None:
         print("Exiting Launcher Editor")
         out = {}
         for i in self.listbox.get(0, "end"):
@@ -117,7 +117,7 @@ class _LauncherEditorWindow(FocusedToplevel):
         self.on_submit()
         self.destroy()
 
-    def _handle_add(self, name: str, settings: dict):
+    def _handle_add(self, name: str, settings: dict) -> None:
         err = None
         if name in self.data:
             err = "Button must have a unique label."
@@ -136,12 +136,12 @@ class _LauncherEditorWindow(FocusedToplevel):
         self.child_window = None
         self._refresh()
 
-    def _add(self):
+    def _add(self) -> None:
         _LauncherButtonEditorWindow(
             self, "", {"type": "url", "location": "", "columns": 1}, self._handle_add
         )
 
-    def _edit(self, event=None):
+    def _edit(self, event=None) -> None:
         key = self.listbox.get((index := self.listbox.curselection()))
 
         def on_submit(name: str, settings: dict):
@@ -166,7 +166,7 @@ class _LauncherEditorWindow(FocusedToplevel):
 
         _LauncherButtonEditorWindow(self, key, self.data[key], on_submit)
 
-    def _delete(self, event=None):
+    def _delete(self, event=None) -> None:
         key = self.listbox.get(index := self.listbox.nearest(event.y))
 
         def delete():
@@ -179,7 +179,7 @@ class _LauncherEditorWindow(FocusedToplevel):
             window=self, no_enabled=False, text=f"Delete {key}?", on_yes=delete
         )
 
-    def _refresh(self):
+    def _refresh(self) -> None:
         for w in self.body.winfo_children():
             try:
                 w.destroy()
@@ -301,7 +301,7 @@ class ConfigurableLauncher(Tab):
             on_yes=on_delete,
         )
 
-    def _save_columns(self, event=None):
+    def _save_columns(self, event=None) -> None:
         print("Saving")
         self._unschedule_columns()
         launcher_widths = self.app.profiles.current_profile.get_preference(
@@ -312,14 +312,14 @@ class ConfigurableLauncher(Tab):
             "launcher_widths", launcher_widths
         )
 
-    def _unschedule_columns(self):
+    def _unschedule_columns(self) -> None:
         if not self._scheduled is None:
             scheduled = self._scheduled
             self._scheduled = None
             if scheduled:
                 self.after_cancel(scheduled)
 
-    def _schedule_columns(self, event=None):
+    def _schedule_columns(self, event=None) -> None:
         self._refresh()
         self._unschedule_columns()
         self._scheduled = self.after(500, self._save_columns)

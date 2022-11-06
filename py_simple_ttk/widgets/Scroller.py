@@ -5,12 +5,13 @@ import platform
 import tkinter as tk
 from tkinter import ttk
 from .Labeler import Labeler
+from typing import Callable
 
 # Widgets with scroll bars that appear when needed and supporting code
 class Scroller(object):
     """Use to wrap an object with scrollbars"""
 
-    def __init__(self, parent):
+    def __init__(self, parent: ttk.Frame):
         try:
             vsb = ttk.Scrollbar(parent, orient="vertical", command=self.yview)
         except:
@@ -42,10 +43,10 @@ class Scroller(object):
                 setattr(self, method, getattr(parent, method))
 
     @staticmethod
-    def _scroll(sbar):
+    def _scroll(sbar) -> Callable:
         """Hide and show scrollbar as needed."""
 
-        def hide(start, end):
+        def hide(start, end) -> None:
             start, end = float(start), float(end)
             if start <= 0.0 and end >= 1.0:
                 sbar.grid_remove()
@@ -55,14 +56,14 @@ class Scroller(object):
 
         return hide
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.parent)
 
 
-def _create_container(func):
+def _create_container(func: Callable) -> Callable:
     """Creates a tk Frame with a given parent, and uses this new frame to place the scrollbars and the widget."""
 
-    def wrapped(cls, parent, **kw):
+    def wrapped(cls, parent, **kw) -> object:
         container = ttk.Frame(parent)
         container.bind("<Enter>", lambda e: _bound_to_mousewheel(e, container))
         container.bind("<Leave>", lambda e: _unbound_to_mousewheel(e, container))
@@ -71,7 +72,7 @@ def _create_container(func):
     return wrapped
 
 
-def bind_mousewheel(widget):
+def bind_mousewheel(widget) -> None:
     """Cross-platform mousewheel scrolling."""
     if platform.system() == "Windows" or platform.system() == "Darwin":
         widget.bind("<MouseWheel>", lambda e: _on_mousewheel(e, widget))
@@ -83,7 +84,7 @@ def bind_mousewheel(widget):
         widget.bind("<Shift-Button-5>", lambda e: _on_shiftmouse(e, widget))
 
 
-def _bound_to_mousewheel(event, widget):
+def _bound_to_mousewheel(event, widget) -> None:
     child = widget.winfo_children()[0]
     if platform.system() == "Windows" or platform.system() == "Darwin":
         child.bind_all("<MouseWheel>", lambda e: _on_mousewheel(e, child))
@@ -95,7 +96,7 @@ def _bound_to_mousewheel(event, widget):
         child.bind_all("<Shift-Button-5>", lambda e: _on_shiftmouse(e, child))
 
 
-def _unbound_to_mousewheel(event, widget):
+def _unbound_to_mousewheel(event, widget) -> None:
     if platform.system() == "Windows" or platform.system() == "Darwin":
         widget.unbind_all("<MouseWheel>")
         widget.unbind_all("<Shift-MouseWheel>")
@@ -106,7 +107,7 @@ def _unbound_to_mousewheel(event, widget):
         widget.unbind_all("<Shift-Button-5>")
 
 
-def _on_mousewheel(event, widget):
+def _on_mousewheel(event, widget) -> None:
     if platform.system() == "Windows":
         widget.yview_scroll(-1 * int(event.delta / 120), "units")
     elif platform.system() == "Darwin":
@@ -118,7 +119,7 @@ def _on_mousewheel(event, widget):
             widget.yview_scroll(1, "units")
 
 
-def _on_shiftmouse(event, widget):
+def _on_shiftmouse(event, widget) -> None:
     if platform.system() == "Windows":
         widget.xview_scroll(-1 * int(event.delta / 120), "units")
     elif platform.system() == "Darwin":

@@ -4,10 +4,12 @@ from tkinter import ttk
 from .ResizableCanvas import ResizableCanvas
 from .Scroller import _on_mousewheel
 
+
 class ScrolledCanvas(ttk.Frame):
     """Resizeable, Auto-Scrollbarred Canvas"""
 
     __desc__ = "Canvas resizes to fit frame on configure event. Canvas has automatic Scrollbars that appear when needed. Canvas background color is based on current theme. Due to how the scrolling is handled the actual Canvas is accessd via `ScrolledCanvas().canvas`."
+
     def __init__(
         self,
         parent,
@@ -56,48 +58,48 @@ class ScrolledCanvas(ttk.Frame):
         self.canvas.bind("<Configure>", self._on_configure, add="+")
         self.bind_canvas_scroll = bind_canvas_scroll
 
-    def get_adjusted_y_view(self, event):
+    def get_adjusted_y_view(self, event) -> int:
         """Gets a canvas y-view adjusted based on its scrolled position"""
         return int(event.y + (float(self.canvas.yview()[0]) * self.canvas_height))
 
-    def _on_mouse_enter(self, event):
+    def _on_mouse_enter(self, event) -> None:
         if self.on_mouse_enter:
             self.on_mouse_enter(event, (event.x, self.get_adjusted_y_view(event)))
 
-    def _on_mouse_leave(self, event):
+    def _on_mouse_leave(self, event) -> None:
         if self.on_mouse_leave:
             self.on_mouse_leave(event, (event.x, self.get_adjusted_y_view(event)))
 
-    def _on_mouse_move(self, event):
+    def _on_mouse_move(self, event) -> None:
         x, y = event.x, self.get_adjusted_y_view(event)
         if self.on_mouse_move:
             self.on_mouse_move(event, (event.x, self.get_adjusted_y_view(event)))
 
-    def _on_scroll_bar(self, move_type:str, move_units:float, __=None):
+    def _on_scroll_bar(self, move_type: str, move_units: float, __=None) -> None:
         if move_type == "moveto":
             self.canvas.yview("moveto", move_units)
 
-    def _on_mouse_wheel(self, event):
+    def _on_mouse_wheel(self, event) -> None:
         if self.on_mouse_wheel:
             self.on_mouse_wheel(event)
         if self.bind_canvas_scroll:
             _on_mousewheel(event, self.canvas)
 
-    def _on_left_click(self, event):
+    def _on_left_click(self, event) -> None:
         y = self.get_adjusted_y_view(event)
         x = event.x
         if self.on_left_click:
             self.on_left_click(event, (x, y))
 
-    def _on_middle_click(self, event):
+    def _on_middle_click(self, event) -> None:
         if self.on_middle_click:
             self.on_middle_click(event, (event.x, self.get_adjusted_y_view(event)))
 
-    def _on_right_click(self, event):
+    def _on_right_click(self, event) -> None:
         if self.on_right_click:
             self.on_right_click(event, (event.x, self.get_adjusted_y_view(event)))
 
-    def _on_configure(self, event=None):
+    def _on_configure(self, event=None) -> None:
         if hasattr(self, "refresh"):
             self.refresh()
         w, h = self.winfo_width(), self.winfo_height()
@@ -105,7 +107,7 @@ class ScrolledCanvas(ttk.Frame):
         if self.on_configure:
             self.on_configure(w, h)
 
-    def use_style(self, style):
+    def use_style(self, style) -> None:
         """Reformat with a given ttk style. `Returns None`"""
         if self.winfo_exists():
             self.tile_fill = style.lookup("TEntry", "fieldbackground") or style.lookup(
@@ -153,7 +155,7 @@ class TiledCanvas(ScrolledCanvas):
         self.canvas.bind("<Button-2>", self.__on_middle_click)
         self.canvas.bind("<Button-3>", self.__on_right_click)
 
-    def refresh(self, event=None):
+    def refresh(self, event=None) -> None:
         """Redraw the canvas"""
         self.canvas.delete("all")
         i = 0
@@ -198,7 +200,7 @@ class TiledCanvas(ScrolledCanvas):
         self.canvas_frame.config(height=self.winfo_height())
         self.canvas.config(scrollregion=(0, 0, 0, self.canvas_height))
 
-    def _place_tile(self, tile):
+    def _place_tile(self, tile) -> None:
         tile.references.extend(
             [
                 self.canvas.create_rectangle(
@@ -216,7 +218,7 @@ class TiledCanvas(ScrolledCanvas):
         if tile.active:
             self._activate_tile(tile)
 
-    def _activate_tile(self, tile):
+    def _activate_tile(self, tile) -> None:
         tile.active_references.extend(
             [
                 self.canvas.create_rectangle(
@@ -245,11 +247,11 @@ class TiledCanvas(ScrolledCanvas):
             ]
         )
 
-    def _deactivate_tile(self, tile):
+    def _deactivate_tile(self, tile) -> None:
         for r in tile.active_references:
             self.canvas.delete(r)
 
-    def _on_action(self, event, on_find_action=None):
+    def _on_action(self, event, on_find_action=None) -> None:
         x, y = event.x, self.get_adjusted_y_view(event)
         found = False
         for t in self.tiles:
@@ -267,32 +269,32 @@ class TiledCanvas(ScrolledCanvas):
         if not found:
             self.hovered = None
 
-    def __on_mouse_move(self, event):
+    def __on_mouse_move(self, event) -> None:
         self._on_mouse_move(event)
         self._on_action(event)
 
-    def __on_left_click(self, event):
+    def __on_left_click(self, event) -> None:
         self._on_left_click(event)
 
-        def on_left_click(tile):
+        def on_left_click(tile) -> None:
             if self.on_tile_left_click:
                 self.on_tile_left_click(tile)
 
         self._on_action(event, on_find_action=on_left_click)
 
-    def __on_middle_click(self, event):
+    def __on_middle_click(self, event) -> None:
         self._on_middle_click(event)
 
-        def on_middle_click(tile):
+        def on_middle_click(tile) -> None:
             if self.on_tile_middle_click:
                 self.on_tile_middle_click(tile)
 
         self._on_action(event, on_find_action=on_middle_click)
 
-    def __on_right_click(self, event):
+    def __on_right_click(self, event) -> None:
         self._on_right_click(event)
 
-        def on_right_click(tile):
+        def on_right_click(tile) -> None:
             if self.on_tile_right_click:
                 self.on_tile_right_click(tile)
 
@@ -301,7 +303,8 @@ class TiledCanvas(ScrolledCanvas):
 
 class ExampleTile:
     """An example tile for a Scrolled Canvas"""
-    def __init__(self, manager, text):
+
+    def __init__(self, manager, text: str):
         self.x, self.y = 0, 0
         self.manager = manager
         self.text = text
@@ -310,23 +313,23 @@ class ExampleTile:
         self.active_references = []
         self.active = False
 
-    def set_position(self, x, y):
+    def set_position(self, x: float, y: float) -> None:
         """Sets a tiles position for the draw manager's draw method."""
         self.x, self.y = x, y
 
-    def activate(self):
+    def activate(self) -> None:
         """Calls the manager to activate the widget."""
         if not self.active:
             self.active = True
             self.manager._activate_tile(self)
 
-    def deactivate(self):
+    def deactivate(self) -> None:
         """Calls the manager to deactivate the widget."""
         if self.active:
             self.active = False
             self.manager._deactivate_tile(self)
 
-    def is_in_range(self, pointer_x, pointer_y):
+    def is_in_range(self, pointer_x: float, pointer_y: float) -> bool:
         """Checks if the mouse pointer is in the tile."""
         x, y = pointer_x, pointer_y
         lb = self.x

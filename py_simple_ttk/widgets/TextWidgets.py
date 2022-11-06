@@ -28,13 +28,13 @@ class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
         Scroller.__init__(self, parent)
         SuperWidgetMixin.__init__(self, **kw)
 
-    def select_all(self, event=None):
+    def select_all(self, event=None) -> None:
         """Selects all text. `Returns None`"""
         self.tag_add(tk.SEL, "1.0", tk.END)
         self.mark_set(tk.INSERT, "1.0")
         self.see(tk.INSERT)
 
-    def set(self, val):
+    def set(self, val: str) -> None:
         """Sets the text. `Returns a String`"""
         state = self["state"]
         self.configure(state=tk.NORMAL)
@@ -42,11 +42,11 @@ class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
         self.insert("1.0", val)
         self.configure(state=state)
 
-    def get(self, start="1.0", end=tk.END):
+    def get(self, start: str = "1.0", end: str = tk.END):
         """Returns the contents of the text box with optional start/end kwargs. `Returns a String`"""
         return tk.Text.get(self, start, end)
 
-    def clear(self):
+    def clear(self) -> None:
         """Empties the text box. `Returns None`"""
         self.delete("1.0", tk.END)
 
@@ -54,14 +54,14 @@ class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
         """Get the current location of the cursor. `Returns None`"""
         return tk.Text.index(self, tk.INSERT)
 
-    def set_cursor(self, col, row):
+    def set_cursor(self, col: int, row: int) -> None:
         """Sets the cursor to a given col / row. `Returns None`"""
         text_widget_name.mark_set(tk.INSERT, "%d.%d" % (col, row))
 
-    def enable(self):
+    def enable(self) -> None:
         self.config(state="normal")
 
-    def disable(self):
+    def disable(self) -> None:
         self.config(state="disable")
 
 
@@ -79,14 +79,14 @@ class CopyBox(ttk.Frame):
         self.text.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
         self.get, self.set, self.clear = self.text.get, self.text.set, self.text.clear
 
-    def _on_click(self):
+    def _on_click(self) -> None:
         self.button.configure(text="Copied!")
         self.clipboard_clear()
         self.clipboard_append(self.get())
         self.after(1000, lambda: self.button.configure(text="Copy To Clipboard"))
 
-    def enable(self):
+    def enable(self) -> None:
         self.text.enable()
 
-    def disable(self):
+    def disable(self) -> None:
         self.text.disable()

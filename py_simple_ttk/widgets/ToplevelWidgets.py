@@ -5,13 +5,22 @@ from .EntryWidgets import PasswordEntry
 from .ListBoxWidgets import Table
 from .RadiobuttonWidgets import LabeledRadiobutton
 
+from typing import Callable
+
 
 class FocusedToplevel(tk.Toplevel):
     """Base Focused Toplevel Class"""
 
     __desc__ = """Window that takes focus and center's itself on the current window. Used as a base class for other windows."""
 
-    def __init__(self, *args, title=None, window=None, on_close=None, **kwargs):
+    def __init__(
+        self,
+        *args,
+        title: str = None,
+        window: tk.Toplevel = None,
+        on_close: Callable = None,
+        **kwargs,
+    ):
         self.window = window
         if not window:
             raise ValueError('Missing required argument "window"')
@@ -26,12 +35,12 @@ class FocusedToplevel(tk.Toplevel):
         self.transient(self.window)  # Force toplevel on top of window
         self.update_idletasks()
 
-    def _on_close(self, event=None):
+    def _on_close(self, event=None) -> None:
         if self.on_close:
             self.on_close()
         self.destroy()
 
-    def _finish_setup(self):
+    def _finish_setup(self) -> None:
         def finish_setup():
             """Call this when the setup process is done to properly center the window."""
             self.update_idletasks()
@@ -41,7 +50,7 @@ class FocusedToplevel(tk.Toplevel):
         self.after(100, finish_setup)
         self.after(200, self.focus_force)
 
-    def destroy(self):
+    def destroy(self) -> None:
         try:
             if self.grab_current() is self:
                 self.grab_release()
@@ -56,7 +65,12 @@ class NoticeWindow(FocusedToplevel):
     __desc__ = """`button_action` can call a function to help with determining acceptance vs. the user hitting the exit button."""
 
     def __init__(
-        self, *args, text=None, button_text="Continue", button_action=None, **kwargs
+        self,
+        *args,
+        text: str = None,
+        button_text: str = "Continue",
+        button_action: Callable = None,
+        **kwargs,
     ):
         FocusedToplevel.__init__(self, *args, **kwargs)
         ttk.Label(self.frame, text=text, justify=tk.CENTER, anchor="n").pack(
@@ -68,7 +82,7 @@ class NoticeWindow(FocusedToplevel):
         button.focus_set()
         self._finish_setup()
 
-    def _on_button(self, event=None):
+    def _on_button(self, event=None) -> None:
         if self.button_action:
             self.button_action()
         self.destroy()
@@ -84,16 +98,16 @@ class YesNoCancelWindow(FocusedToplevel):
         *args,
         text: str = None,
         yes_enabled: bool = True,
-        on_yes=None,
+        on_yes: Callable = None,
         yes_text: str = "Yes",
         no_enabled: bool = True,
-        on_no=None,
+        on_no: Callable = None,
         no_text: str = "No",
         cancel_enabled: bool = True,
-        on_cancel=None,
+        on_cancel: Callable = None,
         cancel_text: str = "Cancel",
         no_destroy: bool = False,
-        focus="",  # "yes", "no", "cancel"
+        focus: str = "",  # "yes", "no", "cancel"
         **kwargs,
     ):
         FocusedToplevel.__init__(self, *args, **kwargs)
@@ -127,19 +141,19 @@ class YesNoCancelWindow(FocusedToplevel):
         if focused_button:
             self.after(100, focused_button.focus)
 
-    def _on_yes(self, event=None):
+    def _on_yes(self, event=None) -> None:
         if self.on_yes:
             self.on_yes()
         if not self.no_destroy:
             self.destroy()
 
-    def _on_no(self, event=None):
+    def _on_no(self, event=None) -> None:
         if self.on_no:
             self.on_no()
         if not self.no_destroy:
             self.destroy()
 
-    def _on_cancel(self, event=None):
+    def _on_cancel(self, event=None) -> None:
         if self.on_cancel:
             self.on_cancel()
         if not self.no_destroy:
@@ -205,7 +219,7 @@ If the select_type kwarg is set to true the user will be prompted to select a da
 
         self._finish_setup()
 
-    def _on_yes(self, event=None):
+    def _on_yes(self, event=None) -> None:
         if self.on_yes:
             if self.select_type:
                 t = self.typemap[self.types.get()]
@@ -224,7 +238,7 @@ If the select_type kwarg is set to true the user will be prompted to select a da
         if not self.no_destroy:
             self.destroy()
 
-    def _on_cancel(self, event=None):
+    def _on_cancel(self, event=None) -> None:
         if self.on_cancel:
             self.on_cancel(self.var.get())
         if not self.no_destroy:
@@ -266,7 +280,7 @@ class ListWindow(FocusedToplevel):
         )
         self._finish_setup()
 
-    def _on_yes(self, event=None):
+    def _on_yes(self, event=None) -> None:
         val = self.listbox.get()
         print(f"Listbox val {val}")
         if self.on_yes:
@@ -276,7 +290,7 @@ class ListWindow(FocusedToplevel):
         if not self.no_destroy:
             self.destroy()
 
-    def _on_cancel(self, event=None):
+    def _on_cancel(self, event=None) -> None:
         if self.on_cancel:
             self.on_cancel(self.var.get())
         if not self.no_destroy:
@@ -297,64 +311,3 @@ class PasswordWindow(FocusedToplevel):
         entry.pack(fill=None, expand=True, padx=10, pady=10)
         entry.username_entry.focus_set()
         self._finish_setup()
-
-
-# if __name__ == "__main__":
-
-#     def on_yes(*args):
-#         print(f"Yes - {args}")
-
-#     def on_no(*args):
-#         print(f"No - {args}")
-
-#     def on_cancel(*args):
-#         print(f"Cancel - {args}")
-
-# NOTICEWINDOW
-# root = tk.Tk()
-# root.update_idletasks()
-# root.title("NoticeWindow Test")
-# root.after(
-#     1000,
-#     lambda: NoticeWindow(text="Hello", window=root),
-# )
-# root.mainloop()
-
-# # YESNOCANCELWINDOW
-# root = tk.Tk()
-# root.update_idletasks()
-# root.title("YesNoCancelWindow Test")
-
-# root.after(
-#     1000,
-#     lambda: YesNoWindow(
-#         text="Hello", on_yes=on_yes, on_no=on_no, on_cancel=on_cancel, window=root
-#     ),
-# )
-# root.mainloop()
-
-# # PROMPTWINDOW
-# root = tk.Tk()
-# root.update_idletasks()
-# root.title("PromptWindow Test")
-
-# root.after(
-#     1000,
-#     lambda: PromptWindow(
-#         text="Hello", on_yes=on_yes, on_cancel=on_cancel, window=root
-#     ),
-# )
-# root.mainloop()
-
-# PASSWORDWINDOW
-# root = tk.Tk()
-# root.update_idletasks()
-# root.title("PasswordWindow Test")
-
-# root.after(
-#     1000,
-#     lambda: PromptWindow(
-#         text="Hello", on_yes=on_yes, on_cancel=on_cancel, window=root
-#     ),
-# )
-# root.mainloop()

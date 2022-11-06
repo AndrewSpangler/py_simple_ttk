@@ -27,10 +27,10 @@ class Labeler:
         )
         self.label.pack(fill="x", expand=False, side=labelside)
 
-    def pack(self, *args, **kw):
+    def pack(self, *args, **kw) -> None:
         """Forward pack args to container frame."""
         self.frame.pack(*args, **kw)
 
-    def set_label_text(self, val: str):
+    def set_label_text(self, val: str) -> None:
         """Update a Labeled widget's Label text."""
         self.label.configure(text=val)

@@ -1,7 +1,7 @@
 from zipfile import ZipFile
 
 
-def get_members(zip):
+def get_members(zip: ZipFile) -> list:
     parts = []
     # get all the path prefixes
     for name in zip.namelist():
@@ -27,7 +27,7 @@ def get_members(zip):
 
 
 # Takes a zip file bytream into memory and extracts it
-def handleZIP(file, extract_dir):
+def handleZIP(file: str, extract_dir: str) -> None:
     print("Extracting...")
     with ZipFile(io.BytesIO(file), "r") as zipObj:
         zipObj.extractall(extract_dir, get_members(zipObj))

@@ -36,6 +36,7 @@ class LabeledProgressbar(Labeler, ttk.Progressbar):
             ttk.Progressbar.pack(self, fill="y", expand=True, side=tk.TOP)
         else:
             raise ValueError(f"Bad orientation - {orient}")
+        self["value"] = default
 
     def enable(self):
         """Disable Progresbar. `Returns None`"""
@@ -84,7 +85,9 @@ class LabeledMultiProgressbar(Labeler, ttk.Frame, MultiWidgetMixin):
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         MultiWidgetMixin.__init__(self, LabeledProgressbar, config)
 
-    def add(self, parent: ttk.Frame, key: str, args, kwargs, widget_type=None):
+    def add(
+        self, parent: ttk.Frame, key: str, args, kwargs, widget_type=None
+    ) -> object:
         """Overrides MultiWidgetMixin to deal with vertical orientation `Returns None`"""
         widget_type = widget_type or self.widget_type
         kwargs["orient"] = self.orient
@@ -96,8 +99,9 @@ class LabeledMultiProgressbar(Labeler, ttk.Frame, MultiWidgetMixin):
         else:
             raise ValueError(f"Bad orientation - {self.orient}")
         self.widgets[key] = w
+        return w
 
-    def link(self, config: dict):
+    def link(self, config: dict) -> None:
         """Link to other widgets with a dict of subwidget keys to link to `Returns None`"""
         for k in config:
             self.widgets[k].link(config[k])

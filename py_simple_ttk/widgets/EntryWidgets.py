@@ -36,7 +36,7 @@ want to use the ScrolledText widget. Used when you need a scrollable text entry 
 
 
 class LabeledEntry(Labeler, ttk.Entry, SuperWidgetMixin):
-    """Labeled ttk.Entry with SuperWidgetMixin"""
+    """Labeled ttk.Entry with the SuperWidget mixin"""
 
     __desc__ = """Used when you need a Labeled Entry"""
 
@@ -49,14 +49,16 @@ class LabeledEntry(Labeler, ttk.Entry, SuperWidgetMixin):
         on_keystroke: bool = False,
         bind_enter: bool = True,
         bind_escape_clear: bool = True,
+        labelside: str = tk.LEFT,
         is_child: bool = False,
         min_width: int = 0,
         widgetargs={},
         **kw,
     ):
-        self.var = tk.StringVar()
-        self.var.set(default)
-        Labeler.__init__(self, parent, labeltext, header=not is_child)
+        self.var = tk.StringVar(value=default)
+        Labeler.__init__(
+            self, parent, labeltext, labelside=labelside, header=not is_child
+        )
         ttk.Entry.__init__(
             self, self.frame, textvariable=self.var, width=min_width, **kw
         )
@@ -70,7 +72,7 @@ class LabeledEntry(Labeler, ttk.Entry, SuperWidgetMixin):
         if bind_enter:
             self.bind("<Return>", self._on_execute_command)
         if bind_escape_clear:
-            self.bind("<Escape>", self.clear())
+            self.bind("<Escape>", self.clear)
 
     def enable(self):
         """Enable Entry. `Returns None`"""

@@ -13,7 +13,7 @@ class Counter(ttk.Frame):
     def __init__(
         self,
         parent: ttk.Frame,
-        default: int = 1,
+        default: int = 0,
         min_value: int = None,
         max_value: int = None,
         step: int = 1,
@@ -23,12 +23,16 @@ class Counter(ttk.Frame):
         **kwargs,
     ):
         ttk.Frame.__init__(self, parent, **kwargs)
+        self.min_value, self.max_value = min_value, max_value
+        self.default, self.step = default, step
+        self._state, self.command = state, command
         self.var = tk.IntVar()
-        buttons = []
+        self.set(default, no_command=True)
+        self.buttons = []
         if not depth or depth < 1:
             raise ValueError("Counter depth cannot be less than 1")
         for i in reversed(range(depth)):
-            buttons.append(
+            self.buttons.append(
                 ttk.Button(
                     self,
                     text="<" * (i + 1),
@@ -36,9 +40,9 @@ class Counter(ttk.Frame):
                     width=i + 1.1,
                 )
             )
-        buttons.append(l := ttk.Label(self, textvariable=self.var))
+        self.buttons.append(l := ttk.Label(self, textvariable=self.var))
         for i in range(depth):
-            buttons.append(
+            self.buttons.append(
                 ttk.Button(
                     self,
                     text=">" * (i + 1),
@@ -47,15 +51,11 @@ class Counter(ttk.Frame):
                 )
             )
         self.get = self.var.get
-        self._state, self.command, self.buttons = state, command, buttons
-        self.default, self.step = default, step
-        self.min_value, self.max_value = min_value, max_value
         self._handle_state()
         for b in self.buttons:
             b.pack(side="left", ipadx=0, padx=0)
             b.bind("<MouseWheel>", self._on_mousewheel)
         self.buttons.remove(l)
-        self.set(default, no_command=True)
 
     def set(self, val: int, adjust: int = 0, no_command: bool = False) -> int:
         if not self._state == "normal":
