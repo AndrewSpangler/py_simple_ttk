@@ -1,13 +1,14 @@
 {
 	"name":"py_simple_ttk",
 	"author":"Andrew Spangler",
-	"version":"0.1.21",
+	"version":"0.1.22",
 	"license":"GPLv3",
 	"email":"AndrewSpangler@users.noreply.github.com",
 	"description":"Themes don't have to be hard.",
 	"requirements":["py_simple_lorem"],
 	"url":"https://github.com/AndrewSpangler/",
 	"changelog": {
+		"0.1.22": "Fix readme",
 		"0.1.21": "Fix readme",
 		"0.1.20": "Add counter widget.",
 		"0.1.19": "Add dynamic launcher system.",
