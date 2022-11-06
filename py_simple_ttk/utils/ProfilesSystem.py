@@ -28,9 +28,8 @@ def get_profiles_list(path=PROFILES_REL_PATH, verbose=False):
 class UserProfile:
     """A class to represent a User / User's Preferences"""
 
-    __desc__ = (
-        """Must pass a unique username and a unique identifier for new profile."""
-    )
+    __desc__ = """Must pass a unique username and a unique \
+    identifier for new profile."""
 
     def __init__(self, path, username: str = None, atomic: str = None):
         self.path = path

@@ -1,13 +1,14 @@
 {
 	"name":"py_simple_ttk",
 	"author":"Andrew Spangler",
-	"version":"0.1.19",
+	"version":"0.1.20",
 	"license":"GPLv3",
 	"email":"AndrewSpangler@users.noreply.github.com",
 	"description":"Themes don't have to be hard.",
 	"requirements":["py_simple_lorem"],
 	"url":"https://github.com/AndrewSpangler/",
 	"changelog": {
+		"0.1.20": "Add counter widget.",
 		"0.1.19": "Add dynamic launcher system.",
 		"0.1.18": "Add Ordered Listbox, add more bindings to SuperWidget, cleanup",
 		"0.1.17": "Add set_desktop_background to WidgetsCore.py",
