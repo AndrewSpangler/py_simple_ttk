@@ -19,6 +19,7 @@ from .WidgetsCore import (
     get_generated_font_images_lookup,
     get_local_appdata_folder,
     get_themes_folder,
+    make_aspect_frames,
     open_link,
     recursive_widget_search,
     run_cl,
@@ -134,4 +135,9 @@ from .CounterWidgets import (
     LabeledFloatCounter,
     LabeledMultiCounter,
     LabeledMultiFloatCounter,
+)
+from .SpinboxWidgets import (
+    ActiveSpinbox,
+    LabeledSpinbox,
+    LabeledMultiSpinbox,
 )

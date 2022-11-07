@@ -75,6 +75,14 @@ def force_aspect(
     outer_frame.bind("<Configure>", force_ratio)
 
 
+def make_aspect_frames(parent: ttk.Frame, ratio: float = (16 / 9)) -> tuple:
+    """Creates an outer and inner frame within a parent frame. Forces the inner frame to maintain an aspect ratio. Returns the outer and inner frames."""
+    outer_frame = ttk.Frame(parent)
+    inner_frame = ttk.Frame(outer_frame).place(relwidth=1, relheight=1)
+    force_aspect(inner_frame, outer_frame, ratio)
+    return outer_frame, inner_frame
+
+
 def center_window(main_window: tk.Tk, spawn_window: tk.Toplevel) -> None:
     """Centers spawn window on main window. Call win.update_idletasks() on either window before calling this if said window is not yet shown."""
     pos_x, width = main_window.winfo_x(), main_window.winfo_width()

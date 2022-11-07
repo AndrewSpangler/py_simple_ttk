@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from py_simple_ttk import (
+    ActiveSpinbox,
     App,
     BrowserLauncherTab,
     CommandLauncherTab,
@@ -27,6 +28,7 @@ from py_simple_ttk import (
     LabeledCheckbutton,
     LabeledCombobox,
     LabeledConstrainedEntry,
+    LabeledCopyBox,
     LabeledCounter,
     LabeledDigitsEntry,
     LabeledEntry,
@@ -40,6 +42,7 @@ from py_simple_ttk import (
     LabeledLowercaseEntry,
     LabeledMultiCheckbutton,
     LabeledMultiCombobox,
+    LabeledMultiCopyBox,
     LabeledMultiCounter,
     LabeledMultiDigitsEntry,
     LabeledMultiEntry,
@@ -57,6 +60,7 @@ from py_simple_ttk import (
     LabeledMultiProgressbar,
     LabeledMultiRadiobutton,
     LabeledMultiScale,
+    LabeledMultiSpinbox,
     LabeledMultiUppercaseDigitsEntry,
     LabeledMultiUppercaseEntry,
     LabeledOctdigitsEntry,
@@ -66,6 +70,7 @@ from py_simple_ttk import (
     LabeledProgressbar,
     LabeledRadiobutton,
     LabeledScale,
+    LabeledSpinbox,
     LabeledUppercaseDigitsEntry,
     LabeledUppercaseEntry,
     LauncherTools,
@@ -94,8 +99,6 @@ from py_simple_ttk import (
     UppercaseEntry,
     WattageTab,
     YesNoCancelWindow,
-    LabeledCopyBox,
-    LabeledMultiCopyBox,
 )
 
 
@@ -780,11 +783,20 @@ class CounterTab(Tab):
 
 class CopyBoxTab(Tab):
     def __init__(self, notebook: ttk.Notebook):
-        Tab.__init__(self, notebook)
+        Tab.__init__(self, notebook, "CopyBoxes")
         (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
-        (lcb := LabeledCopyBox(frame).pack()).pack(fill="x", expand=True)
+        (lcb := LabeledCopyBox(frame, "Labeled CopyBox")).pack(fill="x", expand=True)
         lcb.set(lorem(3))
-        # self.copy_box = LabeledMultiCopyBox
+        # LabeledMultiCopyBox
+
+
+class SpinboxTab(Tab):
+    def __init__(self, notebook: ttk.Notebook):
+        Tab.__init__(self, notebook, "Spinboxes")
+        (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
+        self.spinbox = LabeledSpinbox(frame, "Labeled Spinbox", from_=0, to=500)
+        self.spinbox.pack()
+        # LabeledMultiSpinbox
 
 
 class BasicWidgetsTab(Tab):
@@ -792,7 +804,8 @@ class BasicWidgetsTab(Tab):
         Tab.__init__(self, notebook, "Basic Widgets")
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill="both", expand=True)
-
+        self.spinbox_tab = SpinboxTab(self.notebook)
+        self.copybox_tab = CopyBoxTab(self.notebook)
         self.constrained_tab = ConstrainedTab(self.notebook)
         self.form_tab = FormWidgetDemoTab(self.notebook)
         self.counter_tab = CounterTab(self.notebook)

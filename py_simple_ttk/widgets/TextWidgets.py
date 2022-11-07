@@ -112,12 +112,14 @@ class LabeledCopyBox(Labeler, CopyBox):
         self,
         parent: ttk.Frame,
         labeltext: str,
-        text: str = "",
         is_child: bool = False,
+        labelside: str = tk.LEFT,
         **kw,
     ):
         self.is_child = is_child
-        Labeler.__init__(self, parent, labeltext, header=not is_child, labelside="top")
+        Labeler.__init__(
+            self, parent, labeltext, labelside=labelside, header=not is_child
+        )
         CopyBox.__init__(self, self.frame, **kw)
         CopyBox.pack(self, fill="both", expand=True, side="left")
 

@@ -3,18 +3,17 @@ from tkinter import ttk
 
 from .Labeler import Labeler
 from .WidgetsCore import SuperWidgetMixin
-from .MultiWidgets import MultiWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 
 from typing import Callable
 
 
-class LabeledSpinbox(Labeler, ttk.Spinbox, SuperWidgetMixin):
-    """Labeled Spinbox with the SuperWidget mixin"""
+class ActiveSpinbox(ttk.Spinbox, SuperWidgetMixin):
+    """Spinbox with added features"""
 
     def __init__(
         self,
         parent: ttk.Frame,
-        labeltext: str,
         command: Callable = None,
         default: int = 0,
         on_keystroke: bool = False,
@@ -22,21 +21,14 @@ class LabeledSpinbox(Labeler, ttk.Spinbox, SuperWidgetMixin):
         bind_escape_clear: bool = True,
         bind_mouse_wheel: bool = True,
         custom_values: bool = True,
-        labelside: str = tk.LEFT,
-        is_child: bool = False,
         widgetargs: dict = {},
-        **kw
+        **kw,
     ):
         self.var = tk.IntVar(value=default)
         self.default = default
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
-        )
-        ttk.Spinbox.__init__(self, self.frame, textvariable=self.var, **kw)
+        ttk.Spinbox.__init__(self, parent, textvariable=self.var, **kw)
         ttk.Spinbox.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         SuperWidgetMixin.__init__(self, **widgetargs)
-
-        self.is_child = is_child
         self._command = command
         self._state = "normal" if custom_values else "readonly"
 
@@ -73,3 +65,48 @@ class LabeledSpinbox(Labeler, ttk.Spinbox, SuperWidgetMixin):
         """Calls the provided "command" function with the contents of the Entry. `Returns None`"""
         if self._command:
             self._command(self.get())
+
+
+class LabeledSpinbox(Labeler, ActiveSpinbox):
+    """Labeled Spinbox with the SuperWidget mixin"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        labelside: str = tk.LEFT,
+        is_child: bool = False,
+        **kw,
+    ):
+        Labeler.__init__(
+            self, parent, labeltext, labelside=labelside, header=not is_child
+        )
+        self.is_child = is_child
+        ActiveSpinbox.__init__(self, self.frame, **kw)
+        ActiveSpinbox.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+
+
+class LabeledMultiSpinbox(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget Spinbox."""
+
+    __desc__ = """Used when you need multiple, vertically stacked Labeled Spinboxes"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        config: dict,
+        is_child: bool = False,
+        labelside: str = tk.TOP,
+        **kw,
+    ):
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledSpinbox,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
+        )
