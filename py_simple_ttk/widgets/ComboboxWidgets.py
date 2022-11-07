@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Labeler import Labeler
-from .MultiWidget import MultiWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 from .WidgetsCore import SuperWidgetMixin
 from typing import Callable
 
@@ -26,7 +26,7 @@ class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
         is_child: bool = False,
         min_width: int = 0,
         widgetargs={},
-        **kw
+        **kw,
     ):
         self.default = values[default] if any(values) else ""
         self.var = tk.StringVar(value=self.default)
@@ -75,8 +75,8 @@ class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
             self._command(self.get())
 
 
-class LabeledMultiCombobox(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget LabeledCombobox"""
+class LabeledMultiCombobox(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget LabeledCombobox."""
 
     __desc__ = """Used when you need mutiple, vertically stacked Labeled Comboboxes"""
 
@@ -86,12 +86,16 @@ class LabeledMultiCombobox(Labeler, ttk.Frame, MultiWidgetMixin):
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledCombobox,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledCombobox, config)
-        self.is_child = is_child

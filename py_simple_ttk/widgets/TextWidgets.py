@@ -6,27 +6,27 @@ from tkinter import ttk
 from typing import Callable
 from .Labeler import Labeler
 from .Scroller import Scroller, _create_container
-from .WidgetsCore import default_pack
-from .WidgetsCore import SuperWidgetMixin
+from .WidgetsCore import default_pack, SuperWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 
 
 class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
-    """Scrolled Textbox"""
+    """Scrolled Text with SuperWidget mixin"""
 
-    __desc__ = """Scrolled SuperWidget Text. Configure text by passing the `textkw` argument as a dict formatted like a standard kwarg dict."""
+    __desc__ = """Scrolled Text SuperWidget"""
 
     @_create_container
-    def __init__(self, parent, textkw: dict = {}, **kw):
+    def __init__(self, parent, widgetargs: dict = {}, **kw):
         tk.Text.__init__(
             self,
             parent,
             wrap=tk.WORD,
-            **textkw,
+            **kw,
         )
         # Some systems don't bind this automatically
         self.bind("<Control-Key-a>", self.select_all, "+")
         Scroller.__init__(self, parent)
-        SuperWidgetMixin.__init__(self, **kw)
+        SuperWidgetMixin.__init__(self, **widgetargs)
 
     def select_all(self, event=None) -> None:
         """Selects all text. `Returns None`"""
@@ -59,6 +59,7 @@ class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
         text_widget_name.mark_set(tk.INSERT, "%d.%d" % (col, row))
 
     def enable(self) -> None:
+        """Enable Text box"""
         self.config(state="normal")
 
     def disable(self) -> None:
@@ -66,18 +67,16 @@ class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
 
 
 class CopyBox(ttk.Frame):
-    """Scrolled Text with "Copy tp Clipboard" Button"""
+    """Scrolled Text with "Copy to Clipboard" Button"""
 
     __desc__ = "A widget with a scrolled textbox and button that copies the textbox contents to the user's clipboard. Useful for form output, etc."
 
     def __init__(self, parent: ttk.Frame, **kw):
-
         ttk.Frame.__init__(self, parent)
         self.button = ttk.Button(self, text="Copy to Clipboard", command=self._on_click)
         self.button.pack(side=tk.BOTTOM, fill="x", expand=False, pady=(0, 5))
-        self.text = ScrolledText(self, textkw=kw)
+        self.text = ScrolledText(self, **kw)
         self.text.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-        self.get, self.set, self.clear = self.text.get, self.text.set, self.text.clear
 
     def _on_click(self) -> None:
         self.button.configure(text="Copied!")
@@ -86,7 +85,64 @@ class CopyBox(ttk.Frame):
         self.after(1000, lambda: self.button.configure(text="Copy To Clipboard"))
 
     def enable(self) -> None:
+        """Enable CopyBox"""
         self.text.enable()
 
     def disable(self) -> None:
+        """Disable CopyBox"""
         self.text.disable()
+
+    def get(self) -> None:
+        """Get CopyBox contents"""
+        return self.text.get()
+
+    def set(self, val: str) -> None:
+        """Set CopyBox Contents"""
+        self.text.set(val)
+
+    def clear(self) -> None:
+        """Clear CopyBox Contents"""
+        self.text.clear()
+
+
+class LabeledCopyBox(Labeler, CopyBox):
+    """Labeled CopyBox widget"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        text: str = "",
+        is_child: bool = False,
+        **kw,
+    ):
+        self.is_child = is_child
+        Labeler.__init__(self, parent, labeltext, header=not is_child, labelside="top")
+        CopyBox.__init__(self, self.frame, **kw)
+        CopyBox.pack(self, fill="both", expand=True, side="left")
+
+
+class LabeledMultiCopyBox(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget CopyBox."""
+
+    __desc__ = """Used when you need multiple, vertically stacked Labeled CopyBoxes"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        config: dict,
+        is_child: bool = False,
+        labelside: str = tk.TOP,
+        **kw,
+    ):
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            CopyBox,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
+        )

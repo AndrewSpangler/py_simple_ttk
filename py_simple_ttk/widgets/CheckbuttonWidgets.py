@@ -4,7 +4,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Labeler import Labeler
-from .MultiWidget import MultiWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 
 
 class LabeledCheckbutton(Labeler, ttk.Checkbutton):
@@ -55,7 +55,7 @@ own multiwidgets."""
         self.var.set(self.default)
 
 
-class LabeledMultiCheckbutton(Labeler, ttk.Frame, MultiWidgetMixin):
+class LabeledMultiCheckbutton(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledCheckbutton."""
 
     __desc__ = (
@@ -68,12 +68,16 @@ class LabeledMultiCheckbutton(Labeler, ttk.Frame, MultiWidgetMixin):
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledCheckbutton,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledCheckbutton, config)
-        self.is_child = is_child

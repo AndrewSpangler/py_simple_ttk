@@ -29,7 +29,7 @@ CORE_FUNCTIONS = [
 ]
 CORE_OBJECTS = [MultiWidgetMixin, SuperWidgetMixin]
 
-TEXT_WIDGETS = [ScrolledText, CopyBox]
+TEXT_WIDGETS = [ScrolledText, CopyBox, LabeledCopyBox, LabeledMultiCopyBox]
 TABS = [
     Tab,
     LauncherTab,
@@ -52,11 +52,16 @@ ENTRY_WIDGETS = [
     LabeledButtonEntry,
     LabeledMultiButtonEntry,
     LabeledPathEntry,
+    LabeledMultiPathEntry,
     PasswordEntry,
+    LabeledPasswordEntry,
+    LabeledMultiPasswordEntry,
 ]
+
 CONSTRAINEDENTRY_WIDGETS = [
     ConstrainedEntry,
     LabeledConstrainedEntry,
+    LabeledMultiConstrainedEntry,
     IntEntry,
     LabeledIntEntry,
     LabeledMultiIntEntry,

@@ -4,7 +4,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Labeler import Labeler
-from .MultiWidget import MultiWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 
 
 class LabeledRadiobutton(Labeler, ttk.Frame):
@@ -17,9 +17,9 @@ class LabeledRadiobutton(Labeler, ttk.Frame):
         options: list = [],
         default: int = 0,
         is_child: bool = False,
-        **kw
+        **kw,
     ):
-        self.var = tk.IntVar()
+        self.var = tk.StringVar()
         self.default = options[default]
         self.var.set(self.default)
         self.is_child = is_child
@@ -38,9 +38,9 @@ class LabeledRadiobutton(Labeler, ttk.Frame):
         """Enable Radiobutton. `Returns None`"""
         self["state"] = tk.DISABLED
 
-    def get(self) -> bool:
-        """Get Radiobutton value. `Returns a Bool`"""
-        return bool(self.var.get())
+    def get(self) -> str:
+        """Get Radiobutton value. `Returns a String`"""
+        return self.var.get()
 
     def set(self, val: bool) -> None:
         """Set Radiobutton value. `Returns None`"""
@@ -51,8 +51,10 @@ class LabeledRadiobutton(Labeler, ttk.Frame):
         self.var.set(self.default)
 
 
-class LabeledMultiRadiobutton(Labeler, ttk.Frame, MultiWidgetMixin):
+class LabeledMultiRadiobutton(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledRadiobutton"""
+
+    __desc__ = """Used when you need multiple, vertically stacked LabeledRadiobuttons"""
 
     def __init__(
         self,
@@ -60,12 +62,16 @@ class LabeledMultiRadiobutton(Labeler, ttk.Frame, MultiWidgetMixin):
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledRadiobutton,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledRadiobutton, config)
-        self.is_child = is_child

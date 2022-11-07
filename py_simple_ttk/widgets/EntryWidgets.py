@@ -11,7 +11,9 @@ from tkinter.filedialog import (
 )
 from typing import Callable
 from .Labeler import Labeler
-from .MultiWidget import MultiWidgetMixin
+
+# from .MultiWidget import MultiWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 from .Scroller import Scroller, _create_container
 from .WidgetsCore import SuperWidgetMixin, focus_next, get_asset
 from .ToolTip import ToolTip
@@ -100,7 +102,7 @@ class LabeledEntry(Labeler, ttk.Entry, SuperWidgetMixin):
             self._command(self.get())
 
 
-class LabeledMultiEntry(Labeler, ttk.Frame, MultiWidgetMixin):
+class LabeledMultiEntry(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledEntry"""
 
     __desc__ = """Used when you need multiple, vertically stacked Labeled Entries"""
@@ -111,15 +113,19 @@ class LabeledMultiEntry(Labeler, ttk.Frame, MultiWidgetMixin):
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledEntry,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledEntry, config)
-        self.is_child = is_child
 
 
 class LabeledButtonEntry(LabeledEntry):
@@ -133,10 +139,36 @@ class LabeledButtonEntry(LabeledEntry):
         self.button.pack(expand=False, side=tk.RIGHT)
 
 
+class LabeledMultiButtonEntry(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget Labeled ButtonEntry"""
+
+    __desc__ = """Used when you need multiple, vertically stacked Labeled Entries"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        config: dict,
+        is_child: bool = False,
+        labelside: str = tk.TOP,
+        **kw,
+    ):
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledButtonEntry,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
+        )
+
+
 class LabeledPathEntry(LabeledEntry):
     """LabeledEntry with a ttk.Button bound to a file- or folder-picker for easy \
-    system path selection. Defaults to tk.filedialog.askopenfilename if no \
-    tk.filedialog specified."""
+	system path selection. Defaults to tk.filedialog.askopenfilename if no \
+	tk.filedialog specified."""
 
     _valid_dialogs = [
         askopenfilename,
@@ -164,12 +196,10 @@ class LabeledPathEntry(LabeledEntry):
         self.button.pack(expand=False, side=tk.RIGHT)
 
 
-class LabeledMultiButtonEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget LabeledEntry"""
+class LabeledMultiPathEntry(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget LabeledPathEntry"""
 
-    __desc__ = (
-        """Used when you need multiple, vertically stacked Labeled Button Entries"""
-    )
+    __desc__ = """Used when you need multiple, vertically stacked LabeledPathEntries"""
 
     def __init__(
         self,
@@ -177,15 +207,19 @@ class LabeledMultiButtonEntry(Labeler, ttk.Frame, MultiWidgetMixin):
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledPathEntry,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledButtonEntry, config)
-        self.is_child = is_child
 
 
 class PasswordEntry(ttk.Frame):
@@ -223,7 +257,7 @@ entries is disabled."
         f.pack(fill="x", expand=True)
         self.password_entry = LabeledEntry(f, labeltext=password_text)
         self.password_entry.configure(show=password_char)
-        self.password_entry.bind("<Return>", self.on_submit)
+        self.password_entry.bind("<Return>", self._on_submit)
         if password_enabled:
             self.password_entry.pack(side=tk.LEFT, anchor="n", fill="x", expand=True)
             if peek_enabled:
@@ -242,25 +276,76 @@ entries is disabled."
                 self.peek_button.pack(
                     side=tk.RIGHT, expand=False, ipadx=0, ipady=0, padx=0, pady=0
                 )
-                self.peek_button.bind("<Button-1>", self.on_peek_press)
-                self.peek_button.bind("<ButtonRelease-1>", self.on_peek_release)
+                self.peek_button.bind("<Button-1>", self._on_peek_press)
+                self.peek_button.bind("<ButtonRelease-1>", self._on_peek_release)
                 ToolTip(self.peek_button, "Peek at password", align=tk.RIGHT)
 
-        ttk.Button(self, text=button_text, command=self.on_submit).pack(
+        ttk.Button(self, text=button_text, command=self._on_submit).pack(
             side=tk.TOP, fill="x", expand=False
         )
 
-    def on_peek_press(self, event=None):
+    def _on_peek_press(self, event=None) -> None:
         """Show the contents of the password entry while it is being pressed"""
         self.password_entry.configure(show="")
         self.peek_button.configure(image=self.peek[1])
 
-    def on_peek_release(self, event=None):
+    def _on_peek_release(self, event=None) -> None:
         """Rehide the contents of the password entry"""
         self.password_entry.configure(show="*")
         self.peek_button.configure(image=self.peek[0])
 
-    def on_submit(self, event=None):
+    def _on_submit(self, event=None) -> None:
         """Calls the provided "command" function with the contents of the entry box. `Returns None`"""
         if self.command:
-            self.command((self.username_entry.get(), self.password_entry.get()))
+            self.command(self.get())
+
+    def get(self) -> tuple:
+        return (self.username_entry.get(), self.password_entry.get())
+
+    def set(self, values: tuple) -> None:
+        username, password = values
+        self.username_entry.set(username)
+        self.password_entry.set(password)
+
+
+class LabeledPasswordEntry(Labeler, PasswordEntry):
+    """Labeled Username/Password entry"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        *args,
+        is_child: bool = False,
+        **kw,
+    ):
+        Labeler.__init__(self, parent, labeltext, header=not is_child)
+        PasswordEntry.__init__(self, self.frame, *args, **kw)
+        PasswordEntry.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+        self.is_child = is_child
+
+
+class LabeledMultiPasswordEntry(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget Labeled PasswordEntry"""
+
+    __desc__ = """Used when you need multiple, vertically stacked Labeled Username/Password Entries"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        config: dict,
+        is_child: bool = False,
+        labelside: str = tk.TOP,
+        **kw,
+    ):
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledPasswordEntry,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
+        )

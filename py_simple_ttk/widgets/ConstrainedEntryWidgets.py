@@ -6,6 +6,8 @@ from .Labeler import Labeler
 from .WidgetsCore import SuperWidgetMixin
 from .MultiWidget import MultiWidgetMixin
 
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
+
 # Type-constrained
 def check_entry_type(val: str, typ: type) -> bool:
     """Core type checker function. Limits entry to chars that construct a given type"""
@@ -28,81 +30,36 @@ def check_entry_contents(val: str, limiter: list) -> bool:
     return True
 
 
-class ConstrainedEntry(ttk.Frame):
-    """An Entry widget that allows certain constraints to be placed on the input with a given check_function that returns true if the input is allowed for each keystroke / input."""
+class ConstrainedEntry(ttk.Frame, SuperWidgetMixin):
+    """Constrained Entry with SuperWidget mixin"""
 
-    def __init__(
-        self,
-        parent,
-        check_function,
-        return_type: type = str,
-        default: str = "",
-        widgetargs={},
-        **kwargs,
-    ):
-        ttk.Frame.__init__(self, parent)
-        self.var = tk.StringVar()
-        self.var.trace("w", self._validate)
-        self.default = default
-        if self.default:
-            self.set(default)
-        self.entry = ttk.Entry(self, textvariable=self.var, **kwargs)
-        self.entry.pack(fill="x", expand=True)
-        self.check_function, self.return_type = check_function, return_type
-        self.last = ""
-
-    def _validate(self, *args, **kwargs) -> bool:
-        val = self.var.get()
-        if self.check_function(val):
-            self.last = val
-        else:
-            self.var.set(self.last)
-
-    def get(self) -> object:
-        return self.return_type(self.var.get())
-
-    def set(self, val) -> None:
-        try:
-            self.var.set(str(val))
-        except:
-            raise ValueError("Invaild type supplied.")
-
-    def clear(self):
-        """Set Entry value to default, empty unless default set. `Returns None`"""
-        self.var.set(self.default)
-
-
-class LabeledConstrainedEntry(Labeler, ConstrainedEntry, SuperWidgetMixin):
-    """Labeled Constrained Entry with SuperWidgetMixin"""
+    __desc__ = "An Entry widget that allows certain constraints to be placed on the input with a given check_function that returns true if the input is allowed for each keystroke / input."
 
     def __init__(
         self,
         parent: ttk.Frame,
         check_function: Callable,
-        labeltext: str,
+        return_type: type = str,
         command: Callable = None,
-        default: str = "",
         on_keystroke: bool = False,
         bind_enter: bool = True,
         bind_escape_clear: bool = True,
-        is_child: bool = False,
-        min_width: int = 0,
+        default: str = "",
         widgetargs={},
         **kw,
     ):
-        Labeler.__init__(self, parent, labeltext, header=not is_child)
-        ConstrainedEntry.__init__(
-            self,
-            self.frame,
-            check_function,
-            width=min_width,
-            **kw,
-        )
-        ConstrainedEntry.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+        ttk.Frame.__init__(self, parent)
         SuperWidgetMixin.__init__(self, **widgetargs)
-        self.default = default
-        self.is_child = is_child
+        self.var = tk.StringVar()
+        self.var.trace("w", self._validate)
         self._command = command
+        self.default = default
+        if self.default:
+            self.set(default)
+        self.entry = ttk.Entry(self, textvariable=self.var, **kw)
+        self.entry.pack(fill="x", expand=True)
+        self.check_function, self.return_type = check_function, return_type
+        self.last = ""
         if on_keystroke:
             self.entry.bind("<KeyRelease>", self._on_execute_command)
         if bind_enter:
@@ -110,21 +67,72 @@ class LabeledConstrainedEntry(Labeler, ConstrainedEntry, SuperWidgetMixin):
         if bind_escape_clear:
             self.entry.bind("<Escape>", self.clear())
 
-    def enable(self):
-        """Enable Entry. `Returns None`"""
-        self.entry["state"] = tk.NORMAL
-
-    def disable(self):
-        """Disable Entry. `Returns None`"""
-        self.entry["state"] = tk.DISABLED
-
-    def _on_execute_command(self, event=None):
+    def _on_execute_command(self, event=None) -> None:
         """Calls the provided "command" function with the contents of the Entry. `Returns None`"""
         if self._command:
             self._command(self.get())
 
+    def _validate(self, *args, **kw) -> bool:
+        """Applies the check function"""
+        val = self.var.get()
+        if self.check_function(val):
+            self.last = val
+        else:
+            self.var.set(self.last)
+
+    def get(self) -> object:
+        """Get Entry value, return type varies based on Entry constraint."""
+        return self.return_type(self.var.get())
+
+    def set(self, val) -> None:
+        """Set Entry value. `Returns None`"""
+        try:
+            self.var.set(str(val))
+        except:
+            raise ValueError("Invaild type supplied.")
+
+    def clear(self) -> None:
+        """Set Entry value to default, empty unless default set. `Returns None`"""
+        self.var.set(self.default)
+
+    def enable(self) -> None:
+        """Enable Entry. `Returns None`"""
+        self.entry["state"] = tk.NORMAL
+
+    def disable(self) -> None:
+        """Disable Entry. `Returns None`"""
+        self.entry["state"] = tk.DISABLED
+
 
 # fmt: off
+class LabeledConstrainedEntry(Labeler, ConstrainedEntry):
+    """Labeled Constrained Entry"""
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        *args,
+        is_child: bool = False,
+        **kw,
+    ):
+        Labeler.__init__(self, parent, labeltext, header=not is_child)
+        ConstrainedEntry.__init__(self, self.frame, *args, **kw)
+        ConstrainedEntry.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+        self.is_child = is_child
+class LabeledMultiConstrainedEntry(LabeledMultiWidgetMixin):
+    """Labeled Multi Constrained Entry"""
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        config: dict,
+        is_child: bool = False,
+        labelside: str = tk.TOP,
+        **kw,
+    ):
+        LabeledMultiWidgetMixin.__init__(self,LabeledConstrainedEntry,parent,labeltext,config,is_child,labelside,**kw,)
+
+
 def check_entry_int(val: str) -> bool:
     """Check if an entry input is a valid integer"""
     return check_entry_type(val, int)
@@ -134,28 +142,25 @@ class IntEntry(ConstrainedEntry):
         ConstrainedEntry.__init__(self, parent, check_entry_int, int, *args, **kwargs)
 class LabeledIntEntry(LabeledConstrainedEntry):
     """Labeled Int Entry Widget"""
+
     def __init__(self, parent, labeltext, *args, **kwargs):
         kwargs.update({"return_type": int})
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_int, labeltext, **kwargs
+            self, parent, labeltext, check_entry_int, **kwargs
         )
-class LabeledMultiIntEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Int Entry"""
+class LabeledMultiIntEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledIntEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledIntEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_float(val: str) -> bool:
@@ -172,25 +177,21 @@ class LabeledFloatEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         kwargs.update({"return_type": float})
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_float, labeltext, **kwargs
+            self, parent, labeltext, check_entry_float, **kwargs
         )
-class LabeledMultiFloatEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Float Entry"""
+class LabeledMultiFloatEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledFloatEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledFloatEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_lowercase(val: str) -> bool:
@@ -204,25 +205,21 @@ class LowercaseEntry(ConstrainedEntry):
 class LabeledLowercaseEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_lowercase, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_lowercase, **kwargs
         )
-class LabeledMultiLowercaseEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Lowercase Entry"""
+class LabeledMultiLowercaseEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledLowercaseEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledLowercaseEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_uppercase(val: str) -> bool:
@@ -236,25 +233,21 @@ class UppercaseEntry(ConstrainedEntry):
 class LabeledUppercaseEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_uppercase, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_uppercase, **kwargs
         )
-class LabeledMultiUppercaseEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Uppercase Entry"""
+class LabeledMultiUppercaseEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledUppercaseEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledUppercaseEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_letters(val: str) -> bool:
@@ -268,25 +261,21 @@ class LettersEntry(ConstrainedEntry):
 class LabeledLettersEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_letters, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_letters, **kwargs
         )
-class LabeledMultiLettersEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Letters Entry"""
+class LabeledMultiLettersEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledLettersEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledLettersEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_digits(val: str) -> bool:
@@ -300,25 +289,21 @@ class DigitsEntry(ConstrainedEntry):
 class LabeledDigitsEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_digits, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_digits, **kwargs
         )
-class LabeledMultiDigitsEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Digits Entry"""
+class LabeledMultiDigitsEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledDigitsEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_uppercase_digits(val: str) -> bool:
@@ -332,25 +317,21 @@ class UppercaseDigitsEntry(ConstrainedEntry):
 class LabeledUppercaseDigitsEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_uppercase_digits, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_uppercase_digits, **kwargs
         )
-class LabeledMultiUppercaseDigitsEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Uppercase Digits Entry"""
+class LabeledMultiUppercaseDigitsEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledUppercaseDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledUppercaseDigitsEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_lowercase_digits(val: str) -> bool:
@@ -364,25 +345,21 @@ class LowercaseDigitsEntry(ConstrainedEntry):
 class LabeledLowercaseDigitsEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_lowercase_digits, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_lowercase_digits, **kwargs
         )
-class LabeledMultiLowercaseDigitsEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Lowercase Digits Entry"""
+class LabeledMultiLowercaseDigitsEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledLowercaseDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledLowercaseDigitsEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_letters_digits(val) -> bool:
@@ -396,25 +373,21 @@ class LettersDigitsEntry(ConstrainedEntry):
 class LabeledLettersDigitsEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_letters_digits, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_letters_digits, **kwargs
         )
-class LabeledMultiLettersDigitsEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Letters Digits Entry"""
+class LabeledMultiLettersDigitsEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledLettersDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledLettersDigitsEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_hexdigits(val: str) -> bool:
@@ -428,25 +401,21 @@ class HexdigitsEntry(ConstrainedEntry):
 class LabeledHexdigitsEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_hexdigits, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_hexdigits, **kwargs
         )
-class LabeledMultiHexdigitsEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Hexdigits Entry"""
+class LabeledMultiHexdigitsEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledHexdigitsEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledHexdigitsEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_octdigits(val: str) -> bool:
@@ -460,25 +429,21 @@ class OctdigitsEntry(ConstrainedEntry):
 class LabeledOctdigitsEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_octdigits, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_octdigits, **kwargs
         )
-class LabeledMultiOctdigitsEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Octdigits Entry"""
+class LabeledMultiOctdigitsEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledOctdigitsEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledOctdigitsEntry, config)
-        self.is_child = is_child
 
 
 def check_entry_ascii_printable(val: str) -> bool:
@@ -492,22 +457,21 @@ class PrintableEntry(ConstrainedEntry):
 class LabeledPrintableEntry(LabeledConstrainedEntry):
     def __init__(self, parent, labeltext, *args, **kwargs):
         LabeledConstrainedEntry.__init__(
-            self, parent, check_entry_ascii_printable, labeltext, **kwargs
+            self, parent, labeltext, check_entry_ascii_printable, **kwargs
         )
-class LabeledMultiPrintableEntry(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget Labeled Printable Entry"""
+class LabeledMultiPrintableEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self, LabeledPrintableEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledPrintableEntry, config)
-        self.is_child = is_child
+
+
+# # # # # 3 # 519

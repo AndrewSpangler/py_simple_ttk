@@ -24,7 +24,7 @@ class LabeledSpinbox(Labeler, ttk.Spinbox, SuperWidgetMixin):
         custom_values: bool = True,
         labelside: str = tk.LEFT,
         is_child: bool = False,
-        widgetargs={},
+        widgetargs: dict = {},
         **kw
     ):
         self.var = tk.IntVar(value=default)

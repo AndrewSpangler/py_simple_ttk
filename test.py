@@ -94,6 +94,8 @@ from py_simple_ttk import (
     UppercaseEntry,
     WattageTab,
     YesNoCancelWindow,
+    LabeledCopyBox,
+    LabeledMultiCopyBox,
 )
 
 
@@ -120,10 +122,12 @@ class TextBoxTestTab(Tab):
         Tab.__init__(self, notebook, "AutoScrollbarredTextbox")
         self.text = ScrolledText(
             self,
-            on_mouse_move=self.update_mouse,
-            on_left_click=self.update_cursor,
-            on_right_click=self.update_cursor,
-            on_middle_click=self.update_cursor,
+            widgetargs={
+                "on_mouse_move": self.update_mouse,
+                "on_left_click": self.update_cursor,
+                "on_right_click": self.update_cursor,
+                "on_middle_click": self.update_cursor,
+            },
         )
         self.text.pack(fill=tk.BOTH, expand=True, side=tk.TOP)
         self.text.insert("1.0", lorem(1000))
@@ -772,6 +776,15 @@ class CounterTab(Tab):
             {"Counter A": ((), {}), "Counter B": ((), {})},
         )
         default_pack(self.labeled_multi_float_counter)
+
+
+class CopyBoxTab(Tab):
+    def __init__(self, notebook: ttk.Notebook):
+        Tab.__init__(self, notebook)
+        (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
+        (lcb := LabeledCopyBox(frame).pack()).pack(fill="x", expand=True)
+        lcb.set(lorem(3))
+        # self.copy_box = LabeledMultiCopyBox
 
 
 class BasicWidgetsTab(Tab):

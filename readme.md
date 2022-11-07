@@ -277,7 +277,7 @@ py_simple_ttk exists because I got tired of rewriting the same code over and ove
 
 ```py
 class LabeledButton(Labeler, Button):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, is_child: bool = False, command=None, **kw):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, text: str = '', is_child: bool = False, command: Callable = None, default: str = '', **kw):
 		...
 	def clear(self) -> None:
 		"""Set button text to default"""
@@ -293,150 +293,150 @@ class LabeledButton(Labeler, Button):
 ### py_simple_ttk.widgets.WidgetsCore.bbox_to_width_and_height<a name="mark8"></a>[^](#mark7)
 > **Takes a bbox and converts it to a width and height tuple.**
 > 
-```python
-def bbox_to_width_and_height(bbox: tuple):
+> ```python
+def bbox_to_width_and_height(bbox: tuple) -> tuple:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.center_window<a name="mark9"></a>[^](#mark7)
 > **Centers spawn window on main window. Call win.update_idletasks() on either window before calling this if said window is not yet shown.**
 > 
-```python
-def center_window(main_window: tkinter.Tk, spawn_window: tkinter.Toplevel):
+> ```python
+def center_window(main_window: tkinter.Tk, spawn_window: tkinter.Toplevel) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.check_in_bounds<a name="mark10"></a>[^](#mark7)
 > **Checks if a position is within a given bounds. Pos is generally a mouse event position tuple, bounds is generally a canvas.bbox(), but a (left, top, right, bottom) tuple will work too.**
 > 
-```python
-def check_in_bounds(pos: tuple, bounds: tuple):
+> ```python
+def check_in_bounds(pos: tuple, bounds: tuple) -> bool:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.complex_widget_search<a name="mark11"></a>[^](#mark7)
 > **A more robust version of the widget search with lists for multiple widget types found in one go**
 > 
-```python
-def complex_widget_search(node_widget, widget_types_to_find: list, found_lists={}):
+> ```python
+def complex_widget_search(node_widget, widget_types_to_find: list, found_lists: dict = {}) -> dict:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.copy_to_user_clipboard<a name="mark12"></a>[^](#mark7)
 > **Copies a string to the user's clipboard.**
 > 
-```python
-def copy_to_user_clipboard(widget, value):
+> ```python
+def copy_to_user_clipboard(widget, value: str) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.create_round_rectangle<a name="mark13"></a>[^](#mark7)
 > **Draws a rounded rectangle of a given radius on a tk.canvas**
 > 
-```python
-def create_round_rectangle(canvas, x1, y1, x2, y2, r=20, fill='', outline='#000000', **kwargs):
+> ```python
+def create_round_rectangle(canvas, x1: float, y1: float, x2: float, y2: float, r: float = 20, fill: str = '', outline: str = '#000000', **kwargs):
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.default_pack<a name="mark14"></a>[^](#mark7)
 > **Apply a consistent descending packing method.**
 > 
-```python
-def default_pack(widget, bottom: bool = False, padx=5):
+> ```python
+def default_pack(widget, bottom: bool = False, padx: tuple = 5) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.default_separator<a name="mark15"></a>[^](#mark7)
 > **Apply a consistent horizontal separator.**
 > 
-```python
-def default_separator(f: tkinter.ttk.Frame, padx: int = 35, pady=(10, 5)):
+> ```python
+def default_separator(f: tkinter.ttk.Frame, padx: tuple = 35, pady: tuple = (10, 5)) -> tkinter.ttk.Separator:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.default_vertical_pack<a name="mark16"></a>[^](#mark7)
 > **Apply a consistent packing method to vertically packed widgets.**
 > 
-```python
-def default_vertical_pack(widget, expand: bool = False, fill: str = 'both', padx: int = 0):
+> ```python
+def default_vertical_pack(widget, expand: bool = False, fill: str = 'both', padx: tuple = 0) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.default_vertical_separator<a name="mark17"></a>[^](#mark7)
 > **Apply a consistent vertical separator.**
 > 
-```python
-def default_vertical_separator(frame: tkinter.ttk.Frame, pady: int = 15, padx: int = 10):
+> ```python
+def default_vertical_separator(frame: tkinter.ttk.Frame, pady: tuple = 15, padx: tuple = 10) -> tkinter.ttk.Separator:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.enable_notebook_movement<a name="mark18"></a>[^](#mark7)
 > **Copyright CJB 2010-07-31: https://wiki.tcl-lang.org/page/Drag+and+Drop+Notebook+Tabs Enables Tab dragging in subsequently created notebooks. Only run this function once.**
 > 
-```python
-def enable_notebook_movement(app):
+> ```python
+def enable_notebook_movement(app) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.focus_next<a name="mark19"></a>[^](#mark7)
 > **Forces focus to the widget after the one that triggered the event**
 > 
-```python
-def focus_next(event):
+> ```python
+def focus_next(event) -> object:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.force_aspect<a name="mark20"></a>[^](#mark7)
 > **Forces an inner frame to maintain an aspect ratio regardless of the outer frame's size**
 > 
-```python
-def force_aspect(inner_frame: tkinter.ttk.Frame, outer_frame: tkinter.ttk.Frame, ratio=1.7777777777777777):
+> ```python
+def force_aspect(inner_frame: tkinter.ttk.Frame, outer_frame: tkinter.ttk.Frame, ratio: float = 1.7777777777777777) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.get_asset<a name="mark21"></a>[^](#mark7)
 > **Gets an asset from the included assets folder by relative path. Works with pyinstaller.**
 > 
-```python
-def get_asset(path, folder='C:\\Users\\arcti\\github\\py_simple_ttk\\py_simple_ttk\\./assets'):
+> ```python
+def get_asset(path, folder: str = 'C:\\Users\\arcti\\github\\py_simple_ttk\\py_simple_ttk\\./assets') -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.get_bundled_themes_list<a name="mark22"></a>[^](#mark7)
 > **None**
 > 
-```python
-def get_bundled_themes_list(verbose=False):
+> ```python
+def get_bundled_themes_list(verbose: bool = False) -> list:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.get_generated_font_images_lookup<a name="mark23"></a>[^](#mark7)
 > **Makes a lookup for the pre-generated open-sans font monograms that ship with py_simple_ttk.**
 > 
-```python
-def get_generated_font_images_lookup(path=None):
+> ```python
+def get_generated_font_images_lookup(path: str = None) -> dict:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.get_local_appdata_folder<a name="mark24"></a>[^](#mark7)
 > **Opens user's Windows home folder. Only works on Windows for obvious reasons.**
 > 
-```python
-def get_local_appdata_folder():
+> ```python
+def get_local_appdata_folder() -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.get_themes_folder<a name="mark25"></a>[^](#mark7)
 > **Gets the absolute path to the included themes folder**
 > 
-```python
-def get_themes_folder():
+> ```python
+def get_themes_folder() -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.open_link<a name="mark26"></a>[^](#mark7)
 > **Opens a link in the user's default web browser. `Returns None`**
 > 
-```python
-def open_link(link: str):
+> ```python
+def open_link(link: str) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.recursive_widget_search<a name="mark27"></a>[^](#mark7)
 > **Adds widgets of a given type to a list as it travels up, away from the root of a widget tree. This method can be slow on large widget trees but is useful for retheming tk widgets with ttk formatting on theme changes. `Returns a list of widgets`**
 > 
-```python
-def recursive_widget_search(node_widget, widget_type_to_find, found_list=[]):
+> ```python
+def recursive_widget_search(node_widget, widget_type_to_find: type, found_list: list = []) -> list:
 > 	...
-```
+> ```
 ### py_simple_ttk.widgets.WidgetsCore.run_cl<a name="mark28"></a>[^](#mark7)
 > **Runs something via command line. `Returns None`**
 > 
-```python
-def run_cl(commands: list):
+> ```python
+def run_cl(commands: list) -> None:
 > 	...
-```
+> ```
 ## Core Widgets<a name="mark29"></a>[^](#mark4)
 
 ### py_simple_ttk.widgets.MultiWidget.MultiWidgetMixin<a name="mark30"></a>[^](#mark29)
@@ -445,19 +445,19 @@ def run_cl(commands: list):
 MultiWidgets support a simple get/set system. Calling get without a configuration list returns a dict of subwidget keys mapped to the values of each subwidget's .get value. Passing a list of subwidget keys limits MultiWidgetMixin.get to said subwidgets. Subclassing a multiwidget with one or more instances of one class and then calling multiwidget.add() with different classes after is acceptable assuming the widget supports being added and .get / .set / .enable / .disable / .clear methods.
 ```py
 class MultiWidgetMixin(object):
-	def __init__(self, widget_type, config: dict):
+	def __init__(self, widget_type: type, config: dict):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.WidgetsCore.SuperWidgetMixin<a name="mark31"></a>[^](#mark29)
@@ -571,7 +571,7 @@ class ResizableCanvas(Canvas):
 		"""Create polygon with coordinates x1,y1,...,xn,yn."""
 	def create_rectangle(self, *args, **kw):
 		"""Create rectangle with coordinates x1,y1,x2,y2."""
-	def create_round_rectangle(self, x1: float, y1: float, x2: float, y2: float, r: float = 20, fill: str = '', outline: str = '#000000', **kwargs):
+	def create_round_rectangle(self, x1: float, y1: float, x2: float, y2: float, r: float = 20, fill: str = '', outline: str = '#000000', **kwargs) -> None:
 		"""Draws a rounded rectangle of a given radius on a tk.canvas."""
 	def create_text(self, *args, **kw):
 		"""Create text with coordinates x1,y1."""
@@ -579,7 +579,7 @@ class ResizableCanvas(Canvas):
 		"""Create window with coordinates x1,y1,x2,y2."""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def refresh(self):
+	def refresh(self) -> None:
 		"""Refresh Canvas"""
 ```
 ### py_simple_ttk.widgets.ScrolledCanvas.ScrolledCanvas<a name="mark42"></a>[^](#mark40)
@@ -592,9 +592,9 @@ class ScrolledCanvas(Frame):
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def get_adjusted_y_view(self, event):
+	def get_adjusted_y_view(self, event) -> int:
 		"""Gets a canvas y-view adjusted based on its scrolled position"""
-	def use_style(self, style):
+	def use_style(self, style) -> None:
 		"""Reformat with a given ttk style. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ScrolledCanvas.TiledCanvas<a name="mark43"></a>[^](#mark40)
@@ -604,11 +604,11 @@ class TiledCanvas(ScrolledCanvas):
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def get_adjusted_y_view(self, event):
+	def get_adjusted_y_view(self, event) -> int:
 		"""Gets a canvas y-view adjusted based on its scrolled position"""
-	def refresh(self, event=None):
+	def refresh(self, event=None) -> None:
 		"""Redraw the canvas"""
-	def use_style(self, style):
+	def use_style(self, style) -> None:
 		"""Reformat with a given ttk style. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ScrolledCanvas.ExampleTile<a name="mark44"></a>[^](#mark40)
@@ -616,15 +616,15 @@ class TiledCanvas(ScrolledCanvas):
 
 ```py
 class ExampleTile(object):
-	def __init__(self, manager, text):
+	def __init__(self, manager, text: str):
 		...
-	def activate(self):
+	def activate(self) -> None:
 		"""Calls the manager to activate the widget."""
-	def deactivate(self):
+	def deactivate(self) -> None:
 		"""Calls the manager to deactivate the widget."""
-	def is_in_range(self, pointer_x, pointer_y):
+	def is_in_range(self, pointer_x: float, pointer_y: float) -> bool:
 		"""Checks if the mouse pointer is in the tile."""
-	def set_position(self, x, y):
+	def set_position(self, x: float, y: float) -> None:
 		"""Sets a tiles position for the draw manager's draw method."""
 ```
 ## Checkbutton Widgets<a name="mark45"></a>[^](#mark4)
@@ -637,17 +637,17 @@ The "replace_output" keyword argument allows the user to provide a tuple of len 
 class LabeledCheckbutton(Labeler, Checkbutton):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str = '', replace_output: list = None, default: bool = False, is_child: bool = False, **kw):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Sets the Checkbutton to its default value, usually *False* `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Checkbutton. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Checkbutton. `Returns None`"""
-	def get(self):
+	def get(self) -> bool:
 		"""Get Checkbutton value. `Returns a Boolean unless replace_output is set`"""
-	def set(self, val: bool):
+	def set(self, val: bool) -> None:
 		"""Set Checkbutton value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.CheckbuttonWidgets.LabeledMultiCheckbutton<a name="mark47"></a>[^](#mark45)
@@ -658,19 +658,19 @@ Used when you need multiple, vertically stacked Labeled Checkbuttons
 class LabeledMultiCheckbutton(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## Combobox Widgets<a name="mark48"></a>[^](#mark4)
@@ -683,17 +683,17 @@ Set custom_values keyword to "False" to disable custom user-entered values. Set 
 class LabeledCombobox(Labeler, Combobox, SuperWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, command: Callable = None, default: int = 0, on_keystroke: bool = False, bind_enter: bool = True, bind_escape_clear: bool = True, values: list = (), custom_values: bool = True, labelside: str = 'left', is_child: bool = False, min_width: int = 0, widgetargs={}, **kw):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Sets Combobox to its default value. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Combobox. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Combobox. `Returns None`"""
-	def get(self):
+	def get(self) -> str:
 		"""Get Combobox value. `Returns a String`"""
-	def set(self, val: str):
+	def set(self, val: str) -> None:
 		"""Set Combobox value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ComboboxWidgets.LabeledMultiCombobox<a name="mark50"></a>[^](#mark48)
@@ -704,19 +704,19 @@ Used when you need mutiple, vertically stacked Labeled Comboboxes
 class LabeledMultiCombobox(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## Console Widgets<a name="mark51"></a>[^](#mark4)
@@ -739,101 +739,101 @@ class ConsoleWidget(Labeler, Frame):
 ### check_entry_type<a name="mark54"></a>[^](#mark53)
 > **Core type checker function. Limits entry to chars that construct a given type**
 > 
-```python
+> ```python
 def check_entry_type(val: str, typ: type) -> bool:
 > 	...
-```
+> ```
 ### check_entry_int<a name="mark55"></a>[^](#mark53)
 > **Check if an entry input is a valid integer**
 > 
-```python
+> ```python
 def check_entry_int(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_float<a name="mark56"></a>[^](#mark53)
 > **Check if an entry input is a valid float**
 > 
-```python
+> ```python
 def check_entry_float(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_contents<a name="mark57"></a>[^](#mark53)
 > **Core content checker function. Limits entry to a list of chars ['a', 'b', 'c', ...] or     the chars contained in a simple string 'abc...'**
 > 
-```python
+> ```python
 def check_entry_contents(val: str, limiter: list) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_lowercase<a name="mark58"></a>[^](#mark53)
 > **Check if entry input is made only of lowercase ascii**
 > 
-```python
+> ```python
 def check_entry_ascii_lowercase(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_uppercase<a name="mark59"></a>[^](#mark53)
 > **Check if entry input is made only of uppercase ascii**
 > 
-```python
+> ```python
 def check_entry_ascii_uppercase(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_letters<a name="mark60"></a>[^](#mark53)
 > **Check if entry input is made only of uppercase and lowercase ascii**
 > 
-```python
+> ```python
 def check_entry_ascii_letters(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_digits<a name="mark61"></a>[^](#mark53)
 > **Check if entry input is made only of digits**
 > 
-```python
+> ```python
 def check_entry_ascii_digits(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_uppercase_digits<a name="mark62"></a>[^](#mark53)
 > **Check if entry input is made only of uppercase ascii and digits**
 > 
-```python
+> ```python
 def check_entry_ascii_uppercase_digits(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_lowercase_digits<a name="mark63"></a>[^](#mark53)
 > **Check if entry input is made only of lowercase ascii and digits**
 > 
-```python
+> ```python
 def check_entry_ascii_lowercase_digits(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_hexdigits<a name="mark64"></a>[^](#mark53)
 > **Check if entry input is made only of hexigits**
 > 
-```python
+> ```python
 def check_entry_ascii_hexdigits(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_octdigits<a name="mark65"></a>[^](#mark53)
 > **Check if entry input is made only of octdigits**
 > 
-```python
+> ```python
 def check_entry_ascii_octdigits(val: str) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_letters_digits<a name="mark66"></a>[^](#mark53)
 > **Check if entry input is made only of ascii lowercase, ascii uppercase, and digits**
 > 
-```python
+> ```python
 def check_entry_ascii_letters_digits(val) -> bool:
 > 	...
-```
+> ```
 ### check_entry_ascii_printable<a name="mark67"></a>[^](#mark53)
 > **Check if entry input is made only of printable characters**
 > 
-```python
+> ```python
 def check_entry_ascii_printable(val: str) -> bool:
 > 	...
-```
+> ```
 ## Counter Widgets<a name="mark68"></a>[^](#mark4)
 
 ### Counter<a name="mark69"></a>[^](#mark68)
@@ -841,7 +841,7 @@ def check_entry_ascii_printable(val: str) -> bool:
 
 ```py
 class Counter(Frame):
-	def __init__(self, parent: tkinter.ttk.Frame, default: int = 1, min_value: int = None, max_value: int = None, step: int = 1, state: str = 'normal', command: Callable = None, depth: int = 1, **kwargs):
+	def __init__(self, parent: tkinter.ttk.Frame, default: int = 0, min_value: int = None, max_value: int = None, step: int = 1, state: str = 'normal', command: Callable = None, depth: int = 1, **kwargs):
 		...
 	def clear(self) -> int:
 		...
@@ -920,19 +920,19 @@ Used when you need multiple, vertically stacked Labeled Counters
 class LabeledMultiCounter(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### LabeledMultiFloatCounter<a name="mark74"></a>[^](#mark68)
@@ -943,19 +943,19 @@ Used when you need multiple, vertically stacked Labeled Counters
 class LabeledMultiFloatCounter(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## Entry Widgets<a name="mark75"></a>[^](#mark4)
@@ -966,7 +966,7 @@ class LabeledMultiFloatCounter(Labeler, Frame, MultiWidgetMixin):
 This class is here for completeness but most of the time you will want to use the ScrolledText widget. Used when you need a scrollable text entry box.
 ```py
 class ScrolledEntry(Scroller, Entry, SuperWidgetMixin):
-	def __init__(self, parent, **kw):
+	def __init__(self, parent, **kw) -> object:
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
@@ -974,12 +974,12 @@ class ScrolledEntry(Scroller, Entry, SuperWidgetMixin):
 		"""Return the text."""
 ```
 ### py_simple_ttk.widgets.EntryWidgets.LabeledEntry<a name="mark77"></a>[^](#mark75)
-**Labeled ttk.Entry with SuperWidgetMixin**
+**Labeled ttk.Entry with the SuperWidget mixin**
 
 Used when you need a Labeled Entry
 ```py
 class LabeledEntry(Labeler, Entry, SuperWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, command: Callable = None, default: str = '', on_keystroke: bool = False, bind_enter: bool = True, bind_escape_clear: bool = True, is_child: bool = False, min_width: int = 0, widgetargs={}, **kw):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, command: Callable = None, default: str = '', on_keystroke: bool = False, bind_enter: bool = True, bind_escape_clear: bool = True, labelside: str = 'left', is_child: bool = False, min_width: int = 0, widgetargs={}, **kw):
 		...
 	def clear(self):
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
@@ -1002,19 +1002,19 @@ Used when you need multiple, vertically stacked Labeled Entries
 class LabeledMultiEntry(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.EntryWidgets.LabeledButtonEntry<a name="mark79"></a>[^](#mark75)
@@ -1045,19 +1045,19 @@ Used when you need multiple, vertically stacked Labeled Button Entries
 class LabeledMultiButtonEntry(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.EntryWidgets.LabeledPathEntry<a name="mark81"></a>[^](#mark75)
@@ -1098,40 +1098,45 @@ class PasswordEntry(Frame):
 		"""Calls the provided "command" function with the contents of the entry box. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.ConstrainedEntry<a name="mark83"></a>[^](#mark75)
-**An Entry widget that allows certain constraints to be placed on the input with a given check_function that returns true if the input is allowed for each keystroke / input.**
+**Constrained Entry with SuperWidget mixin**
 
+An Entry widget that allows certain constraints to be placed on the input with a given check_function that returns true if the input is allowed for each keystroke / input.
 ```py
-class ConstrainedEntry(Frame):
-	def __init__(self, parent, check_function, return_type: type = <class 'str'>, default: str = '', widgetargs={}, **kwargs):
+class ConstrainedEntry(Frame, SuperWidgetMixin):
+	def __init__(self, parent: tkinter.ttk.Frame, check_function: Callable, return_type: type = <class 'str'>, command: Callable = None, on_keystroke: bool = False, bind_enter: bool = True, bind_escape_clear: bool = True, default: str = '', widgetargs={}, **kw):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def get(self) -> object:
-		...
-	def set(self, val) -> None:
-		...
-```
-### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledConstrainedEntry<a name="mark84"></a>[^](#mark75)
-**Labeled Constrained Entry with SuperWidgetMixin**
-
-```py
-class LabeledConstrainedEntry(Labeler, ConstrainedEntry, SuperWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, check_function: Callable, labeltext: str, command: Callable = None, default: str = '', on_keystroke: bool = False, bind_enter: bool = True, bind_escape_clear: bool = True, is_child: bool = False, min_width: int = 0, widgetargs={}, **kw):
-		...
-	def clear(self):
-		"""Set Entry value to default, empty unless default set. `Returns None`"""
-	def destroy(self):
-		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
+		"""Set Entry value. `Returns None`"""
+```
+### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledConstrainedEntry<a name="mark84"></a>[^](#mark75)
+**Labeled Constrained Entry**
+
+```py
+class LabeledConstrainedEntry(Labeler, ConstrainedEntry):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, *args, is_child: bool = False, **kw):
 		...
+	def clear(self) -> None:
+		"""Set Entry value to default, empty unless default set. `Returns None`"""
+	def destroy(self):
+		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
+	def get(self) -> object:
+		"""Get Entry value, return type varies based on Entry constraint."""
+	def set(self, val) -> None:
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.IntEntry<a name="mark85"></a>[^](#mark75)
 **Int Entry Widget**
@@ -1140,14 +1145,18 @@ class LabeledConstrainedEntry(Labeler, ConstrainedEntry, SuperWidgetMixin):
 class IntEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledIntEntry<a name="mark86"></a>[^](#mark75)
 **Labeled Int Entry Widget**
@@ -1156,39 +1165,37 @@ class IntEntry(ConstrainedEntry):
 class LabeledIntEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiIntEntry<a name="mark87"></a>[^](#mark75)
-**Labeled MultiWidget Labeled Int Entry**
-
 ```py
-class LabeledMultiIntEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+class LabeledMultiIntEntry(LabeledMultiWidgetMixin):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside: str = 'top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.FloatEntry<a name="mark88"></a>[^](#mark75)
@@ -1196,53 +1203,57 @@ class LabeledMultiIntEntry(Labeler, Frame, MultiWidgetMixin):
 class FloatEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledFloatEntry<a name="mark89"></a>[^](#mark75)
 ```py
 class LabeledFloatEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiFloatEntry<a name="mark90"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Float Entry**
 
 ```py
 class LabeledMultiFloatEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LowercaseEntry<a name="mark91"></a>[^](#mark75)
@@ -1250,53 +1261,57 @@ class LabeledMultiFloatEntry(Labeler, Frame, MultiWidgetMixin):
 class LowercaseEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledLowercaseEntry<a name="mark92"></a>[^](#mark75)
 ```py
 class LabeledLowercaseEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiLowercaseEntry<a name="mark93"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Lowercase Entry**
 
 ```py
 class LabeledMultiLowercaseEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.UppercaseEntry<a name="mark94"></a>[^](#mark75)
@@ -1304,53 +1319,57 @@ class LabeledMultiLowercaseEntry(Labeler, Frame, MultiWidgetMixin):
 class UppercaseEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledUppercaseEntry<a name="mark95"></a>[^](#mark75)
 ```py
 class LabeledUppercaseEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiUppercaseEntry<a name="mark96"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Uppercase Entry**
 
 ```py
 class LabeledMultiUppercaseEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LettersEntry<a name="mark97"></a>[^](#mark75)
@@ -1358,53 +1377,57 @@ class LabeledMultiUppercaseEntry(Labeler, Frame, MultiWidgetMixin):
 class LettersEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledLettersEntry<a name="mark98"></a>[^](#mark75)
 ```py
 class LabeledLettersEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiLettersEntry<a name="mark99"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Letters Entry**
 
 ```py
 class LabeledMultiLettersEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.DigitsEntry<a name="mark100"></a>[^](#mark75)
@@ -1412,53 +1435,57 @@ class LabeledMultiLettersEntry(Labeler, Frame, MultiWidgetMixin):
 class DigitsEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledDigitsEntry<a name="mark101"></a>[^](#mark75)
 ```py
 class LabeledDigitsEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiDigitsEntry<a name="mark102"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Digits Entry**
 
 ```py
 class LabeledMultiDigitsEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.UppercaseDigitsEntry<a name="mark103"></a>[^](#mark75)
@@ -1466,53 +1493,57 @@ class LabeledMultiDigitsEntry(Labeler, Frame, MultiWidgetMixin):
 class UppercaseDigitsEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledUppercaseDigitsEntry<a name="mark104"></a>[^](#mark75)
 ```py
 class LabeledUppercaseDigitsEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiUppercaseDigitsEntry<a name="mark105"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Uppercase Digits Entry**
 
 ```py
 class LabeledMultiUppercaseDigitsEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LowercaseDigitsEntry<a name="mark106"></a>[^](#mark75)
@@ -1520,53 +1551,57 @@ class LabeledMultiUppercaseDigitsEntry(Labeler, Frame, MultiWidgetMixin):
 class LowercaseDigitsEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledLowercaseDigitsEntry<a name="mark107"></a>[^](#mark75)
 ```py
 class LabeledLowercaseDigitsEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiLowercaseDigitsEntry<a name="mark108"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Lowercase Digits Entry**
 
 ```py
 class LabeledMultiLowercaseDigitsEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LettersDigitsEntry<a name="mark109"></a>[^](#mark75)
@@ -1574,53 +1609,57 @@ class LabeledMultiLowercaseDigitsEntry(Labeler, Frame, MultiWidgetMixin):
 class LettersDigitsEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledLettersDigitsEntry<a name="mark110"></a>[^](#mark75)
 ```py
 class LabeledLettersDigitsEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiLettersDigitsEntry<a name="mark111"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Letters Digits Entry**
 
 ```py
 class LabeledMultiLettersDigitsEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.HexdigitsEntry<a name="mark112"></a>[^](#mark75)
@@ -1628,53 +1667,57 @@ class LabeledMultiLettersDigitsEntry(Labeler, Frame, MultiWidgetMixin):
 class HexdigitsEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledHexdigitsEntry<a name="mark113"></a>[^](#mark75)
 ```py
 class LabeledHexdigitsEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiHexdigitsEntry<a name="mark114"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Hexdigits Entry**
 
 ```py
 class LabeledMultiHexdigitsEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.OctdigitsEntry<a name="mark115"></a>[^](#mark75)
@@ -1682,53 +1725,57 @@ class LabeledMultiHexdigitsEntry(Labeler, Frame, MultiWidgetMixin):
 class OctdigitsEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledOctdigitsEntry<a name="mark116"></a>[^](#mark75)
 ```py
 class LabeledOctdigitsEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiOctdigitsEntry<a name="mark117"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Octdigits Entry**
 
 ```py
 class LabeledMultiOctdigitsEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.PrintableEntry<a name="mark118"></a>[^](#mark75)
@@ -1736,53 +1783,57 @@ class LabeledMultiOctdigitsEntry(Labeler, Frame, MultiWidgetMixin):
 class PrintableEntry(ConstrainedEntry):
 	def __init__(self, parent, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self) -> None:
+		"""Disable Entry. `Returns None`"""
+	def enable(self) -> None:
+		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledPrintableEntry<a name="mark119"></a>[^](#mark75)
 ```py
 class LabeledPrintableEntry(LabeledConstrainedEntry):
 	def __init__(self, parent, labeltext, *args, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Set Entry value to default, empty unless default set. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable Entry. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable Entry. `Returns None`"""
 	def get(self) -> object:
-		...
+		"""Get Entry value, return type varies based on Entry constraint."""
 	def set(self, val) -> None:
-		...
+		"""Set Entry value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ConstrainedEntryWidgets.LabeledMultiPrintableEntry<a name="mark120"></a>[^](#mark75)
 **Labeled MultiWidget Labeled Printable Entry**
 
 ```py
 class LabeledMultiPrintableEntry(Labeler, Frame, MultiWidgetMixin):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', **kw):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## KeyPad Widgets<a name="mark121"></a>[^](#mark4)
@@ -1793,7 +1844,7 @@ class LabeledMultiPrintableEntry(Labeler, Frame, MultiWidgetMixin):
 Keypad button that automatically packs itself based on given coordinates. This object is not usually directly instantiated.
 ```py
 class KeypadButton(Button):
-	def __init__(self, frame, value, coords, callback):
+	def __init__(self, frame, value, coords, command):
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
@@ -1804,7 +1855,7 @@ class KeypadButton(Button):
 Either instantiate directly with a custom layout or subclass with each subclass supplying a custom layout for more keypads. Subclass KeypadButton and supply the class as the "button_type" kwarg for custom buttons.
 ```py
 class BaseKeypad(Frame):
-	def __init__(self, layout, callback, button_class=<class 'py_simple_ttk.widgets.KeyPadWidgets.KeypadButton'>, *args, **kwargs):
+	def __init__(self, layout, command, button_class=<class 'py_simple_ttk.widgets.KeyPadWidgets.KeypadButton'>, *args, **kwargs):
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
@@ -1815,7 +1866,7 @@ class BaseKeypad(Frame):
 Example 12-button keypad, subclass BaseKeypad and supply a custom layout for more keypads.
 ```py
 class DialerKeypad(BaseKeypad):
-	def __init__(self, callback, *args, **kwargs):
+	def __init__(self, command: Callable, *args, **kwargs):
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
@@ -1827,7 +1878,7 @@ class DialerKeypad(BaseKeypad):
 
 ```py
 class LabeledButton(Labeler, Button):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, is_child: bool = False, command=None, **kw):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, text: str = '', is_child: bool = False, command: Callable = None, default: str = '', **kw):
 		...
 	def clear(self) -> None:
 		"""Set button text to default"""
@@ -1845,7 +1896,7 @@ class LabeledButton(Labeler, Button):
 
 ```py
 class ScrolledListBox(Scroller, Listbox, SuperWidgetMixin):
-	def __init__(self, parent, **kw):
+	def __init__(self, parent, **kw) -> object:
 		...
 	def activate(self, index):
 		"""Activate item identified by INDEX."""
@@ -1881,15 +1932,15 @@ Tested on Mac/Windows/Linux. In most cases a TreeTable widget will be superior t
 class Table(Frame):
 	def __init__(self, *args, min_column_width: int = 100, start_column_width: int = 100, on_selection: Callable = None, visible_rows=0, **kw):
 		...
-	def build(self, contents: dict):
+	def build(self, contents: dict) -> None:
 		"""Rebuild the table"""
-	def clear(self):
+	def clear(self) -> None:
 		"""Clears the table"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def get(self):
+	def get(self) -> list:
 		"""Gets the currently selected items from the table. `Returns a List of Strings`"""
-	def use_style(self, style: tkinter.ttk.Style):
+	def use_style(self, style: tkinter.ttk.Style) -> None:
 		"""Update to match supplied ttk.Style object. `Returns None`"""
 ```
 ## OptionMenu Widgets<a name="mark131"></a>[^](#mark4)
@@ -1901,17 +1952,17 @@ class Table(Frame):
 class LabeledOptionMenu(Labeler, OptionMenu):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, options: list, default: int = 0, is_child: bool = False):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Sets OptionMenu to its default value. `Returns None`"""
 	def destroy(self):
 		"""Destroy this widget and its associated variable."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Disable OptionMenu. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Enable OptionMenu. `Returns None`"""
-	def get(self):
+	def get(self) -> str:
 		"""Get OptionMenu value. `Returns a String`"""
-	def set(self, val):
+	def set(self, val) -> None:
 		"""Set OptionMenu value. `Returns None`"""
 	def set_menu(self, default=None, *values):
 		"""Build a new menu of radiobuttons with *values and optionally
@@ -1924,19 +1975,19 @@ class LabeledOptionMenu(Labeler, OptionMenu):
 class LabeledMultiOptionMenu(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## ProgressBar Widgets<a name="mark134"></a>[^](#mark4)
@@ -1982,21 +2033,21 @@ class LabeledProgressbar(Labeler, Progressbar):
 class LabeledMultiProgressbar(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', orient='horizontal'):
 		...
-	def add(self, parent: tkinter.ttk.Frame, key: str, args, kwargs, widget_type=None):
+	def add(self, parent: tkinter.ttk.Frame, key: str, args, kwargs, widget_type=None) -> object:
 		"""Overrides MultiWidgetMixin to deal with vertical orientation `Returns None`"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def link(self, config: dict):
+	def link(self, config: dict) -> None:
 		"""Link to other widgets with a dict of subwidget keys to link to `Returns None`"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## Radiobutton Widgets<a name="mark137"></a>[^](#mark4)
@@ -2008,17 +2059,17 @@ class LabeledMultiProgressbar(Labeler, Frame, MultiWidgetMixin):
 class LabeledRadiobutton(Labeler, Frame):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, options: list = [], default: int = 0, is_child: bool = False, **kw):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Sets Radiobutton to its default value. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Enable Radiobutton. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Disable Radiobutton. `Returns None`"""
-	def get(self):
+	def get(self) -> bool:
 		"""Get Radiobutton value. `Returns a Bool`"""
-	def set(self, val: bool):
+	def set(self, val: bool) -> None:
 		"""Set Radiobutton value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.RadiobuttonWidgets.LabeledMultiRadiobutton<a name="mark139"></a>[^](#mark137)
@@ -2028,19 +2079,19 @@ class LabeledRadiobutton(Labeler, Frame):
 class LabeledMultiRadiobutton(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top'):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key: str, args: list, kwargs: dict, widget_type: type = None) -> object:
 		"""Method for adding different widgets to a multiwidget post-instantiation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## Scale Widgets<a name="mark140"></a>[^](#mark4)
@@ -2050,19 +2101,19 @@ class LabeledMultiRadiobutton(Labeler, Frame, MultiWidgetMixin):
 
 ```py
 class LabeledScale(Labeler, Scale):
-	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, command: Callable = None, default: float = 0, orient: bool = 'horizontal', is_child: bool = False, from_=0, to=100, **kwargs):
+	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, command: Callable = None, default: float = 0, orient: bool = 'horizontal', is_child: bool = False, **kwargs):
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Sets Scale to its default value. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		"""Enable Scale. `Returns None`"""
-	def enable(self):
+	def enable(self) -> None:
 		"""Disable Scale. `Returns None`"""
-	def get(self):
+	def get(self) -> float:
 		"""Get Scale value. `Returns a Float`"""
-	def set(self, val):
+	def set(self, val) -> None:
 		"""Set Scale value. `Returns None`"""
 ```
 ### py_simple_ttk.widgets.ScaleWidgets.LabeledMultiScale<a name="mark142"></a>[^](#mark140)
@@ -2072,19 +2123,19 @@ class LabeledScale(Labeler, Scale):
 class LabeledMultiScale(Labeler, Frame, MultiWidgetMixin):
 	def __init__(self, parent: tkinter.ttk.Frame, labeltext: str, config: dict, is_child: bool = False, labelside='top', orient='horizontal', command=None):
 		...
-	def add(self, parent, key, args, kwargs, widget_type=None):
+	def add(self, parent, key, args, kwargs, widget_type=None) -> object:
 		"""Override MultiWidgetMixin for vertical orientation"""
-	def clear(self, config: list = None):
+	def clear(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to clear or all are set to default"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self, config: list = None):
+	def disable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to disable or all are disabled"""
-	def enable(self, config: list = None):
+	def enable(self, config: list = None) -> None:
 		"""Pass a list of subwidgets to enable or all are enabled"""
-	def get(self, config: list = None):
+	def get(self, config: list = None) -> dict:
 		"""Pass a list of widget keys to get a dict of outputs"""
-	def set(self, config: dict):
+	def set(self, config: dict) -> None:
 		"""Pass a map of widget keys and their values"""
 ```
 ## Text Widgets<a name="mark143"></a>[^](#mark4)
@@ -2095,13 +2146,13 @@ class LabeledMultiScale(Labeler, Frame, MultiWidgetMixin):
 Scrolled SuperWidget Text. Configure text by passing the `textkw` argument as a dict formatted like a standard kwarg dict.
 ```py
 class ScrolledText(Scroller, Text, SuperWidgetMixin):
-	def __init__(self, parent, **kw):
+	def __init__(self, parent, **kw) -> object:
 		...
-	def clear(self):
+	def clear(self) -> None:
 		"""Empties the text box. `Returns None`"""
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		...
 	def edit_undo(self):
 		"""Undoes the last edit action
@@ -2112,15 +2163,15 @@ class ScrolledText(Scroller, Text, SuperWidgetMixin):
         an error when the undo stack is empty. Does nothing
         when the undo option is false
         """
-	def enable(self):
+	def enable(self) -> None:
 		...
-	def get(self, start='1.0', end='end'):
+	def get(self, start: str = '1.0', end: str = 'end'):
 		"""Returns the contents of the text box with optional start/end kwargs. `Returns a String`"""
 	def get_cursor(self):
 		"""Get the current location of the cursor. `Returns None`"""
-	def select_all(self, event=None):
+	def select_all(self, event=None) -> None:
 		"""Selects all text. `Returns None`"""
-	def set(self, val):
+	def set(self, val: str) -> None:
 		"""Sets the text. `Returns a String`"""
 	def window_create(self, index, cnf={}, **kw):
 		"""Create a window at INDEX."""
@@ -2135,9 +2186,9 @@ class CopyBox(Frame):
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
-	def disable(self):
+	def disable(self) -> None:
 		...
-	def enable(self):
+	def enable(self) -> None:
 		...
 ```
 ## Toplevel Widgets<a name="mark146"></a>[^](#mark4)
@@ -2148,9 +2199,9 @@ class CopyBox(Frame):
 Window that takes focus and center's itself on the current window. Used as a base class for other windows.
 ```py
 class FocusedToplevel(Toplevel):
-	def __init__(self, *args, title=None, window=None, on_close=None, **kwargs):
+	def __init__(self, *args, title: str = None, window: tkinter.Toplevel = None, on_close: Callable = None, **kwargs):
 		...
-	def destroy(self):
+	def destroy(self) -> None:
 		...
 	def iconify(self):
 		"""Display widget as icon."""
@@ -2164,9 +2215,9 @@ class FocusedToplevel(Toplevel):
 `button_action` can call a function to help with determining acceptance vs. the user hitting the exit button.
 ```py
 class NoticeWindow(FocusedToplevel):
-	def __init__(self, *args, text=None, button_text='Continue', button_action=None, **kwargs):
+	def __init__(self, *args, text: str = None, button_text: str = 'Continue', button_action: Callable = None, **kwargs):
 		...
-	def destroy(self):
+	def destroy(self) -> None:
 		...
 	def iconify(self):
 		"""Display widget as icon."""
@@ -2180,9 +2231,9 @@ class NoticeWindow(FocusedToplevel):
 `no_destroy` can be set to `True` to allow the window to remain open after a selection is made.
 ```py
 class YesNoCancelWindow(FocusedToplevel):
-	def __init__(self, *args, text: str = None, yes_enabled: bool = True, on_yes=None, yes_text: str = 'Yes', no_enabled: bool = True, on_no=None, no_text: str = 'No', cancel_enabled: bool = True, on_cancel=None, cancel_text: str = 'Cancel', no_destroy: bool = False, focus='', **kwargs):
+	def __init__(self, *args, text: str = None, yes_enabled: bool = True, on_yes: Callable = None, yes_text: str = 'Yes', no_enabled: bool = True, on_no: Callable = None, no_text: str = 'No', cancel_enabled: bool = True, on_cancel: Callable = None, cancel_text: str = 'Cancel', no_destroy: bool = False, focus: str = '', **kwargs):
 		...
-	def destroy(self):
+	def destroy(self) -> None:
 		...
 	def iconify(self):
 		"""Display widget as icon."""
@@ -2198,7 +2249,7 @@ class YesNoCancelWindow(FocusedToplevel):
 class PromptWindow(FocusedToplevel):
 	def __init__(self, *args, text: str = 'Enter Text:', on_yes=None, yes_text: str = 'Continue', on_cancel=None, cancel_text: str = 'Cancel', bind_enter: bool = True, no_destroy: bool = False, select_type: bool = False, focus='', **kwargs):
 		...
-	def destroy(self):
+	def destroy(self) -> None:
 		...
 	def iconify(self):
 		"""Display widget as icon."""
@@ -2214,7 +2265,7 @@ Demo Password Entry Window, you will want to copy the source for this widget and
 class PasswordWindow(FocusedToplevel):
 	def __init__(self, window=None, **kwargs):
 		...
-	def destroy(self):
+	def destroy(self) -> None:
 		...
 	def iconify(self):
 		"""Display widget as icon."""
@@ -2229,7 +2280,7 @@ class PasswordWindow(FocusedToplevel):
 class ListWindow(FocusedToplevel):
 	def __init__(self, *args, options: list, text: str = 'Select Item:', on_yes=None, yes_text: str = 'Continue', on_cancel=None, cancel_text: str = 'Cancel', no_destroy: bool = False, select_mode: str = 'single', **kwargs):
 		...
-	def destroy(self):
+	def destroy(self) -> None:
 		...
 	def iconify(self):
 		"""Display widget as icon."""
@@ -2245,7 +2296,7 @@ class ListWindow(FocusedToplevel):
 Easily show theme-friendly tooltip. Currently only left and right align are supported.
 ```py
 class ToolTip(ToolTipBase):
-	def __init__(self, tipwidget, text: str, align='left'):
+	def __init__(self, parent: object, text: str, align: str = 'left'):
 		...
 ```
 ### py_simple_ttk.widgets.SizegripWidgets.EasySizegrip<a name="mark155"></a>[^](#mark153)
@@ -2258,6 +2309,10 @@ class EasySizegrip(Sizegrip):
 		...
 	def destroy(self):
 		"""Destroy this and all descendants widgets."""
+	def disable(self):
+		...
+	def enable(self):
+		...
 ```
 # SuperLib.utils<a name="mark156"></a>[^](#mark0)
 
@@ -2266,80 +2321,80 @@ class EasySizegrip(Sizegrip):
 ### py_simple_ttk.utils.utils.check_if_module_installed<a name="mark158"></a>[^](#mark157)
 > **Indicates if a packages is installed. `Returns a Boolean`**
 > 
-```python
-def check_if_module_installed(package):
+> ```python
+def check_if_module_installed(package: str) -> bool:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.check_string_contains<a name="mark159"></a>[^](#mark157)
 > **Returns `(True, char_index)` if any character from the list exists in the string otherwise returns `(False, None)`**
 > 
-```python
-def check_string_contains(string: str, contains_list: tuple):
+> ```python
+def check_string_contains(string: str, contains_list: tuple) -> tuple:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.dummy_function<a name="mark160"></a>[^](#mark157)
-> **Dummy function that nicely prints out any passed args and kwargs. `Returns None`**
+> **Dummy function that nicely prints out any passed args and kwargs. `Returns True`**
 > 
-```python
-def dummy_function(*args, **kwargs):
+> ```python
+def dummy_function(*args, **kwargs) -> bool:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.get_friendly_time<a name="mark161"></a>[^](#mark157)
 > **Gets a time string in one of several modes. Modes: `all, time, date, nice_date`. `Returns a String`**
 > 
-```python
-def get_friendly_time(timestamp, mode='all'):
+> ```python
+def get_friendly_time(timestamp, mode: str = 'all') -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.get_installed_packages<a name="mark162"></a>[^](#mark157)
 > **Get an alphabetized list of available packages. `Returns a List`**
 > 
-```python
-def get_installed_packages():
+> ```python
+def get_installed_packages() -> list:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.get_unix_timestamp<a name="mark163"></a>[^](#mark157)
 > **Get a unix timestamp. `Returns a Float`**
 > 
-```python
-def get_unix_timestamp():
+> ```python
+def get_unix_timestamp() -> float:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.get_unix_timestring<a name="mark164"></a>[^](#mark157)
 > **Get a unix timestring. `Returns a String`**
 > 
-```python
-def get_unix_timestring():
+> ```python
+def get_unix_timestring() -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.get_user_home_folder<a name="mark165"></a>[^](#mark157)
 > **Cross-platform function to get a user's home folder**
 > 
-```python
-def get_user_home_folder():
+> ```python
+def get_user_home_folder() -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.open_folder_in_explorer<a name="mark166"></a>[^](#mark157)
 > **Cross-platform way to open a folder in the default file manager for a system**
 > 
-```python
-def open_folder_in_explorer(path):
+> ```python
+def open_folder_in_explorer(path) -> None:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.sort_dict_by_keys<a name="mark167"></a>[^](#mark157)
 > **Sorts a dictionary by its keys**
 > 
-```python
-def sort_dict_by_keys(source: dict, reverse: bool = False):
+> ```python
+def sort_dict_by_keys(source: dict, reverse: bool = False) -> collections.OrderedDict:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.utils.timer_decorator<a name="mark168"></a>[^](#mark157)
 > **Decorator to add timing to a function**
 > 
-```python
-def timer_decorator(proc):
+> ```python
+def timer_decorator(func: Callable) -> None:
 > 	...
-```
+> ```
 ## File Generators<a name="mark169"></a>[^](#mark156)
 
 ### py_simple_ttk.utils.HTML_Generator.HTML_Generator<a name="mark170"></a>[^](#mark169)
@@ -2494,73 +2549,73 @@ class HistoryMixin(object):
 ### py_simple_ttk.utils.color.reduce_255<a name="mark176"></a>[^](#mark175)
 > **Limits a val to a range of 0 to 255**
 > 
-```python
-def reduce_255(in_value: int, maxval: int = 255):
+> ```python
+def reduce_255(in_value: int, maxval: int = 255) -> int:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.rgb_to_hex<a name="mark177"></a>[^](#mark175)
 > **Converts an rgb tuple to hex**
 > 
-```python
-def rgb_to_hex(rgb: tuple):
+> ```python
+def rgb_to_hex(rgb: tuple) -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.rgba_to_hex<a name="mark178"></a>[^](#mark175)
 > **Converts an rgba tuple to rgba hex**
 > 
-```python
-def rgba_to_hex(rgba: tuple):
+> ```python
+def rgba_to_hex(rgba: tuple) -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.hex_to_rgb<a name="mark179"></a>[^](#mark175)
 > **Converts hex to rgb tuple**
 > 
-```python
-def hex_to_rgb(hex: str):
+> ```python
+def hex_to_rgb(hex: str) -> tuple:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.hex_to_rgba<a name="mark180"></a>[^](#mark175)
 > **Tries to convert rgba hex to rgba, on failure converts rgb hex to rgb and sets a full opacity**
 > 
-```python
-def hex_to_rgba(hex: str):
+> ```python
+def hex_to_rgba(hex: str) -> tuple:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.get_gradient<a name="mark181"></a>[^](#mark175)
 > **Generates a black / white gradient with a given number of steps**
 > 
-```python
-def get_gradient(steps: int):
+> ```python
+def get_gradient(steps: int) -> tuple:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.rgb_to_scalar<a name="mark182"></a>[^](#mark175)
 > **Converts an rgb itterable to scalar list**
 > 
-```python
-def rgb_to_scalar(rgb: tuple):
+> ```python
+def rgb_to_scalar(rgb: tuple) -> tuple:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.scalar_to_rgb<a name="mark183"></a>[^](#mark175)
 > **Converts rgb scalar to rgb list**
 > 
-```python
-def scalar_to_rgb(rgb: tuple):
+> ```python
+def scalar_to_rgb(rgb: tuple) -> tuple:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.linear_gradient<a name="mark184"></a>[^](#mark175)
 > **Generates a linear gradient between two colors, accepts html hex or rgb formats**
 > 
-```python
-def linear_gradient(start_hex: str = '#000000', finish_hex: str = '#FFFFFF', n: int = 10):
+> ```python
+def linear_gradient(start_hex: str = '#000000', finish_hex: str = '#FFFFFF', n: int = 10) -> list:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.color.get_rainbow<a name="mark185"></a>[^](#mark175)
 > **Generates a rainbow with a given number of steps. Steps must be divisible by 4)**
 > 
-```python
-def get_rainbow(steps: int):
+> ```python
+def get_rainbow(steps: int) -> tuple:
 > 	...
-```
+> ```
 # MegaWidgets<a name="mark186"></a>[^](#mark0)
 
 ## Notes MegaWidget<a name="mark187"></a>[^](#mark186)
@@ -2646,41 +2701,41 @@ class ConversationsTab(Tab):
 class ProfilesSystem(object):
 	def __init__(self, select_profile_actions: list = [], refresh_profiles_actions: list = [], profiles_dir: str = 'C:\\Users\\arcti\\github\\py_simple_ttk\\Profiles', handle_duplicates: bool = True):
 		...
-	def add_refresh_profiles_action(self, action):
+	def add_refresh_profiles_action(self, action: Callable) -> None:
 		"""Add an action to the profiles list refresh actions"""
-	def add_refresh_profiles_actions(self, actions: list):
+	def add_refresh_profiles_actions(self, actions: list) -> None:
 		"""Add a list of actions to the profiles list refresh actions"""
-	def add_select_profile_action(self, action):
+	def add_select_profile_action(self, action: Callable) -> None:
 		"""Add an action to the profile switch actions"""
-	def add_select_profile_actions(self, actions: list):
+	def add_select_profile_actions(self, actions: list) -> None:
 		"""Add a list of actions to the profile switch actions"""
-	def check_if_name_exists_in_profiles(self, name: str, profiles: list = None):
+	def check_if_name_exists_in_profiles(self, name: str, profiles: list = None) -> bool:
 		"""Check if a name exists in a list of profiles, if no list is provided uses the list of all profiles. `Returns a Bool`"""
-	def clear_refresh_profile_actions(self, new: list = []):
+	def clear_refresh_profile_actions(self, new: list = []) -> None:
 		"""Clear out the profiles list refresh actions, optionally replacing them with new ones"""
-	def clear_select_profile_actions(self, new: list = []):
+	def clear_select_profile_actions(self, new: list = []) -> None:
 		"""Clear out the profile switch actions, optionally replacing them with new ones"""
-	def create_profile(self, name: str):
+	def create_profile(self, name: str) -> py_simple_ttk.utils.ProfilesSystem.UserProfile:
 		"""Creates a profile with a given name. `Raises ValueError` if the profile name already exists. `Returns a UserProfile`"""
-	def delete_profile(self, profile: py_simple_ttk.utils.ProfilesSystem.UserProfile):
+	def delete_profile(self, profile: py_simple_ttk.utils.ProfilesSystem.UserProfile) -> None:
 		...
-	def get_last_used_profile(self, profiles: list = None):
+	def get_last_used_profile(self, profiles: list = None) -> py_simple_ttk.utils.ProfilesSystem.UserProfile:
 		"""Returns the most recently accessed profile"""
-	def get_profile_by_username(self, name: str):
+	def get_profile_by_username(self, name: str) -> py_simple_ttk.utils.ProfilesSystem.UserProfile:
 		...
-	def get_profile_names(self):
+	def get_profile_names(self) -> list:
 		"""Returns an alphabetically sorted list of profile names"""
-	def handle_duplicate_profile_names(self, name: str):
+	def handle_duplicate_profile_names(self, name: str) -> None:
 		"""Makes profile names unique if they have identical names. The most recently accessed profile (according to the file json) keeps its name untouched. `Returns None`"""
-	def handle_refresh_profiles_actions(self):
+	def handle_refresh_profiles_actions(self) -> None:
 		"""Handle on-refresh-profiles actions"""
-	def handle_select_profile_actions(self):
+	def handle_select_profile_actions(self) -> None:
 		"""Handle on-profile-selection actions"""
-	def select_profile(self, profile: py_simple_ttk.utils.ProfilesSystem.UserProfile):
+	def select_profile(self, profile: py_simple_ttk.utils.ProfilesSystem.UserProfile) -> None:
 		"""Change the currently selected profile"""
-	def select_profile_by_username(self, name: str):
+	def select_profile_by_username(self, name: str) -> None:
 		...
-	def sort_profiles_by_accessed(self, profiles: list = None):
+	def sort_profiles_by_accessed(self, profiles: list = None) -> None:
 		"""Sort a list of profiles by last accessed, if no list is provided returns a sorted list of all profiles in the system. `Returns a List`"""
 ```
 ### py_simple_ttk.utils.ProfilesSystem.UserProfile<a name="mark193"></a>[^](#mark191)
@@ -2689,35 +2744,35 @@ class ProfilesSystem(object):
 Must pass a unique username and a unique     identifier for new profile.
 ```py
 class UserProfile(object):
-	def __init__(self, path, username: str = None, atomic: str = None):
+	def __init__(self, path: str, username: str = None, atomic: str = None):
 		...
-	def clear_preferences(self, preferences: list = None):
+	def clear_preferences(self, preferences: list = None) -> None:
 		...
-	def get_preference(self, key: str):
+	def get_preference(self, key: str) -> object:
 		...
-	def load(self, path: str = None, overwrite_path=False):
+	def load(self, path: str = None, overwrite_path: bool = False) -> None:
 		...
-	def save(self, path: str = None, overwrite_path=False):
+	def save(self, path: str = None, overwrite_path: bool = False) -> None:
 		...
-	def set_preference(self, key: str, value: str):
+	def set_preference(self, key: str, value: str) -> None:
 		...
-	def set_username(self, name: str):
+	def set_username(self, name: str) -> None:
 		...
 ```
 ### py_simple_ttk.utils.ProfilesSystem.get_profiles_folder<a name="mark194"></a>[^](#mark193)
 > **Gets the absolute path to the included profiles folder. `Returns a String`**
 > 
-```python
-def get_profiles_folder():
+> ```python
+def get_profiles_folder() -> str:
 > 	...
-```
+> ```
 ### py_simple_ttk.utils.ProfilesSystem.get_profiles_list<a name="mark195"></a>[^](#mark193)
 > **Gets a list of profile files at a given path. `Returns a List of Path strings`**
 > 
-```python
-def get_profiles_list(path='./Profiles', verbose=False):
+> ```python
+def get_profiles_list(path: str = './Profiles', verbose: bool = False) -> list:
 > 	...
-```
+> ```
 # Changelog<a name="mark196"></a>[^](#mark0)
 
 ## 0.1.25<a name="mark197"></a>[^](#mark196)

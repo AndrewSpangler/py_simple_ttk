@@ -4,7 +4,7 @@ from tkinter import ttk
 from typing import Callable
 from .Labeler import Labeler
 from .WidgetsCore import SuperWidgetMixin
-from .MultiWidget import MultiWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 
 
 class Counter(ttk.Frame):
@@ -123,8 +123,8 @@ class LabeledCounter(Labeler, Counter, SuperWidgetMixin):
         self.is_child = is_child
 
 
-class LabeledMultiCounter(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget LabeledCounter"""
+class LabeledMultiCounter(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget LabeledCounter."""
 
     __desc__ = """Used when you need multiple, vertically stacked Labeled Counters"""
 
@@ -134,15 +134,19 @@ class LabeledMultiCounter(Labeler, ttk.Frame, MultiWidgetMixin):
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledCounter,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledCounter, config)
-        self.is_child = is_child
 
 
 class FloatCounter(ttk.Frame):
@@ -289,10 +293,12 @@ class LabeledFloatCounter(Labeler, FloatCounter, SuperWidgetMixin):
         self.is_child = is_child
 
 
-class LabeledMultiFloatCounter(Labeler, ttk.Frame, MultiWidgetMixin):
-    """Labeled MultiWidget LabeledFloatCounter"""
+class LabeledMultiFloatCounter(LabeledMultiWidgetMixin):
+    """Labeled MultiWidget Labeled FloatCounter."""
 
-    __desc__ = """Used when you need multiple, vertically stacked Labeled Counters"""
+    __desc__ = (
+        """Used when you need multiple, vertically stacked Labeled FloatCounters"""
+    )
 
     def __init__(
         self,
@@ -300,12 +306,16 @@ class LabeledMultiFloatCounter(Labeler, ttk.Frame, MultiWidgetMixin):
         labeltext: str,
         config: dict,
         is_child: bool = False,
-        labelside=tk.TOP,
+        labelside: str = tk.TOP,
+        **kw,
     ):
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
+        LabeledMultiWidgetMixin.__init__(
+            self,
+            LabeledFloatCounter,
+            parent,
+            labeltext,
+            config,
+            is_child,
+            labelside,
+            **kw,
         )
-        ttk.Frame.__init__(self, self.frame)
-        ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, LabeledFloatCounter, config)
-        self.is_child = is_child

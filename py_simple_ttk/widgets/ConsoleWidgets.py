@@ -40,7 +40,8 @@ keyword argument to handle the entry input."""
             ttk.Frame.__init__(self, parent)
         self.console = ScrolledText(
             self,
-            textkw={"highlightthickness": 0, "state": tk.DISABLED},
+            highlightthickness=0,
+            state=tk.DISABLED,
         )
         self.console.pack(fill=tk.BOTH, expand=True, side=tk.TOP)
         self.entry = LabeledButtonEntry(
