@@ -12,16 +12,16 @@ class ActiveCombobox(ttk.Combobox, SuperWidgetMixin):
     def __init__(
         self,
         parent: ttk.Frame,
-        command: Callable=None,
+        command: Callable = None,
         default: int = 0,
         on_keystroke: bool = False,
         bind_enter: bool = True,
         bind_escape_clear: bool = True,
         values: list = (),
         custom_values: bool = True,
-        widgetargs:dict={},
-        **kw
-        ):
+        widgetargs: dict = {},
+        **kw,
+    ):
         self._state = "normal" if custom_values else "readonly"
         self.default = values[default] if any(values) else ""
         self.var = tk.StringVar(value=self.default)
@@ -60,6 +60,7 @@ class ActiveCombobox(ttk.Combobox, SuperWidgetMixin):
         if self._command:
             self._command(self.get())
 
+
 class LabeledCombobox(Labeler, ActiveCombobox):
     """Labeled Combobox with the Super Widget mixin"""
 
@@ -81,7 +82,7 @@ class LabeledCombobox(Labeler, ActiveCombobox):
         ActiveCombobox.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         self.is_child = is_child
 
-        
+
 class LabeledMultiCombobox(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledCombobox."""
 

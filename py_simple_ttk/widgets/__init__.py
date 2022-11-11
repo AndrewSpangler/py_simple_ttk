@@ -1,6 +1,3 @@
-from .ButtonWidgets import ActiveButton, LabeledButton
-
-
 from .WidgetsCore import (
     bbox_to_width_and_height,
     center_window,
@@ -41,7 +38,7 @@ from .CheckbuttonWidgets import (
     LabeledCheckbutton,
     LabeledMultiCheckbutton,
 )
-from .ComboboxWidgets import ActiveComboBox, LabeledCombobox, LabeledMultiCombobox
+from .ComboboxWidgets import ActiveCombobox, LabeledCombobox, LabeledMultiCombobox
 from .OptionMenuWidgets import (
     ActiveOptionMenu,
     LabeledOptionMenu,

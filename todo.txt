@@ -2,7 +2,6 @@ Drawing canvas
 Calculator
 Help Manual Object
 selection item demo tab
-Labeled Radiobutton
 Add/remove buttons from multicheckbutton
 Satisfaction / Severity / Triage button table generator
 Radiobutton

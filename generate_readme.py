@@ -46,7 +46,7 @@ RADIOBUTTON_WIDGETS = (
     ActiveRadiobutton,
     RadioTable,
     LabeledRadioTable,
-    LabeledMultiRadiotable,
+    LabeledMultiRadioTable,
     SimpleRadioTable,
     LabeledSimpleRadioTable,
     LabeledMultiSimpleRadioTable,
@@ -127,8 +127,8 @@ CONSTRAINEDENTRY_FUNCTIONS = [
     check_entry_ascii_printable,
 ]
 CONSOLE_WIDGETS = [ConsoleWidget]
-COMBOBOX_WIDGETS = [ActiveComboBox, LabeledCombobox, LabeledMultiCombobox]
-CHECKBUTTON_WIDGETS = [ActiveCheckButton, LabeledCheckbutton, LabeledMultiCheckbutton]
+COMBOBOX_WIDGETS = [ActiveCombobox, LabeledCombobox, LabeledMultiCombobox]
+CHECKBUTTON_WIDGETS = [ActiveCheckbutton, LabeledCheckbutton, LabeledMultiCheckbutton]
 CANVAS_WIDGETS = [ResizableCanvas, ScrolledCanvas, TiledCanvas, ExampleTile]
 TOPLEVEL_WIDGETS = [
     FocusedToplevel,
@@ -269,16 +269,18 @@ def generate_readme(tables: dict, changelog: dict):
     gen.add_paragraph(requirements_text)
     gen.add_heading_1("Configuring ini.json", add_toc=True)
     gen.add_code_block(ini_conf, lang="")
+    gen.add_heading_1("The App Object")
+    gen.handle_class_list([App], show_submodule=True)
+    gen.add_heading_1("Core Widgets", add_toc=True)
+    gen.handle_class_list(CORE_OBJECTS, show_submodule=True)
+    gen.add_heading_2("Tabs", add_toc=True)
+    gen.handle_class_list(TABS, show_submodule=True)
     gen.add_heading_1("Widgets", add_toc=True)
     gen.increase_toc_depth()
     gen.add_heading_2("Button Widgets", add_toc=True)
     gen.handle_class_list(BUTTON_WIDGETS)
     gen.add_heading_2("Core Functions", add_toc=True)
     gen.handle_function_list(CORE_FUNCTIONS, show_submodule=True)
-    gen.add_heading_2("Core Widgets", add_toc=True)
-    gen.handle_class_list(CORE_OBJECTS, show_submodule=True)
-    gen.add_heading_2("Tabs", add_toc=True)
-    gen.handle_class_list(TABS, show_submodule=True)
     gen.add_heading_2("Canvas Widgets", add_toc=True)
     gen.handle_class_list(CANVAS_WIDGETS, show_submodule=True)
     gen.add_heading_2("Checkbutton Widgets", add_toc=True)

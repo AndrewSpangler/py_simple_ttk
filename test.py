@@ -90,7 +90,6 @@ from py_simple_ttk import (
     ScrolledText,
     ShoppingListTab,
     Tab,
-    TicTacToeTab,
     TiledCanvas,
     TimecardTab,
     ToolTip,
@@ -103,8 +102,10 @@ from py_simple_ttk import (
     LabeledMultiRadioTable,
     LabeledSimpleRadioTable,
     LabeledMultiSimpleRadioTable,
+    get_generated_font_images,
 )
 
+from examples.tic_tac_toe import TicTacToeTab
 
 from math import sin
 

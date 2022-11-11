@@ -18,11 +18,13 @@ class ActiveScale(ttk.Scale, SuperWidgetMixin):
         command: Callable = None,
         default: float = 0,
         widgetargs: dict = {},
-        **kw
+        **kw,
     ):
         self.default, self._command = float(default), command
         self.var = tk.DoubleVar(value=self.default)
-        ttk.Scale.__init__(self, parent, variable=self.var, command=self._on_execute_command)
+        ttk.Scale.__init__(
+            self, parent, variable=self.var, command=self._on_execute_command, **kw
+        )
         SuperWidgetMixin.__init__(self, **widgetargs)
 
     def enable(self) -> None:
@@ -48,8 +50,7 @@ class ActiveScale(ttk.Scale, SuperWidgetMixin):
     def _on_execute_command(self, val: float) -> None:
         if self._command:
             self._command(val)
-        
-        
+
 
 class LabeledScale(Labeler, ActiveScale):
     """Labeled ActiveScale"""
@@ -66,14 +67,17 @@ class LabeledScale(Labeler, ActiveScale):
     ):
         if not orient in (tk.HORIZONTAL, tk.VERTICAL):
             raise ValueError(f"Unknown orientation - {orient}")
-        pack_args = {"fill":"x","expand":True,"side":tk.TOP}
+        pack_args = {"fill": "x", "expand": True, "side": tk.TOP}
         if orient == tk.VERTICAL:
-            labelside=tk.TOP
-            pack_args.update({"fill":"y"})
-        kw["orient"]=orient
+            labelside = tk.TOP
+            pack_args.update({"fill": "y"})
+        kw["orient"] = orient
         self.is_child = is_child
-        Labeler.__init__(self, parent, labeltext, labelside=labelside, header=not is_child)
+        Labeler.__init__(
+            self, parent, labeltext, labelside=labelside, header=not is_child
+        )
         ActiveScale.__init__(self, self.frame, **kw)
+        ActiveScale.pack(self, **pack_args)
 
 
 class LabeledMultiScale(Labeler, ttk.Frame, MultiWidgetMixin):
@@ -108,13 +112,13 @@ class LabeledMultiScale(Labeler, ttk.Frame, MultiWidgetMixin):
 
     def add(
         self,
-        parent:ttk.Frame,
-        key:str,
-        args:list,
-        kwargs:dict,
-        widget_type:type=None
+        parent: ttk.Frame,
+        key: str,
+        args: list,
+        kwargs: dict,
+        widget_type: type = None,
     ) -> object:
-        
+
         """Override MultiWidgetMixin for vertical orientation"""
         widget_type = widget_type or self.widget_type
         kwargs["orient"] = self.orient

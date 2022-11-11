@@ -47,6 +47,7 @@ from .widgets import (
     get_asset,
     get_bundled_themes_list,
     get_generated_font_image,
+    get_generated_font_images,
     get_generated_font_images_lookup,
     get_local_appdata_folder,
     get_themes_folder,
@@ -154,12 +155,13 @@ from .widgets import (
     LabeledMultiSimpleRadioTable,
     LabeledCycleButton,
     LabeledMultiCycleButton,
-    ActiveComboBox,
+    ActiveCombobox,
     ActiveEntry,
     ColumnFrame,
     ActiveOptionMenu,
     ActiveProgressbar,
     ActiveScale,
+    LabeledMultiButton,
 )
 
 from .utils.color import (
@@ -215,10 +217,8 @@ from .mega_widgets.profile_manager import ProfilesWindow
 from .mega_widgets.timecard_maker import TimecardTab, TimecardMaker
 from .mega_widgets.wattage_calculator import WattageTab, WattageCalculator
 from .mega_widgets.shopping_list import ShoppingListTab, ShoppingList
-from .mega_widgets.tictactoe import TicTacToeTab, TicTacToe
 from .mega_widgets.launcher import ConfigurableLauncher, LauncherTools
 from .app import App
-
 
 if not check_if_module_installed("pillow"):
     PILLOW_AVAILABLE = False

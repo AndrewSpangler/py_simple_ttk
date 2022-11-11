@@ -65,7 +65,7 @@ class ConsoleTab(Tab):
 class TableTab(Tab):
     """Basic Table Tab"""
 
-    __desc__ = """table_contents is a dictionary whose keys map to lists with the column contents"""
+    __desc__ = """table_contents is a dictionary whose keys map to lists of equal lengths with the column contents"""
 
     def __init__(self, notebook: ttk.Notebook, title: str, table_contents: dict, **kw):
         Tab.__init__(self, notebook, title)
@@ -78,7 +78,7 @@ class TableTab(Tab):
 class TreeTableTab(Tab):
     """Improved Table Tab"""
 
-    __desc__ = """table_contents is a dictionary whose keys map to list with the column contents"""
+    __desc__ = """table_contents is a dictionary whose keys map to lists of equal lengths with the column contents"""
 
     def __init__(
         self, notebook: ttk.Notebook, title: str, table_contents: dict = {}, **kw

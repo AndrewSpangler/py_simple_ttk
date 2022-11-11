@@ -2,12 +2,11 @@ import json
 import tkinter as tk
 from tkinter import ttk
 import tkinter.font as tkfont
-from ..widgets import (
+from py_simple_ttk import (
     CopyBox,
     default_pack,
     force_aspect,
     get_asset,
-    get_generated_font_image,
     get_generated_font_images,
     get_generated_font_images_lookup,
     LabeledCombobox,
@@ -15,7 +14,6 @@ from ..widgets import (
     ScrolledCanvas,
     Tab,
 )
-
 
 CANVAS_SIZE = 750
 BOARD_COLOR = "#000000"
@@ -298,3 +296,11 @@ class TicTacToeWidget(ttk.Frame):
             self.turnvar.set("Click for new match.")
         else:
             self.turnvar.set(f"{self.game.get_current_player()}'s turn to pick.")
+
+
+if __name__ == "__main__":
+    from py_simple_ttk import App
+
+    app = App("tic_tac_toe.json")
+    TicTacToeTab(app.notebook)
+    app.mainloop()
