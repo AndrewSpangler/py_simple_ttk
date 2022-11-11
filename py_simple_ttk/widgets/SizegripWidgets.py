@@ -5,7 +5,7 @@ class EasySizegrip(ttk.Sizegrip):
     """Sizegrip widget with bindings"""
 
     __desc__ = "Automatically packs self and binds mouse presses for systems that don't bind automatically."
-    position = {"relx": 1.0, "rely": 1.0, "anchor": "se"}
+    _position = {"relx": 1.0, "rely": 1.0, "anchor": "se"}
 
     def __init__(self, *args, **kwargs):
         ttk.Sizegrip.__init__(self, *args, **kwargs)
@@ -24,7 +24,7 @@ class EasySizegrip(ttk.Sizegrip):
         self["cursor"] = "bottom_right_corner"
 
     def enable(self):
-        self.place(**self.position)
+        self.place(**self._position)
 
     def disable(self):
         self.place_forget()

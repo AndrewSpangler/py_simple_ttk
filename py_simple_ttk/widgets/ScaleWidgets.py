@@ -5,47 +5,25 @@ import tkinter as tk
 from tkinter import ttk
 from .Labeler import Labeler
 from .MultiWidget import MultiWidgetMixin
+from .SuperWidget import SuperWidgetMixin
 from typing import Callable
 
 
-class LabeledScale(Labeler, ttk.Scale):
-    """Labeled Scale"""
+class ActiveScale(ttk.Scale, SuperWidgetMixin):
+    """ttk.Scale with added features and the SuperWidget mixin"""
 
     def __init__(
         self,
         parent: ttk.Frame,
-        labeltext: str,
         command: Callable = None,
         default: float = 0,
-        orient: bool = tk.HORIZONTAL,
-        is_child: bool = False,
-        **kwargs,
+        widgetargs: dict = {},
+        **kw
     ):
-        self.var = tk.DoubleVar(value=(default := float(default)))
-        self.default = default
-        self.is_child = is_child
-        self._command = command
-        if orient == tk.HORIZONTAL:
-            Labeler.__init__(self, parent, labeltext, header=not is_child)
-            ttk.Scale.__init__(
-                self, self.frame, variable=self.var, command=self._on_update, **kwargs
-            )
-            ttk.Scale.pack(self, fill="x", expand=True, side=tk.TOP)
-        elif orient == tk.VERTICAL:
-            Labeler.__init__(
-                self, parent, labeltext, labelside=tk.TOP, header=not is_child
-            )
-            ttk.Scale.__init__(
-                self,
-                self.frame,
-                variable=self.var,
-                command=self._on_update,
-                orient=tk.VERTICAL,
-                **kwargs,
-            )
-            ttk.Scale.pack(self, fill="y", expand=True, side=tk.TOP)
-        else:
-            raise ValueError(f"Unknown orientation - {orient}")
+        self.default, self._command = float(default), command
+        self.var = tk.DoubleVar(value=self.default)
+        ttk.Scale.__init__(self, parent, variable=self.var, command=self._on_execute_command)
+        SuperWidgetMixin.__init__(self, **widgetargs)
 
     def enable(self) -> None:
         """Disable Scale. `Returns None`"""
@@ -59,7 +37,7 @@ class LabeledScale(Labeler, ttk.Scale):
         """Get Scale value. `Returns a Float`"""
         return self.var.get()
 
-    def set(self, val) -> None:
+    def set(self, val: float) -> None:
         """Set Scale value. `Returns None`"""
         self.var.set(val)
 
@@ -67,9 +45,35 @@ class LabeledScale(Labeler, ttk.Scale):
         """Sets Scale to its default value. `Returns None`"""
         self.var.set(self.default)
 
-    def _on_update(self, val) -> None:
+    def _on_execute_command(self, val: float) -> None:
         if self._command:
             self._command(val)
+        
+        
+
+class LabeledScale(Labeler, ActiveScale):
+    """Labeled ActiveScale"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        command: Callable = None,
+        orient: bool = tk.HORIZONTAL,
+        is_child: bool = False,
+        labelside: str = tk.LEFT,
+        **kw,
+    ):
+        if not orient in (tk.HORIZONTAL, tk.VERTICAL):
+            raise ValueError(f"Unknown orientation - {orient}")
+        pack_args = {"fill":"x","expand":True,"side":tk.TOP}
+        if orient == tk.VERTICAL:
+            labelside=tk.TOP
+            pack_args.update({"fill":"y"})
+        kw["orient"]=orient
+        self.is_child = is_child
+        Labeler.__init__(self, parent, labeltext, labelside=labelside, header=not is_child)
+        ActiveScale.__init__(self, self.frame, **kw)
 
 
 class LabeledMultiScale(Labeler, ttk.Frame, MultiWidgetMixin):
@@ -102,7 +106,15 @@ class LabeledMultiScale(Labeler, ttk.Frame, MultiWidgetMixin):
 
         return do_command
 
-    def add(self, parent, key, args, kwargs, widget_type=None) -> object:
+    def add(
+        self,
+        parent:ttk.Frame,
+        key:str,
+        args:list,
+        kwargs:dict,
+        widget_type:type=None
+    ) -> object:
+        
         """Override MultiWidgetMixin for vertical orientation"""
         widget_type = widget_type or self.widget_type
         kwargs["orient"] = self.orient

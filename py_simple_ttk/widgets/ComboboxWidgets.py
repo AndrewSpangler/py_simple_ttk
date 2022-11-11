@@ -2,46 +2,32 @@ import tkinter as tk
 from tkinter import ttk
 from .Labeler import Labeler
 from .LabeledMultiWidget import LabeledMultiWidgetMixin
-from .WidgetsCore import SuperWidgetMixin
+from .SuperWidget import SuperWidgetMixin
 from typing import Callable
 
 
-class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
-    """Labeled Combobox with the Super Widget mixin"""
-
-    __desc__ = """Set custom_values keyword to "False" to disable custom user-entered values. Set the "default" keyword to the index of the value to display by default from the "values" keyword."""
+class ActiveCombobox(ttk.Combobox, SuperWidgetMixin):
+    """ttk.Combobox with added features and the SuperWidgetMixin"""
 
     def __init__(
         self,
         parent: ttk.Frame,
-        labeltext: str,
-        command: Callable = None,
+        command: Callable=None,
         default: int = 0,
         on_keystroke: bool = False,
         bind_enter: bool = True,
         bind_escape_clear: bool = True,
         values: list = (),
         custom_values: bool = True,
-        labelside: str = tk.LEFT,
-        is_child: bool = False,
-        min_width: int = 0,
-        widgetargs={},
-        **kw,
-    ):
+        widgetargs:dict={},
+        **kw
+        ):
+        self._state = "normal" if custom_values else "readonly"
         self.default = values[default] if any(values) else ""
         self.var = tk.StringVar(value=self.default)
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
-        )
-        ttk.Combobox.__init__(self, self.frame, textvariable=self.var, **kw)
-        ttk.Combobox.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+        ttk.Combobox.__init__(self, parent, textvariable=self.var, **kw)
         SuperWidgetMixin.__init__(self, **widgetargs)
-
-        self.is_child = is_child
-
-        self["values"] = values
-        self._state = "normal" if custom_values else "readonly"
-        self._command = command
+        self._command, self["values"] = command, values
         if on_keystroke:
             self.bind("<KeyRelease>", self._on_execute_command)
         if bind_enter:
@@ -74,7 +60,28 @@ class LabeledCombobox(Labeler, ttk.Combobox, SuperWidgetMixin):
         if self._command:
             self._command(self.get())
 
+class LabeledCombobox(Labeler, ActiveCombobox):
+    """Labeled Combobox with the Super Widget mixin"""
 
+    __desc__ = """Set custom_values keyword to "False" to disable custom user-entered values. Set the "default" keyword to the index of the value to display by default from the "values" keyword."""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        labelside: str = tk.LEFT,
+        is_child: bool = False,
+        widgetargs={},
+        **kw,
+    ):
+        Labeler.__init__(
+            self, parent, labeltext, labelside=labelside, header=not is_child
+        )
+        ActiveCombobox.__init__(self, self.frame, **kw)
+        ActiveCombobox.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+        self.is_child = is_child
+
+        
 class LabeledMultiCombobox(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledCombobox."""
 

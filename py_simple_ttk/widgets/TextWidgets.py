@@ -6,8 +6,9 @@ from tkinter import ttk
 from typing import Callable
 from .Labeler import Labeler
 from .Scroller import Scroller, _create_container
-from .WidgetsCore import default_pack, SuperWidgetMixin
+from .WidgetsCore import default_pack
 from .LabeledMultiWidget import LabeledMultiWidgetMixin
+from .SuperWidget import SuperWidgetMixin
 
 
 class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):

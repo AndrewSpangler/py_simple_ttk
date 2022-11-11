@@ -12,6 +12,7 @@ from py_simple_ttk import (
     ConversationsTab,
     CopyBox,
     Counter,
+    CycleButton,
     default_pack,
     default_separator,
     default_vertical_pack,
@@ -30,6 +31,7 @@ from py_simple_ttk import (
     LabeledConstrainedEntry,
     LabeledCopyBox,
     LabeledCounter,
+    LabeledCycleButton,
     LabeledDigitsEntry,
     LabeledEntry,
     LabeledFloatCounter,
@@ -58,7 +60,6 @@ from py_simple_ttk import (
     LabeledMultiOptionMenu,
     LabeledMultiPrintableEntry,
     LabeledMultiProgressbar,
-    LabeledMultiRadiobutton,
     LabeledMultiScale,
     LabeledMultiSpinbox,
     LabeledMultiUppercaseDigitsEntry,
@@ -68,7 +69,6 @@ from py_simple_ttk import (
     LabeledPathEntry,
     LabeledPrintableEntry,
     LabeledProgressbar,
-    LabeledRadiobutton,
     LabeledScale,
     LabeledSpinbox,
     LabeledUppercaseDigitsEntry,
@@ -99,6 +99,10 @@ from py_simple_ttk import (
     UppercaseEntry,
     WattageTab,
     YesNoCancelWindow,
+    LabeledRadioTable,
+    LabeledMultiRadioTable,
+    LabeledSimpleRadioTable,
+    LabeledMultiSimpleRadioTable,
 )
 
 
@@ -439,14 +443,16 @@ class ComboRadioTab(Tab):
         default_separator(self)
 
         options = ["Option 1", "Option 2", "Option 3"]
-        self.radio = LabeledRadiobutton(self, "Labeled Radiobuttons", options, 0)
+        self.radio = LabeledSimpleRadioTable(
+            self, "Labeled Radiobuttons", options=options, default=0
+        )
         default_pack(self.radio)
 
         conf = {
             "Radios 1": ([["Option 4", "Option 5", "Option 6"]], {"default": 1}),
             "Radios 2": ([["Option 7", "Option 8", "Option 9"]], {"default": 2}),
         }
-        self.radios = LabeledMultiRadiobutton(
+        self.radios = LabeledMultiSimpleRadioTable(
             self, "Labeled Multi Radiobuttons", config=conf
         )
         default_pack(self.radios)
@@ -799,11 +805,25 @@ class SpinboxTab(Tab):
         # LabeledMultiSpinbox
 
 
+class ButtonTab(Tab):
+    def __init__(self, notebook: ttk.Notebook):
+        Tab.__init__(self, notebook, "Buttons")
+        (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
+        LabeledCycleButton(
+            frame,
+            "LabeledCycleButton (0->5)",
+            tuple(str(i) for i in range(6)),
+            command=print,
+        ).pack(fill="x", padx=20)
+
+
 class BasicWidgetsTab(Tab):
     def __init__(self, notebook: ttk.Notebook):
         Tab.__init__(self, notebook, "Basic Widgets")
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill="both", expand=True)
+
+        self.button_tab = ButtonTab(self.notebook)
         self.spinbox_tab = SpinboxTab(self.notebook)
         self.copybox_tab = CopyBoxTab(self.notebook)
         self.constrained_tab = ConstrainedTab(self.notebook)

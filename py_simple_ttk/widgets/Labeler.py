@@ -18,8 +18,7 @@ class Labeler:
         header: bool = False,
     ):
         self.frame = ttk.Frame(parent)
-        self.labelvar = tk.StringVar()
-        self.labelvar.set(labeltext)
+        self.labelvar = tk.StringVar(value=labeltext)
         self.label = ttk.Label(
             self.frame,
             textvariable=self.labelvar,
@@ -34,3 +33,7 @@ class Labeler:
     def set_label_text(self, val: str) -> None:
         """Update a Labeled widget's Label text."""
         self.label.configure(text=val)
+
+    def clear_label_text(self) -> None:
+        """Clear a Labeled widget's Label text."""
+        self.labelvar.set("")

@@ -3,7 +3,7 @@ from tkinter import ttk
 from .WidgetsCore import center_window, default_pack
 from .EntryWidgets import PasswordEntry
 from .ListBoxWidgets import Table
-from .RadiobuttonWidgets import LabeledRadiobutton
+from .RadiobuttonWidgets import LabeledRadioTable
 
 from typing import Callable
 
@@ -199,7 +199,7 @@ If the select_type kwarg is set to true the user will be prompted to select a da
 
         self.typemap = {"String": str, "Integer": int, "Float": float}
         if select_type:
-            self.types = LabeledRadiobutton(
+            self.types = LabeledRadioTable(
                 self.frame, "Value Type", ("String", "Integer", "Float"), 0
             )
             default_pack(self.types)

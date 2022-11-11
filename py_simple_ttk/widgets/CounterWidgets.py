@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 from .Labeler import Labeler
-from .WidgetsCore import SuperWidgetMixin
+from .SuperWidget import SuperWidgetMixin
 from .LabeledMultiWidget import LabeledMultiWidgetMixin
 
 

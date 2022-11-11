@@ -1,13 +1,16 @@
 {
 	"name":"py_simple_ttk",
 	"author":"Andrew Spangler",
-	"version":"0.1.25",
+	"version":"0.1.28",
 	"license":"GPLv3",
 	"email":"AndrewSpangler@users.noreply.github.com",
 	"description":"Themes don't have to be hard.",
 	"requirements":["py_simple_lorem"],
 	"url":"https://github.com/AndrewSpangler/",
 	"changelog": {
+		"0.1.28": "Move SuperWidgetMixin from WidgetsCore.py to SuperWidget.py",
+		"0.1.27": "Add ActiveButton, ActiveCheckButton, ActiveComboBox, ActiveEntry, ActiveOptionMenu, ActiveProgressbar, ActiveRadioButton, ActiveScale, ColumnFrame, CycleButton, LabeledButton, LabeledMultiButton, LabeledCycleButton, LabeledMultiCycleButton, LabeledMultiRadioTable, LabeledMultiSimpleRadioTable, LabeledRadioTable, LabeledSimpleRadioTable, RadioTable, SimpleRadioTable, Remove: LabeledRadioButton, LabeledMultiRadioButton",
+		"0.1.26": "Add Spinbox widgets, fix Copybox",
 		"0.1.25": "Reduce packaged fonts color pallete",
 		"0.1.24": "Update readme generator with more config keys, fix ini readme md code block being marked as python",
 		"0.1.23": "Add columns to Configurable Launcher",

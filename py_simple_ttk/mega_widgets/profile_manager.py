@@ -11,7 +11,6 @@ from ..widgets.ToplevelWidgets import (
 )
 from ..widgets.EntryWidgets import LabeledEntry
 from ..widgets.ListBoxWidgets import Table
-from ..widgets.RadiobuttonWidgets import LabeledRadiobutton
 from ..utils.ProfilesSystem import UserProfile
 from ..utils.utils import get_friendly_time
 

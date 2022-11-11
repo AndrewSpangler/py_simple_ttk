@@ -2,7 +2,7 @@ import platform
 import tkinter as tk
 from tkinter import ttk
 from typing import Callable
-from .WidgetsCore import SuperWidgetMixin
+from .SuperWidget import SuperWidgetMixin
 from .Scroller import Scroller, _create_container
 from .Labeler import Labeler
 
@@ -22,14 +22,14 @@ class ScrolledListBox(Scroller, tk.Listbox, SuperWidgetMixin):
 class OrderedListbox(ScrolledListBox):
     """A Scrolled Re-Orderable Listbox with SuperWidget mixin"""
 
-    __desc__ = """Used when you need a re-orderable listbox for list arrangement etc."""
+    __desc__ = """Used when you need a re-orderable listbox for list arrangement etc. "selectmode" can only be "single" for this Widget."""
 
     def __init__(self, parent: ttk.Frame, **kw):
-        if "selectmode" in kw and not kw["selectmode"] == "single":
+        if kw.get("selectmode") and not kw["selectmode"] == "single":
             raise ValueError('"selectmode" can only be "single"')
         ScrolledListBox.__init__(self, parent, selectmode="single", **kw)
-        self.bind("<Button-1>", self._click)
-        self.bind("<B1-Motion>", self._move)
+        self.bind("<Button-1>", self._click, add="+")
+        self.bind("<B1-Motion>", self._move, add="+")
         self._index = None
 
     def _click(self, event) -> None:
@@ -146,7 +146,7 @@ class Table(ttk.Frame):
         elif platform.system() == "Linux":
             if event.num == 5:
                 l.yview("scroll", 1, "units")
-            if event.num == 4:
+            elif event.num == 4:
                 l.yview("scroll", -1, "units")
         for listbox in self.listboxes:
             self.listboxes[listbox].yview_moveto(l.yview()[0])

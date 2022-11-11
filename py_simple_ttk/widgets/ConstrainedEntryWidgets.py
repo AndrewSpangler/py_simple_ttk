@@ -3,10 +3,9 @@ from tkinter import ttk
 import string
 from typing import Callable
 from .Labeler import Labeler
-from .WidgetsCore import SuperWidgetMixin
-from .MultiWidget import MultiWidgetMixin
-
+from .SuperWidget import SuperWidgetMixin
 from .LabeledMultiWidget import LabeledMultiWidgetMixin
+from .EntryWidgets import ActiveEntry
 
 # Type-constrained
 def check_entry_type(val: str, typ: type) -> bool:
@@ -21,7 +20,7 @@ def check_entry_type(val: str, typ: type) -> bool:
 
 
 # Contents-constrained
-def check_entry_contents(val: str, limiter: list) -> bool:
+def check_entry_contents(val: str, limiter: list | str) -> bool:
     """Core content checker function. Limits entry to a list of chars ['a', 'b', 'c', ...] or \
     the chars contained in a simple string 'abc...'"""
     for char in val:
@@ -29,9 +28,9 @@ def check_entry_contents(val: str, limiter: list) -> bool:
             return False
     return True
 
-
-class ConstrainedEntry(ttk.Frame, SuperWidgetMixin):
-    """Constrained Entry with SuperWidget mixin"""
+# This class is used as a base for every class below
+class ConstrainedEntry(ActiveEntry):
+    """Constrained ActiveEntry"""
 
     __desc__ = "An Entry widget that allows certain constraints to be placed on the input with a given check_function that returns true if the input is allowed for each keystroke / input."
 
@@ -40,37 +39,12 @@ class ConstrainedEntry(ttk.Frame, SuperWidgetMixin):
         parent: ttk.Frame,
         check_function: Callable,
         return_type: type = str,
-        command: Callable = None,
-        on_keystroke: bool = False,
-        bind_enter: bool = True,
-        bind_escape_clear: bool = True,
-        default: str = "",
-        widgetargs={},
         **kw,
     ):
-        ttk.Frame.__init__(self, parent)
-        SuperWidgetMixin.__init__(self, **widgetargs)
-        self.var = tk.StringVar()
-        self.var.trace("w", self._validate)
-        self._command = command
-        self.default = default
-        if self.default:
-            self.set(default)
-        self.entry = ttk.Entry(self, textvariable=self.var, **kw)
-        self.entry.pack(fill="x", expand=True)
+        ActiveEntry.__init__(self, parent, **kw)
         self.check_function, self.return_type = check_function, return_type
+        self.var.trace("w", self._validate)
         self.last = ""
-        if on_keystroke:
-            self.entry.bind("<KeyRelease>", self._on_execute_command)
-        if bind_enter:
-            self.entry.bind("<Return>", self._on_execute_command)
-        if bind_escape_clear:
-            self.entry.bind("<Escape>", self.clear())
-
-    def _on_execute_command(self, event=None) -> None:
-        """Calls the provided "command" function with the contents of the Entry. `Returns None`"""
-        if self._command:
-            self._command(self.get())
 
     def _validate(self, *args, **kw) -> bool:
         """Applies the check function"""
@@ -83,25 +57,6 @@ class ConstrainedEntry(ttk.Frame, SuperWidgetMixin):
     def get(self) -> object:
         """Get Entry value, return type varies based on Entry constraint."""
         return self.return_type(self.var.get())
-
-    def set(self, val) -> None:
-        """Set Entry value. `Returns None`"""
-        try:
-            self.var.set(str(val))
-        except:
-            raise ValueError("Invaild type supplied.")
-
-    def clear(self) -> None:
-        """Set Entry value to default, empty unless default set. `Returns None`"""
-        self.var.set(self.default)
-
-    def enable(self) -> None:
-        """Enable Entry. `Returns None`"""
-        self.entry["state"] = tk.NORMAL
-
-    def disable(self) -> None:
-        """Disable Entry. `Returns None`"""
-        self.entry["state"] = tk.DISABLED
 
 
 # fmt: off
@@ -472,6 +427,3 @@ class LabeledMultiPrintableEntry(LabeledMultiWidgetMixin):
         LabeledMultiWidgetMixin.__init__(
             self, LabeledPrintableEntry, parent, labeltext, config, is_child, labelside, **kw
         )
-
-
-# # # # # 3 # 519

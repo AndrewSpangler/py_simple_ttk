@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Scroller import Scroller, _create_container
-from .WidgetsCore import SuperWidgetMixin
+from .SuperWidget import SuperWidgetMixin
 
 
 class ScrolledTree(Scroller, ttk.Treeview, SuperWidgetMixin):

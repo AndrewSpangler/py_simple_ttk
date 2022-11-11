@@ -6,8 +6,45 @@ from tkinter import ttk
 from .Labeler import Labeler
 from .MultiWidget import MultiWidgetMixin
 
+class ActiveProgressbar(ttk.Progressbar):
+    """ttk.Progressbar with added features"""
 
-class LabeledProgressbar(Labeler, ttk.Progressbar):
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        default: float = 0,
+        **kw
+    ):
+        ttk.Progressbar.__init__(self, self.frame, **kw)
+        self["value"] = self.default = default
+
+    def enable(self):
+        """Disable Progressbar. `Returns None`"""
+        self["state"] = tk.NORMAL
+
+    def disable(self):
+        """Enable Progressbar. `Returns None`"""
+        self["state"] = tk.DISABLED
+
+    def set(self, val):
+        """Get Progressbar progress. `Returns a String`"""
+        self["value"] = val
+
+    def get(self):
+        """Set Progressbar progress. `Returns None`"""
+        return self["value"]
+
+    def clear(self):
+        """Sets Progressbar progress to its default value `Returns None`"""
+        self["value"] = self.default
+
+    def link(self, widget):
+        """Easily link to other widgets, sets the progressbar var to the passed widget's var. `Returns None`"""
+        self.configure(variable=widget.var)
+
+        
+
+class LabeledProgressbar(Labeler, ActiveProgressbar):
     """Labeled Progressbar"""
 
     def __init__(
@@ -22,47 +59,20 @@ class LabeledProgressbar(Labeler, ttk.Progressbar):
     ):
         self.is_child = is_child
         self.default = default
-        if orient == tk.HORIZONTAL:
-            Labeler.__init__(
-                self, parent, labeltext, labelside=labelside, header=not is_child
-            )
-            ttk.Progressbar.__init__(self, self.frame, **kw)
-            ttk.Progressbar.pack(self, fill="x", expand=True, side=tk.RIGHT)
-        elif orient == tk.VERTICAL:
-            Labeler.__init__(
-                self, parent, labeltext, labelside=tk.TOP, header=not is_child
-            )
-            ttk.Progressbar.__init__(self, self.frame, orient=tk.VERTICAL, **kw)
-            ttk.Progressbar.pack(self, fill="y", expand=True, side=tk.TOP)
+        kw.update({"orient":orient})
+        if orient == tk.VERTICAL:
+            # Force labelside redirect for vertical Progress bars
+            labelside=tk.TOP
+            pack = {"fill":"y", "expand":True, "side":tk.TOP}
+        elif orient == tk.HORIZONTAL:
+            pack = {"fill":"x", "expand":True, "side":tk.RIGHT}
         else:
             raise ValueError(f"Bad orientation - {orient}")
-        self["value"] = default
+        Labeler.__init__(self, parent, labeltext, labelside=labelside, header=not is_child)
+        ActiveProgressbar.__init__(self, self.frame, **kw)
+        ActiveProgressbar.pack(self, **pack)
 
-    def enable(self):
-        """Disable Progresbar. `Returns None`"""
-        self["state"] = tk.NORMAL
-
-    def disable(self):
-        """Enable Progresbar. `Returns None`"""
-        self["state"] = tk.DISABLED
-
-    def set(self, val):
-        """Get Progresbar progress. `Returns a String`"""
-        self["value"] = val
-
-    def get(self):
-        """Set Progresbar progress. `Returns None`"""
-        return self["value"]
-
-    def clear(self):
-        """Sets Progresbar progress to its default value `Returns None`"""
-        self["value"] = self.default
-
-    def link(self, widget):
-        """Easily link to other widgets, sets the progressbar var to the passed widget's var. `Returns None`"""
-        self.configure(variable=widget.var)
-
-
+        
 class LabeledMultiProgressbar(Labeler, ttk.Frame, MultiWidgetMixin):
     """Labeled MultiWidget LabeledProgressbar"""
 
@@ -88,7 +98,7 @@ class LabeledMultiProgressbar(Labeler, ttk.Frame, MultiWidgetMixin):
     def add(
         self, parent: ttk.Frame, key: str, args, kwargs, widget_type=None
     ) -> object:
-        """Overrides MultiWidgetMixin to deal with vertical orientation `Returns None`"""
+        """Overrides normal MultiWidgetMixin behavior to deal with vertical orientation. Will break most added widgets  `Returns None`"""
         widget_type = widget_type or self.widget_type
         kwargs["orient"] = self.orient
         w = widget_type(parent, key, *args, **kwargs)
@@ -102,6 +112,6 @@ class LabeledMultiProgressbar(Labeler, ttk.Frame, MultiWidgetMixin):
         return w
 
     def link(self, config: dict) -> None:
-        """Link to other widgets with a dict of subwidget keys to link to `Returns None`"""
+        """Link to other widgets with a dict of subwidget keys to link to. This function will break if widgets without the link method are added to the MultiWidget. `Returns None`"""
         for k in config:
             self.widgets[k].link(config[k])

@@ -7,32 +7,23 @@ from .Labeler import Labeler
 from .LabeledMultiWidget import LabeledMultiWidgetMixin
 
 
-class LabeledCheckbutton(Labeler, ttk.Checkbutton):
-    """Labeled Checkbutton"""
+class ActiveCheckbutton(ttk.Checkbutton):
+    """ttk.Checkbutton with added features"""
 
     __desc__ = """The "replace_output" keyword argument allows the user to \
-provide a tuple of len 2 to replace the default True/False return values. \
-The "is_child" keyword is used by the multiwidget mixin for label \
-configuration and should probably be left alone unless you are making your \
-own multiwidgets."""
+provide a tuple of length 2 to replace the default True/False return values."""
 
     def __init__(
         self,
         parent: ttk.Frame,
-        labeltext: str = "",
         replace_output: list = None,
         default: bool = False,
-        is_child: bool = False,
         **kw,
     ):
         self.var = tk.IntVar(value=default)
-        self.default = default
-        self.replace_output = replace_output
-        self.is_child = is_child
-        Labeler.__init__(self, parent, labeltext, header=not is_child)
-        ttk.Checkbutton.__init__(self, self.frame, variable=self.var, **kw)
-        ttk.Checkbutton.pack(self, fill="x", expand=False, side=tk.TOP)
-
+        self.default, self.replace_output = default, replace_output
+        ttk.Checkbutton.__init__(self, parent, variable=self.var)
+        
     def enable(self) -> None:
         """Enable Checkbutton. `Returns None`"""
         self["state"] = tk.NORMAL
@@ -43,8 +34,7 @@ own multiwidgets."""
 
     def get(self) -> bool:
         """Get Checkbutton value. `Returns a Boolean unless replace_output is set`"""
-        v = self.var.get()
-        return self.replace_output[v] if self.replace_output else v
+        return self.replace_output[self.var.get()] if not self.replace_output is None else self.var.get()
 
     def set(self, val: bool) -> None:
         """Set Checkbutton value. `Returns None`"""
@@ -53,6 +43,24 @@ own multiwidgets."""
     def clear(self) -> None:
         """Sets the Checkbutton to its default value, usually *False* `Returns None`"""
         self.var.set(self.default)
+    
+
+class LabeledCheckbutton(Labeler, ActiveCheckbutton):
+    """Labeled Checkbutton"""
+
+    __desc__ = """ActiveCheckbutton with a Label"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str = "",
+        is_child: bool = False,
+        **kw,
+    ):
+        self.is_child = is_child
+        Labeler.__init__(self, parent, labeltext, header=not is_child)
+        ActiveCheckbutton.__init__(self, self.frame, **kw)
+        ActiveCheckbutton.pack(self, fill="x", expand=False, side=tk.TOP)
 
 
 class LabeledMultiCheckbutton(LabeledMultiWidgetMixin):
@@ -67,7 +75,6 @@ class LabeledMultiCheckbutton(LabeledMultiWidgetMixin):
         parent: ttk.Frame,
         labeltext: str,
         config: dict,
-        is_child: bool = False,
         labelside: str = tk.TOP,
         **kw,
     ):
@@ -77,7 +84,6 @@ class LabeledMultiCheckbutton(LabeledMultiWidgetMixin):
             parent,
             labeltext,
             config,
-            is_child,
-            labelside,
+            labelside=labelside,
             **kw,
         )

@@ -1,10 +1,10 @@
 # Based on https://github.com/roseman/idle/blob/master/ToolTip.py
-# Modified to be consistent with this project
+# Modified to for use with ttk theming
 import tkinter as tk
 from tkinter import ttk
 from .TextWidgets import ScrolledText
 
-# Tooltip
+
 class ToolTipBase:
     def __init__(self, parent: object, align: str = tk.LEFT):
         self.parent, self.align = parent, align
@@ -51,8 +51,7 @@ class ToolTipBase:
         self.tipwindow.wm_geometry("+%d+%d" % (x, y))
 
     def _showcontents(self, text: str = "") -> None:
-        sc = ttk.Label(self.tipwindow, text=text, borderwidth=2, relief=tk.SOLID)
-        sc.pack()
+        ttk.Label(self.tipwindow, text=text, borderwidth=2, relief=tk.SOLID).pack()
 
     def _hidetip(self) -> None:
         tw = self.tipwindow

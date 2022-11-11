@@ -8,11 +8,19 @@ Satisfaction / Severity / Triage button table generator
 Radiobutton
 Scrollbar
 Spinbox
+PieMenu
+ToolBar
+StatusBar
+Carousel
+FlipButton
+PieMeter
+SpeedMeter
+
+Remake MessageBox widgets
+
 
 Separator, Sizegrip,, Notebook and 
 Button, Frame, LabelFrame, Menubutton, PanedWindow, , , and 
-
-test for labeledbutton
 
 # importing the choosecolor package
 from tkinter import colorchooser
@@ -27,3 +35,10 @@ def choose_color():
 
 
 exception handling in tkinter mainloop with special NotImplemented and NotAvailable exceptions that get caught by the mainloop and inform the user with a popup
+
+move tic-tac-toe to an examples folder that the test imports
+
+
+
+# class ActionButton(ActiveButton):
+#     """A button with a dropdown of actions to be executed on button push"""

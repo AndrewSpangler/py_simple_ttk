@@ -29,6 +29,7 @@ CORE_FUNCTIONS = [
     run_cl,
 ]
 CORE_OBJECTS = [MultiWidgetMixin, SuperWidgetMixin]
+FRAME_WIDGETS = [ColumnFrame]
 
 TEXT_WIDGETS = [ScrolledText, CopyBox, LabeledCopyBox, LabeledMultiCopyBox]
 TABS = [
@@ -40,13 +41,22 @@ TABS = [
     TableTab,
     TreeTableTab,
 ]
-SCALE_WIDGETS = [LabeledScale, LabeledMultiScale]
-RADIOBUTTON_WIDGETS = [LabeledRadiobutton, LabeledMultiRadiobutton]
-PROGRESSBAR_WIDGETS = [LabeledProgressbar, LabeledMultiProgressbar]
-OPTIONMENU_WIDGETS = [LabeledOptionMenu, LabeledMultiOptionMenu]
-LISTBOX_WIDGETS = [ScrolledListBox, OrderedListbox, Table]
-KEYPAD_WIDGETS = [KeypadButton, BaseKeypad, DialerKeypad]
+SCALE_WIDGETS = [ActiveScale, LabeledScale, LabeledMultiScale]
+RADIOBUTTON_WIDGETS = (
+    ActiveRadiobutton,
+    RadioTable,
+    LabeledRadioTable,
+    LabeledMultiRadiotable,
+    SimpleRadioTable,
+    LabeledSimpleRadioTable,
+    LabeledMultiSimpleRadioTable,
+)
+PROGRESSBAR_WIDGETS = (ActiveProgressbar, LabeledProgressbar, LabeledMultiProgressbar)
+OPTIONMENU_WIDGETS = (ActiveOptionMenu, LabeledOptionMenu, LabeledMultiOptionMenu)
+LISTBOX_WIDGETS = (ScrolledListBox, OrderedListbox, Table)
+KEYPAD_WIDGETS = (KeypadButton, BaseKeypad, DialerKeypad)
 ENTRY_WIDGETS = [
+    ActiveEntry,
     ScrolledEntry,
     LabeledEntry,
     LabeledMultiEntry,
@@ -117,8 +127,8 @@ CONSTRAINEDENTRY_FUNCTIONS = [
     check_entry_ascii_printable,
 ]
 CONSOLE_WIDGETS = [ConsoleWidget]
-COMBOBOX_WIDGETS = [LabeledCombobox, LabeledMultiCombobox]
-CHECKBUTTON_WIDGETS = [LabeledCheckbutton, LabeledMultiCheckbutton]
+COMBOBOX_WIDGETS = [ActiveComboBox, LabeledCombobox, LabeledMultiCombobox]
+CHECKBUTTON_WIDGETS = [ActiveCheckButton, LabeledCheckbutton, LabeledMultiCheckbutton]
 CANVAS_WIDGETS = [ResizableCanvas, ScrolledCanvas, TiledCanvas, ExampleTile]
 TOPLEVEL_WIDGETS = [
     FocusedToplevel,
@@ -155,7 +165,7 @@ ZIP_FUNCTIONS = [
     get_package_manifest,
     get_package_manifest_json,
 ]
-COLOR_FUNCTIONS = [
+COLOR_FUNCTIONS = (
     reduce_255,
     rgb_to_hex,
     rgba_to_hex,
@@ -166,17 +176,24 @@ COLOR_FUNCTIONS = [
     scalar_to_rgb,
     linear_gradient,
     get_rainbow,
-]
-PROFILES_OBJECTS = [
+)
+PROFILES_OBJECTS = (
     ProfilesSystem,
     UserProfile,
-]
-PROFILES_FUNCTIONS = [
+)
+PROFILES_FUNCTIONS = (
     get_profiles_folder,
     get_profiles_list,
-]
-LABELER_OBJECTS = [Labeler]
-BUTTON_WIDGETS = [LabeledButton]
+)
+LABELER_OBJECTS = (Labeler,)
+BUTTON_WIDGETS = (
+    ActiveButton,
+    LabeledButton,
+    LabeledMultiButton,
+    CycleButton,
+    LabeledCycleButton,
+    LabeledMultiCycleButton,
+)
 COUNTER_WIDGETS = [
     Counter,
     FloatCounter,
@@ -277,6 +294,8 @@ def generate_readme(tables: dict, changelog: dict):
     gen.add_heading_2("Entry Widgets", add_toc=True)
     ENTRY_WIDGETS.extend(CONSTRAINEDENTRY_WIDGETS)
     gen.handle_class_list(ENTRY_WIDGETS, show_submodule=True)
+    gen.add_heading_2("Frame Widgets", add_toc=True)
+    gen.handle_class_list(FRAME_WIDGETS, show_submodule=True)
     gen.add_heading_2("KeyPad Widgets", add_toc=True)
     gen.handle_class_list(KEYPAD_WIDGETS, show_submodule=True)
     gen.add_heading_2("Labeler Widget", add_toc=True)

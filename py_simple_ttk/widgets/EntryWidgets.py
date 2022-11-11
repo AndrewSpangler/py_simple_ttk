@@ -15,60 +15,29 @@ from .Labeler import Labeler
 # from .MultiWidget import MultiWidgetMixin
 from .LabeledMultiWidget import LabeledMultiWidgetMixin
 from .Scroller import Scroller, _create_container
-from .WidgetsCore import SuperWidgetMixin, focus_next, get_asset
+from .SuperWidget import SuperWidgetMixin
+from .WidgetsCore import focus_next, get_asset
 from .ToolTip import ToolTip
 import sys
 
-
-class ScrolledEntry(Scroller, ttk.Entry, SuperWidgetMixin):
-    """Scrolled ttk.Entry with SuperWidgetMixin"""
-
-    __desc__ = """This class is here for completeness but most of the time you will \
-want to use the ScrolledText widget. Used when you need a scrollable text entry box."""
-
-    @_create_container
-    def __init__(self, parent: ttk.Frame, widgetargs: dict = {}, **kw):
-        ttk.Entry.__init__(
-            self,
-            parent,
-            **kw,
-        )
-        Scroller.__init__(self, parent)
-        SuperWidgetMixin.__init__(self, **widgetargs)
-
-
-class LabeledEntry(Labeler, ttk.Entry, SuperWidgetMixin):
-    """Labeled ttk.Entry with the SuperWidget mixin"""
-
-    __desc__ = """Used when you need a Labeled Entry"""
+class ActiveEntry(ttk.Entry, SuperWidgetMixin):
+    """Active ttk.Entry with added features and the SuperWidgetMixin"""
 
     def __init__(
-        self,
-        parent: ttk.Frame,
-        labeltext: str,
-        command: Callable = None,
-        default: str = "",
-        on_keystroke: bool = False,
-        bind_enter: bool = True,
-        bind_escape_clear: bool = True,
-        labelside: str = tk.LEFT,
-        is_child: bool = False,
-        min_width: int = 0,
-        widgetargs={},
-        **kw,
-    ):
+            self,
+            parent: ttk.Frame,
+            command: Callable = None,
+            default: str = "",
+            on_keystroke: bool = False,
+            bind_enter: bool = True,
+            bind_escape_clear: bool = True,
+            widgetargs: dict={},
+            **kw
+        ):
         self.var = tk.StringVar(value=default)
-        Labeler.__init__(
-            self, parent, labeltext, labelside=labelside, header=not is_child
-        )
-        ttk.Entry.__init__(
-            self, self.frame, textvariable=self.var, width=min_width, **kw
-        )
-        ttk.Entry.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+        ttk.Entry.__init__(self, parent, textvariable=self.var, **kw)
         SuperWidgetMixin.__init__(self, **widgetargs)
-        self.default = default
-        self.is_child = is_child
-        self._command = command
+        self._command, self.default = command, default
         if on_keystroke:
             self.bind("<KeyRelease>", self._on_execute_command)
         if bind_enter:
@@ -76,32 +45,69 @@ class LabeledEntry(Labeler, ttk.Entry, SuperWidgetMixin):
         if bind_escape_clear:
             self.bind("<Escape>", self.clear)
 
-    def enable(self):
+    def enable(self) -> None:
         """Enable Entry. `Returns None`"""
         self["state"] = tk.NORMAL
 
-    def disable(self):
+    def disable(self) -> None:
         """Disable Entry. `Returns None`"""
         self["state"] = tk.DISABLED
 
-    def get(self):
+    def get(self) -> str:
         """Get Entry value. `Returns a String`"""
         return self.var.get()
 
-    def set(self, val):
+    def set(self, val) -> None:
         """Set Entry value. `Returns None`"""
-        self.var.set(val)
+        try:
+            self.var.set(str(val))
+        except:
+            raise ValueError("Invaild type supplied.")
 
-    def clear(self):
+    def clear(self) -> None:
         """Set Entry value to default, empty unless default set. `Returns None`"""
         self.var.set(self.default)
 
-    def _on_execute_command(self, event=None):
+    def _on_execute_command(self, event=None) -> None:
         """Calls the provided "command" function with the contents of the Entry. `Returns None`"""
         if self._command:
             self._command(self.get())
 
+class ScrolledEntry(Scroller, ActiveEntry):
+    """Scrolled ttk.Entry with SuperWidgetMixin"""
 
+    __desc__ = """This class is here for completeness but most of the time you will \
+want to use the ScrolledText widget. Used when you need a scrollable text entry box."""
+
+    @_create_container
+    def __init__(self, parent: ttk.Frame, widgetargs: dict = {}, **kw):
+        ActiveEntry.__init__(
+            self,
+            parent,
+            **kw,
+        )
+        Scroller.__init__(self, parent)
+        
+class LabeledEntry(Labeler, ActiveEntry):
+    """Labeled ActiveEntry"""
+
+    __desc__ = """ActiveEntry with Label"""
+
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        labeltext: str,
+        labelside: str = tk.LEFT,
+        is_child: bool = False,        
+        **kw,
+    ):
+        Labeler.__init__(
+            self, parent, labeltext, labelside=labelside, header=not is_child
+        )
+        self.is_child = is_child
+        ActiveEntry.__init__(self, self.frame, **kw)
+        ActiveEntry.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
+        
 class LabeledMultiEntry(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledEntry"""
 
@@ -167,8 +173,8 @@ class LabeledMultiButtonEntry(LabeledMultiWidgetMixin):
 
 class LabeledPathEntry(LabeledEntry):
     """LabeledEntry with a ttk.Button bound to a file- or folder-picker for easy \
-	system path selection. Defaults to tk.filedialog.askopenfilename if no \
-	tk.filedialog specified."""
+    system path selection. Defaults to tk.filedialog.askopenfilename if no \
+    tk.filedialog specified."""
 
     _valid_dialogs = [
         askopenfilename,
