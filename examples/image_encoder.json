@@ -1,0 +1,20 @@
+{
+    "application": "Image Encoder",
+    "version": "0.0.1",
+    "width": 500,
+    "height": 200,
+    "minwidth": 500,
+    "minheight": 200,
+    "resizable_width": false,
+    "resizable_height": false,
+    "start_maximized": false,
+    "start_fullscreen": false,
+    "enable_fullscreen": false,
+    "scaling": 1.5,
+    "enable_themes_menu": false,
+    "enable_profiles": false,
+    "enable_launcher": false,
+    "movable_tabs": false,
+    "conversations_enabled": false,
+    "notes_enabled": false
+}

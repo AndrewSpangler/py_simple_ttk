@@ -14,12 +14,19 @@ Carousel
 FlipButton
 PieMeter
 SpeedMeter
-
+RGB/RGBA buttons
 Remake MessageBox widgets
 
+detect if tooltip is below screen
+
+add option to lowercase and upwercase contraained entries that will apply .lower() / .upper() on the value before processing it to see if it can be entered
+
+add labeled listbox and add clear/enable/disable, form widgets can still take the varying contents too I guess so lets do it
 
 Separator, Sizegrip,, Notebook and 
 Button, Frame, LabelFrame, Menubutton, PanedWindow, , , and 
+
+add ini.json option: default_theme
 
 # importing the choosecolor package
 from tkinter import colorchooser

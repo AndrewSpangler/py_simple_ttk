@@ -29,7 +29,7 @@ CORE_FUNCTIONS = [
     run_cl,
 ]
 CORE_OBJECTS = [MultiWidgetMixin, SuperWidgetMixin]
-FRAME_WIDGETS = [ColumnFrame]
+FRAME_WIDGETS = [ColumnFrame, HamburgerFrame]
 
 TEXT_WIDGETS = [ScrolledText, CopyBox, LabeledCopyBox, LabeledMultiCopyBox]
 TABS = [
@@ -207,6 +207,11 @@ SPINBOX_WIDGETS = [
     LabeledSpinbox,
     LabeledMultiSpinbox,
 ]
+LABEL_WIDGETS = [
+    ActiveLabel,
+    LabeledValue,
+]
+
 # fmt: off
 IGNORED_METHODS = ["addtag","addtag_above","addtag_all","addtag_below","addtag_closest","addtag_enclosed","addtag_overlapping","addtag_withtag","after","after_cancel","after_idle","anchor","aspect","attributes","bbox","bell","bind","bind_all","bind_class","bindtags","canvasx","canvasy","cget","client","clipboard_append","clipboard_clear","clipboard_get","colormapwindows","columnconfigure","command","compare","config","configure","coords","count","current","dchars","debug","deiconify","delete","deletecommand","dlineinfo","dtag","dump","edit","edit_modified","edit_redo","edit_reset","edit_separator","edit_und","event_add","event_delete","event_generate","event_info","find","find_above","find_all","find_below","find_closest","find_enclosed","find_overlapping","find_withtag","focus","focus_displayof","focus_force","focus_get","focus_lastfor","focus_set","focusmodel","forget","frame","geometry","getboolean","getdouble","getint","gettags","getvar","grab_current","grab_release","grab_set","grab_set_global","grab_status","grid","grid_anchor","grid_bbox","grid_columnconfigure","grid_configure","grid_forget","grid_info","grid_location","grid_propagate","grid_remove","grid_rowconfigure","grid_size","grid_slaves","group","iconbitmap","iconify""iconmask","iconname","iconphoto","iconposition","iconwindow","icursor","identify","image_cget","image_configure","image_create","image_names","image_types","index","info","insert","instate","invoke","itemcget","itemconfig","itemconfigure","keys","lift","location","lower","mainloop","manage","mark_gravity","mark_names","mark_next","mark_previous","mark_set","mark_unset","maxsize","minsize","move","moveto","moveto","nametowidget","nearest","option_add","option_clear","option_get","option_readfile","overrideredirect","pack","pack_configure","pack_forget","pack_info","pack_propagate","pack_slaves","peer_create","peer_names","place","place_configure","place_forget","place_info","place_slaves","positionfrom","postscript","propagate","protocol","quit","register","replace","resizable","rowconfigure","scale","scan_dragto","scan_mark","search","see","select_adjust","select_anchor","select_clear","select_from","select_includes","select_item","select_present","select_range","select_set","select_to","selection_adjust","selection_anchor","selection_clear","selection_clear","selection_from","selection_get","selection_handle","selection_includes","selection_own","selection_own_get","selection_present","selection_range","selection_set","selection_to","send","set_cursor","set_label_text","setvar","size","sizefrom","slaves","state","tag_add","tag_bind","tag_bing","tag_cget","tag_config","tag_configure","tag_delete","tag_lower","tag_names","tag_nextrange","tag_prevrange","tag_raise","tag_ranges","tag_remove","tag_unbind","title","tk_bisque","tk_focusFollowsMouse","tk_focusNext","tk_focusPrev","tk_setPalette","tk_strictMotif","tkraise","transient","type","unbind","unbind_all","unbind_class","update","update_idletasks","validate","wait_variable","wait_visibility","wait_window","waitvar","window_cget","window_config","window_configure","window_names","winfo_atom","winfo_atomname","winfo_cells","winfo_children","winfo_class","winfo_colormapfull","winfo_containing","winfo_depth","winfo_exists","winfo_fpixels","winfo_geometry","winfo_height","winfo_id","winfo_interps","winfo_ismapped","winfo_manager","winfo_name","winfo_parent","winfo_pathname","winfo_pixels","winfo_pointerx","winfo_pointerxy","winfo_pointery","winfo_reqheight","winfo_reqwidth","winfo_rgb","winfo_rootx","winfo_rooty","winfo_screen","winfo_screencells","winfo_screendepth","winfo_screenheight","winfo_screenmmheight","winfo_screenmmwidth","winfo_screenvisual","winfo_screenwidth","winfo_server","winfo_toplevel","winfo_viewable","winfo_visual","winfo_visualid","winfo_visualsavailable","winfo_vrootheight","winfo_vrootwidth","winfo_vrootx","winfo_vrooty","winfo_width","winfo_x","winfo_y","withdraw","wm_aspect","wm_attributes","wm_client","wm_colormapwindows","wm_command","wm_deiconify","wm_focusmode","wm_focusmodel","wm_forget","wm_frame","wm_geometry","wm_grid","wm_group","wm_iconbitmap","wm_iconify","wm_iconmask","wm_iconname","wm_iconphoto","wm_iconposition","wm_iconwindow","wm_manage","wm_maxsize","wm_minsize","wm_overrideredirect","wm_positionfrom","wm_protocol","wm_resizable","wm_sizefrom","wm_state","wm_title","wm_transient","wm_withdraw","xview","xview_moveto","xview_scroll","yview","yview_moveto","yview_pickplace","yview_scroll"]
 # fmt: on
@@ -300,6 +305,8 @@ def generate_readme(tables: dict, changelog: dict):
     gen.handle_class_list(FRAME_WIDGETS, show_submodule=True)
     gen.add_heading_2("KeyPad Widgets", add_toc=True)
     gen.handle_class_list(KEYPAD_WIDGETS, show_submodule=True)
+    gen.add_heading_2("Label Widgets", add_toc=True)
+    gen.handle_class_list(LABEL_WIDGETS, show_submodule=True)
     gen.add_heading_2("Labeler Widget", add_toc=True)
     gen.handle_class_list(BUTTON_WIDGETS)
     gen.add_heading_2("ListBox Widgets", add_toc=True)

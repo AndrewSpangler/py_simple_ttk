@@ -21,6 +21,7 @@ class ScrolledCanvas(ttk.Frame):
         on_middle_click=None,  # If specified, calls func(event)
         on_right_click=None,  # If specified, calls func(event)
         on_configure=None,  # If specified, calls func(event)
+        configure_delay: int = 100,  # Delay after last config event to apply resize
         bind_canvas_scroll=True,
         **kw,  # Canvas args
     ):
@@ -32,6 +33,8 @@ class ScrolledCanvas(ttk.Frame):
         self.on_right_click = on_right_click
         self.on_mouse_wheel = on_mouse_wheel
         self.on_configure = on_configure
+        self.configure_delay = configure_delay
+        self._scheduled_configure = None
         ttk.Frame.__init__(self, parent)
         self.canvas_height = 1
         self.canvas_width = 1
@@ -55,7 +58,7 @@ class ScrolledCanvas(ttk.Frame):
         self.canvas.bind("<Button-2>", self._on_middle_click, add="+")
         self.canvas.bind("<Button-3>", self._on_right_click, add="+")
         self.canvas.bind("<MouseWheel>", self._on_mouse_wheel, add="+")
-        self.canvas.bind("<Configure>", self._on_configure, add="+")
+        self.canvas.bind("<Configure>", self._schedule_configure, add="+")
         self.bind_canvas_scroll = bind_canvas_scroll
 
     def get_adjusted_y_view(self, event) -> int:
@@ -99,6 +102,16 @@ class ScrolledCanvas(ttk.Frame):
         if self.on_right_click:
             self.on_right_click(event, (event.x, self.get_adjusted_y_view(event)))
 
+    def _unschedule_configure(self, event=None) -> None:
+        scheduled_configure = self._scheduled_configure
+        self._scheduled_configure = None
+        if scheduled_configure:
+            self.after_cancel(scheduled_configure)
+
+    def _schedule_configure(self, event=None) -> None:
+        self._unschedule_configure()
+        self._scheduled_configure = self.after(self.configure_delay, self._on_configure)
+
     def _on_configure(self, event=None) -> None:
         if hasattr(self, "refresh"):
             self.refresh()
@@ -106,11 +119,12 @@ class ScrolledCanvas(ttk.Frame):
         self.canvas.config(width=w, height=h)
         if self.on_configure:
             self.on_configure(w, h)
+        self._unschedule_configure()
 
     def use_style(self, style) -> None:
         """Reformat with a given ttk style. `Returns None`"""
         if self.winfo_exists():
-            self.tile_fill = style.lookup("TEntry", "fieldbackground") or style.lookup(
+            self.tile_color = style.lookup("TEntry", "fieldbackground") or style.lookup(
                 "TCombobox", "fieldbackground"
             )
             bg = style.lookup("TFrame", "background") or "#ffffff"
@@ -208,7 +222,7 @@ class TiledCanvas(ScrolledCanvas):
                     tile.y,
                     tile.x + self.tile_width,
                     tile.y + self.tile_height,
-                    fill=self.tile_fill,
+                    fill=self.tile_color,
                 ),
                 self.canvas.create_text(
                     tile.x + 5, tile.y + 10, anchor="nw", text=tile.text

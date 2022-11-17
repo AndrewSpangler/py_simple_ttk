@@ -171,4 +171,5 @@ from .SpinboxWidgets import (
     LabeledMultiSpinbox,
 )
 from .SuperWidget import SuperWidgetMixin
-from .FrameWidgets import ColumnFrame
+from .FrameWidgets import ColumnFrame, HamburgerFrame
+from .LabelWidgets import ActiveLabel, LabeledValue

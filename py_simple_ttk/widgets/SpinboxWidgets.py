@@ -24,8 +24,10 @@ class ActiveSpinbox(ttk.Spinbox, SuperWidgetMixin):
         widgetargs: dict = {},
         **kw,
     ):
-        self.var = tk.IntVar(value=default)
+        self.var = tk.IntVar()
         self.default = default
+        # self.from_ = kw.get("from_")
+        # self.to = kw.get("to")
         ttk.Spinbox.__init__(self, parent, textvariable=self.var, **kw)
         ttk.Spinbox.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
         SuperWidgetMixin.__init__(self, **widgetargs)
@@ -40,6 +42,7 @@ class ActiveSpinbox(ttk.Spinbox, SuperWidgetMixin):
             self.bind("<Escape>", self.clear)
         if bind_mouse_wheel:
             self.bind("<MouseWheel>", self._on_execute_command)
+        self.set(default)
 
     def disable(self) -> None:
         """Disable Spinbox. `Returns None`"""
@@ -53,9 +56,9 @@ class ActiveSpinbox(ttk.Spinbox, SuperWidgetMixin):
         """Get Spinbox value. `Returns an Int`"""
         return self.var.get()
 
-    def set(self, val: str) -> None:
+    def set(self, val: int) -> None:
         """Set Spinbox value. `Returns None`"""
-        self.var.set(val)
+        self.var.set(max(min(val, self.cget("to")), self.cget("from")))
 
     def clear(self) -> None:
         """Sets Spinbox to its default value. `Returns None`"""

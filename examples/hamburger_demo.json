@@ -1,0 +1,20 @@
+{
+    "application": "Hamburger Frame Demo",
+    "version": "0.1.1",
+    "width": 800,
+    "height": 600,
+    "minwidth": 60,
+    "minheight": 60,
+    "resizable_width": true,
+    "resizable_height": true,
+    "start_maximized": false,
+    "start_fullscreen": false,
+    "enable_fullscreen": true,
+    "scaling": 1.5,
+    "enable_themes_menu": true,
+    "enable_profiles": false,
+    "enable_launcher": false,
+    "movable_tabs": false,
+    "conversations_enabled": false,
+    "notes_enabled": false
+}

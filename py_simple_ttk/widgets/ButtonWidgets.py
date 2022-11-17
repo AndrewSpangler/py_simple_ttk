@@ -108,7 +108,7 @@ class CycleButton(ActiveButton):
     ):
         ActiveButton.__init__(self, parent, command=self._on_cycle, **kw)
         self.options = options
-        self.index = default
+        self.index, self.default = default, default
         self.set(self.options[default])
         self.bind("<KeyRelease>", self._on_cycle)
         self._cycle_command = command
@@ -118,6 +118,9 @@ class CycleButton(ActiveButton):
         self.set(self.options[self.index % len(self.options)])
         if self._cycle_command:
             self._cycle_command(self.get())
+
+    def clear(self, event=None):
+        self.set(self.options[self.default])
 
 
 class LabeledCycleButton(Labeler, CycleButton):

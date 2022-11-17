@@ -7,6 +7,7 @@ from py_simple_ttk import (
     App,
     BrowserLauncherTab,
     CommandLauncherTab,
+    ColumnFrame,
     ConsoleTab,
     ConstrainedEntry,
     ConversationsTab,
@@ -46,6 +47,7 @@ from py_simple_ttk import (
     LabeledMultiCombobox,
     LabeledMultiCopyBox,
     LabeledMultiCounter,
+    LabeledMultiCycleButton,
     LabeledMultiDigitsEntry,
     LabeledMultiEntry,
     LabeledMultiFloatCounter,
@@ -73,6 +75,7 @@ from py_simple_ttk import (
     LabeledSpinbox,
     LabeledUppercaseDigitsEntry,
     LabeledUppercaseEntry,
+    LabeledValue,
     LauncherTools,
     LettersDigitsEntry,
     LettersEntry,
@@ -178,9 +181,11 @@ class TextBoxTestTab(Tab):
 
 class FormWidgetDemoTab(Tab):
     def __init__(self, notebook: ttk.Notebook):
-        Tab.__init__(self, notebook, "Form Widgets")
-
-        self.entry = LabeledEntry(self, "Labeled Entry")
+        Tab.__init__(self, notebook, "Basic Widgets")
+        (frames := ColumnFrame(self, 3)).pack(fill="both", expand=True)
+        self.frames = frames
+        left, mid, right = frames.frames
+        self.entry = LabeledEntry(left, "LabeledEntry")
         default_pack(self.entry)
         entry_config = {
             "Entry 1": ([], {"default": ""}),
@@ -188,20 +193,18 @@ class FormWidgetDemoTab(Tab):
             "Entry 3": ([], {"default": "101010000100101"}),
             "Entry 4": ([], {"default": ""}),
         }
-        self.entries = LabeledMultiEntry(self, "Labeled Multi Entry", entry_config)
+        self.entries = LabeledMultiEntry(left, "LabeledMultiEntry", entry_config)
         default_pack(self.entries)
-        default_separator(self)
-
-        self.path_entry = LabeledPathEntry(self, "Labeled Path Entry")
+        default_separator(left)
+        self.path_entry = LabeledPathEntry(left, "LabeledPathEntry (File Mode)")
         default_pack(self.path_entry)
         self.dir_entry = LabeledPathEntry(
-            self, "Labeled Dir Entry", dialog=tk.filedialog.askdirectory
+            left, "LabeledPathEntry (Dir mode)", dialog=tk.filedialog.askdirectory
         )
         default_pack(self.dir_entry)
-        default_separator(self)
-
+        default_separator(left)
         self.option_menu = LabeledOptionMenu(
-            self, "Labeled Option Menu", ["Option 1", "Option 2"]
+            left, "LabeledOptionMenu", ["Option 1", "Option 2"]
         )
         default_pack(self.option_menu)
         option_menu_config = {
@@ -210,14 +213,13 @@ class FormWidgetDemoTab(Tab):
             "Menu 3": ([["A", "B", "C", "D", "E"]], {"default": 4}),
         }
         self.option_menus = LabeledMultiOptionMenu(
-            self, "Labeled Multi Option Menu", option_menu_config
+            left, "LabeledMultiOptionMenu", option_menu_config
         )
         default_pack(self.option_menus)
-        default_separator(self)
-
+        default_separator(left)
         self.check_button = LabeledCheckbutton(
-            self,
-            "Labeled Check Button",
+            left,
+            "LabeledCheckButton",
             text="Button Text",
             replace_output=["Unchecked", "Checked"],
             default=True,
@@ -248,14 +250,86 @@ class FormWidgetDemoTab(Tab):
             ),
         }
         self.check_buttons = LabeledMultiCheckbutton(
-            self, "Labeled Check Buttons", check_buttons_config
+            left, "LabeledMultiCheckButton", check_buttons_config
         )
         default_pack(self.check_buttons)
-        default_separator(self)
+        default_separator(left)
 
-        run_button = ttk.Button(self, command=self.on_button_click, text="Run Test")
-        default_pack(run_button)
+        # Middle Column
+        self.box = LabeledCombobox(mid, "LabeledCombobox", values=("A", "B"), default=0)
+        default_pack(self.box)
+        conf = {
+            "Box 1": ([], {"values": ("C", "D"), "default": 0}),
+            "Box 2": ([], {"values": ("E", "F"), "default": 1}),
+            "Box 3": ([], {"values": ("G", "H"), "default": 0}),
+        }
+        self.boxes = LabeledMultiCombobox(mid, "LabeledMultiCombobox", config=conf)
+        default_pack(self.boxes)
+        default_separator(mid)
 
+        options = ["Option 1", "Option 2", "Option 3"]
+        self.radio = LabeledSimpleRadioTable(
+            mid, "LabeledRadioTable", options=options, default=0
+        )
+        default_pack(self.radio)
+
+        conf = {
+            "Radios 1": ([["Option 4", "Option 5", "Option 6"]], {"default": 1}),
+            "Radios 2": ([["Option 7", "Option 8", "Option 9"]], {"default": 2}),
+        }
+        self.radios = LabeledMultiSimpleRadioTable(
+            mid, "LabeledMultiRadioTable", config=conf
+        )
+        default_pack(self.radios)
+        default_separator(mid)
+        # ActiveLabel
+        self.labeled_value = LabeledValue(mid, "LabeledValue", "The Value")
+        default_pack(self.labeled_value)
+
+        self.cycle = LabeledCycleButton(
+            right,
+            "LabeledCycleButton (0 -> 5)",
+            tuple(str(i) for i in range(6)),
+        )
+        default_pack(self.cycle)
+        conf = {
+            "Cycle 1 (5 -> 0)": ([[str(i) for i in reversed(range(6))]], {}),
+            "Cycle 2 (-5 -> 5)": ([[str(i) for i in range(-5, 6)]], {}),
+        }
+        self.multi_cycle = LabeledMultiCycleButton(
+            right, "LabeledMultiCycleButton", config=conf
+        )
+        default_pack(self.multi_cycle)
+        default_separator(right)
+        self.spin = LabeledSpinbox(right, "LabeledSpinbox (0 -> 500)", from_=0, to=500)
+        default_pack(self.spin)
+        conf = {
+            "Spin 1 (20-30)": [(), {"from_": 20, "to": 30}],
+            "Spin 2 (60-80)": [(), {"from_": 60, "to": 80}],
+        }
+        self.multi_spin = LabeledMultiSpinbox(right, "LabeledMultiSpinbox", config=conf)
+        default_pack(self.multi_spin)
+
+        self.labeled_counter = LabeledCounter(right, "Labeled Counter")
+        default_pack(self.labeled_counter)
+        self.labeled_float_counter = LabeledFloatCounter(
+            right, "Labeled Counter", integer_level=2, step=0.2
+        )
+        default_pack(self.labeled_float_counter)
+        self.labeled_multi_counter = LabeledMultiCounter(
+            right,
+            "LabeledMultiCounter",
+            {"Counter A": ((), {}), "Counter B": ((), {})},
+        )
+        default_pack(self.labeled_multi_counter)
+        self.labeled_multi_float_counter = LabeledMultiFloatCounter(
+            right,
+            "LabeledMultiFloatCounter",
+            {"Counter A": ((), {}), "Counter B": ((), {})},
+        )
+        default_pack(self.labeled_multi_float_counter)
+
+        default_pack(ttk.Button(self, command=self.on_button_click, text="Run Test"))
         self.copy_box = CopyBox(self)
         self.copy_box.pack(fill=tk.BOTH, expand=True, padx=5)
 
@@ -263,11 +337,11 @@ class FormWidgetDemoTab(Tab):
         entry_value = self.entry.get()
         self.entry.clear()
         entries_value = json.dumps(self.entries.get(), indent=4)
-
-        path_value = self.path_entry.get()
-        dir_value = self.dir_entry.get()
-
         self.entries.clear()
+        path_value = self.path_entry.get()
+        self.path_entry.clear()
+        dir_value = self.dir_entry.get()
+        self.dir_entry.clear()
         option_value = self.option_menu.get()
         self.option_menu.clear()
         options_value = json.dumps(self.option_menus.get(), indent=4)
@@ -276,18 +350,44 @@ class FormWidgetDemoTab(Tab):
         self.check_button.clear()
         checks_value = json.dumps(self.check_buttons.get(), indent=4)
         self.check_buttons.clear()
-        self.copy_box.set(
-            "Entry Value: {}\nPath Value: {}\nDir Value: {}\nMulti Entry Value: {}\nOption Value: {}\nMulti Option Value: {}\nCheck Value: {}\nMulti Check Value: {}".format(
-                entry_value,
-                path_value,
-                dir_value,
-                entries_value,
-                option_value,
-                options_value,
-                check_value,
-                checks_value,
-            )
+        # Col 2
+        box_value = self.box.get()
+        self.box.clear()
+        boxes_value = json.dumps(self.boxes.get(), indent=4)
+        self.boxes.clear()
+        radio_value = self.radio.get()
+        self.radio.clear()
+        radios_value = json.dumps(self.radios.get(), indent=4)
+        self.radios.clear()
+        # Col 3
+        cycle_value = json.dumps(self.cycle.get(), indent=4)
+        self.cycle.clear()
+        multi_cycle_value = json.dumps(self.multi_cycle.get(), indent=4)
+        self.multi_cycle.clear()
+
+        col_1_values = "Entry Value: {}\nPath Value: {}\nDir Value: {}\nMulti Entry Value: {}\nOption Value: {}\nMulti Option Value: {}\nCheck Value: {}\nMulti Check Value: {}\n".format(
+            entry_value,
+            path_value,
+            dir_value,
+            entries_value,
+            option_value,
+            options_value,
+            check_value,
+            checks_value,
         )
+
+        col_2_values = "Combobox Value: {}\nMulti Combobox Value: {}\nRadio Value: {}\nRadios Value: {}\n".format(
+            box_value,
+            boxes_value,
+            radio_value,
+            radios_value,
+        )
+
+        col_3_values = "CycleButton Value: {}\nMultiCycleButton Value: {}\n".format(
+            cycle_value, multi_cycle_value
+        )
+
+        self.copy_box.set(col_1_values + col_2_values + col_3_values)
 
 
 class LoadingBarDemo(Tab):
@@ -424,61 +524,61 @@ class LoadingBarDemo(Tab):
         default_pack(self.indeterminate_loading_looped_bar)
 
 
-class ComboRadioTab(Tab):
-    def __init__(
-        self,
-        notebook: ttk.Notebook,
-    ):
-        Tab.__init__(self, notebook, "Radios & Combos")
-        self.box = LabeledCombobox(
-            self, "Labeled Combobox", values=("A", "B"), default=0
-        )
-        default_pack(self.box)
-        conf = {
-            "Box 1": ([], {"values": ("C", "D"), "default": 0}),
-            "Box 2": ([], {"values": ("E", "F"), "default": 1}),
-            "Box 3": ([], {"values": ("G", "H"), "default": 0}),
-        }
-        self.boxes = LabeledMultiCombobox(self, "Labeled Multi Combobox", config=conf)
-        default_pack(self.boxes)
-        default_separator(self)
+# class ComboRadioTab(Tab):
+#     def __init__(
+#         self,
+#         notebook: ttk.Notebook,
+#     ):
+#         Tab.__init__(self, notebook, "Radios & Combos")
+# #         self.box = LabeledCombobox(
+# #             self, "Labeled Combobox", values=("A", "B"), default=0
+# #         )
+# #         default_pack(self.box)
+# #         conf = {
+# #             "Box 1": ([], {"values": ("C", "D"), "default": 0}),
+# #             "Box 2": ([], {"values": ("E", "F"), "default": 1}),
+# #             "Box 3": ([], {"values": ("G", "H"), "default": 0}),
+# #         }
+# #         self.boxes = LabeledMultiCombobox(self, "Labeled Multi Combobox", config=conf)
+# #         default_pack(self.boxes)
+# #         default_separator(self)
+#
+# #         options = ["Option 1", "Option 2", "Option 3"]
+# #         self.radio = LabeledSimpleRadioTable(
+# #             self, "Labeled Radiobuttons", options=options, default=0
+# #         )
+# #         default_pack(self.radio)
+#
+# #         conf = {
+# #             "Radios 1": ([["Option 4", "Option 5", "Option 6"]], {"default": 1}),
+# #             "Radios 2": ([["Option 7", "Option 8", "Option 9"]], {"default": 2}),
+# #         }
+# #         self.radios = LabeledMultiSimpleRadioTable(
+# #             self, "Labeled Multi Radiobuttons", config=conf
+# #         )
+# #         default_pack(self.radios)
+# #         default_separator(self)
 
-        options = ["Option 1", "Option 2", "Option 3"]
-        self.radio = LabeledSimpleRadioTable(
-            self, "Labeled Radiobuttons", options=options, default=0
-        )
-        default_pack(self.radio)
+#         run_button = ttk.Button(self, command=self.on_button_click, text="Run Test")
+#         default_pack(run_button)
 
-        conf = {
-            "Radios 1": ([["Option 4", "Option 5", "Option 6"]], {"default": 1}),
-            "Radios 2": ([["Option 7", "Option 8", "Option 9"]], {"default": 2}),
-        }
-        self.radios = LabeledMultiSimpleRadioTable(
-            self, "Labeled Multi Radiobuttons", config=conf
-        )
-        default_pack(self.radios)
-        default_separator(self)
+#         self.copy_box = CopyBox(self)
+#         self.copy_box.pack(fill=tk.BOTH, expand=True, padx=5)
 
-        run_button = ttk.Button(self, command=self.on_button_click, text="Run Test")
-        default_pack(run_button)
-
-        self.copy_box = CopyBox(self)
-        self.copy_box.pack(fill=tk.BOTH, expand=True, padx=5)
-
-    def on_button_click(self, event=None):
-        box_value = self.box.get()
-        self.box.clear()
-        boxes_value = json.dumps(self.boxes.get(), indent=4)
-        self.boxes.clear()
-        radio_value = self.radio.get()
-        self.radio.clear()
-        radios_value = json.dumps(self.radios.get(), indent=4)
-        self.radios.clear()
-        self.copy_box.set(
-            "Combobox Value: {}\nMulti Combobox Value: {}\nRadio Value: {}\nRadios Value: {}".format(
-                box_value, boxes_value, radio_value, radios_value
-            )
-        )
+#     def on_button_click(self, event=None):
+#         box_value = self.box.get()
+#         self.box.clear()
+#         boxes_value = json.dumps(self.boxes.get(), indent=4)
+#         self.boxes.clear()
+#         radio_value = self.radio.get()
+#         self.radio.clear()
+#         radios_value = json.dumps(self.radios.get(), indent=4)
+#         self.radios.clear()
+#         self.copy_box.set(
+#             "Combobox Value: {}\nMulti Combobox Value: {}\nRadio Value: {}\nRadios Value: {}".format(
+#                 box_value, boxes_value, radio_value, radios_value
+#             )
+#         )
 
 
 class ToolTipTab(Tab):
@@ -763,29 +863,29 @@ class ListboxTab(Tab):
                 l.insert("end", i)
 
 
-class CounterTab(Tab):
-    def __init__(self, notebook: ttk.Notebook):
-        Tab.__init__(self, notebook, "Counters")
-        self.frame = ttk.Frame(self)
-        self.frame.pack(fill=tk.BOTH, expand=True)
-        self.labeled_counter = LabeledCounter(self.frame, "Labeled Counter")
-        default_pack(self.labeled_counter)
-        self.labeled_float_counter = LabeledFloatCounter(
-            self.frame, "Labeled Counter", integer_level=2, step=0.2
-        )
-        default_pack(self.labeled_float_counter)
-        self.labeled_multi_counter = LabeledMultiCounter(
-            self.frame,
-            "LabeledMultiCounter",
-            {"Counter A": ((), {}), "Counter B": ((), {})},
-        )
-        default_pack(self.labeled_multi_counter)
-        self.labeled_multi_float_counter = LabeledMultiFloatCounter(
-            self.frame,
-            "LabeledMultiFloatCounter",
-            {"Counter A": ((), {}), "Counter B": ((), {})},
-        )
-        default_pack(self.labeled_multi_float_counter)
+# class CounterTab(Tab):
+#     def __init__(self, notebook: ttk.Notebook):
+#         Tab.__init__(self, notebook, "Counters")
+#         self.frame = ttk.Frame(self)
+#         self.frame.pack(fill=tk.BOTH, expand=True)
+#         self.labeled_counter = LabeledCounter(self.frame, "Labeled Counter")
+#         default_pack(self.labeled_counter)
+#         self.labeled_float_counter = LabeledFloatCounter(
+#             self.frame, "Labeled Counter", integer_level=2, step=0.2
+#         )
+#         default_pack(self.labeled_float_counter)
+#         self.labeled_multi_counter = LabeledMultiCounter(
+#             self.frame,
+#             "LabeledMultiCounter",
+#             {"Counter A": ((), {}), "Counter B": ((), {})},
+#         )
+#         default_pack(self.labeled_multi_counter)
+#         self.labeled_multi_float_counter = LabeledMultiFloatCounter(
+#             self.frame,
+#             "LabeledMultiFloatCounter",
+#             {"Counter A": ((), {}), "Counter B": ((), {})},
+#         )
+#         default_pack(self.labeled_multi_float_counter)
 
 
 class CopyBoxTab(Tab):
@@ -797,25 +897,25 @@ class CopyBoxTab(Tab):
         # LabeledMultiCopyBox
 
 
-class SpinboxTab(Tab):
-    def __init__(self, notebook: ttk.Notebook):
-        Tab.__init__(self, notebook, "Spinboxes")
-        (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
-        self.spinbox = LabeledSpinbox(frame, "Labeled Spinbox", from_=0, to=500)
-        self.spinbox.pack()
-        # LabeledMultiSpinbox
+# class SpinboxTab(Tab):
+#     def __init__(self, notebook: ttk.Notebook):
+#         Tab.__init__(self, notebook, "Spinboxes")
+#         (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
+#         self.spinbox = LabeledSpinbox(frame, "Labeled Spinbox", from_=0, to=500)
+#         self.spinbox.pack()
+#         # LabeledMultiSpinbox
 
 
-class ButtonTab(Tab):
-    def __init__(self, notebook: ttk.Notebook):
-        Tab.__init__(self, notebook, "Buttons")
-        (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
-        LabeledCycleButton(
-            frame,
-            "LabeledCycleButton (0->5)",
-            tuple(str(i) for i in range(6)),
-            command=print,
-        ).pack(fill="x", padx=20)
+# class ButtonTab(Tab):
+#     def __init__(self, notebook: ttk.Notebook):
+#         Tab.__init__(self, notebook, "Buttons")
+#         (frame := ttk.Frame(self)).pack(fill=tk.BOTH, expand=True)
+#         LabeledCycleButton(
+#             frame,
+#             "LabeledCycleButton (0->5)",
+#             tuple(str(i) for i in range(6)),
+#             command=print,
+#         ).pack(fill="x", padx=20)
 
 
 class BasicWidgetsTab(Tab):
@@ -824,17 +924,18 @@ class BasicWidgetsTab(Tab):
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill="both", expand=True)
 
-        self.button_tab = ButtonTab(self.notebook)
-        self.spinbox_tab = SpinboxTab(self.notebook)
+        self.form_tab = FormWidgetDemoTab(self.notebook)
+        # self.button_tab = ButtonTab(self.notebook)
+        # self.spinbox_tab = SpinboxTab(self.notebook)
         self.copybox_tab = CopyBoxTab(self.notebook)
         self.constrained_tab = ConstrainedTab(self.notebook)
-        self.form_tab = FormWidgetDemoTab(self.notebook)
-        self.counter_tab = CounterTab(self.notebook)
+
+        # self.counter_tab = CounterTab(self.notebook)
         self.listbox_tab = ListboxTab(self.notebook)
         self.table_tab = DemoTableTab(self.notebook)
         self.textbox_tab = TextBoxTestTab(self.notebook)
         self.loading_bar = LoadingBarDemo(self.notebook)
-        self.combo_tab = ComboRadioTab(self.notebook)
+        # self.combo_tab = ComboRadioTab(self.notebook)
         self.popups_tab = PopupsTab(self.notebook, self)
         self.password_tab = PasswordEntryTab(self.notebook)
 

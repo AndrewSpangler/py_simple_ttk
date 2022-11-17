@@ -8,11 +8,11 @@ from .TextWidgets import ScrolledText
 class ToolTipBase:
     def __init__(self, parent: object, align: str = tk.LEFT):
         self.parent, self.align = parent, align
-        self.id, self.tipwindow = None, None
         self.x = self.y = 0
-        self._id1 = self.parent.bind("<Enter>", self._enter)
-        self._id2 = self.parent.bind("<Leave>", self._leave)
-        self._id3 = self.parent.bind("<ButtonPress>", self._leave)
+        self.parent.bind("<Enter>", self._enter)
+        self.parent.bind("<Leave>", self._leave)
+        self.parent.bind("<ButtonPress>", self._leave)
+        self._id, self._tipwindow = None, None
 
     def _enter(self, event=None) -> None:
         self._schedule()
@@ -23,21 +23,21 @@ class ToolTipBase:
 
     def _schedule(self) -> None:
         self._unschedule()
-        self.id = self.parent.after(10, self._showtip)
+        self._id = self.parent.after(10, self._showtip)
 
     def _unschedule(self):
-        id = self.id
-        self.id = None
-        if id:
-            self.parent.after_cancel(id)
+        _id = self._id
+        self._id = None
+        if _id:
+            self.parent.after_cancel(_id)
 
     def _showtip(self) -> None:
-        if self.tipwindow:
+        if self._tipwindow:
             return
-        self.tipwindow = tk.Toplevel(self.parent)
-        self.tipwindow.wm_overrideredirect(1)
+        self._tipwindow = tk.Toplevel(self.parent)
+        self._tipwindow.wm_overrideredirect(1)
         self._showcontents()
-        self.tipwindow.update_idletasks()
+        self._tipwindow.update_idletasks()
 
         x = self.parent.winfo_rootx()
         y = self.parent.winfo_rooty() + self.parent.winfo_height() + 1
@@ -45,17 +45,17 @@ class ToolTipBase:
         if self.align == tk.LEFT:
             pass
         elif self.align == tk.RIGHT:
-            x += self.parent.winfo_width() - self.tipwindow.winfo_width()
+            x += self.parent.winfo_width() - self._tipwindow.winfo_width()
         else:
             raise ValueError(f"Unsupported ToolTip alignment {self.align}")
-        self.tipwindow.wm_geometry("+%d+%d" % (x, y))
+        self._tipwindow.wm_geometry("+%d+%d" % (x, y))
 
     def _showcontents(self, text: str = "") -> None:
-        ttk.Label(self.tipwindow, text=text, borderwidth=2, relief=tk.SOLID).pack()
+        ttk.Label(self._tipwindow, text=text, borderwidth=2, relief=tk.SOLID).pack()
 
     def _hidetip(self) -> None:
-        tw = self.tipwindow
-        self.tipwindow = None
+        tw = self._tipwindow
+        self._tipwindow = None
         if tw:
             tw.destroy()
 

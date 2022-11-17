@@ -275,6 +275,10 @@ override this function."""
         text_bg = self.style.lookup("TEntry", "fieldbackground") or "white"
         self.style.configure("Bold.TLabel", font=self.bold_font)
         self.style.configure("LargeBold.TLabel", font=self.large_bold_font)
+        self.style.configure("Bold.TLabelframe.Label", font=self.bold_font)
+        self.style.configure("LargeBold.TLabelframe.Label", font=self.large_bold_font)
+        self.style.configure("Bold.TButton", font=self.bold_font)
+        self.style.configure("LargeBold.TButton", font=self.large_bold_font)
         self.style.configure(
             "NoPad.TButton",
             padding=0,
@@ -288,6 +292,7 @@ override this function."""
             "Treeview", background=bg, fieldbackground=bg, foreground=text_fg
         )
         self.style.configure("Treeview.Heading", relief="groove")
+        self.style.configure("Hamburger.TFrame", relief="solid", borderwidth=4)
         # Search GUI tree towards branches, updating certain elements that otherwise don't work with ttk
         widgets = complex_widget_search(
             self.window, (ScrolledText, ScrolledCanvas, Table)

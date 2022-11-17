@@ -1,5 +1,6 @@
 from typing import Callable
 
+
 class SuperWidgetMixin:
     """Mixin to easily bind many of the common tkinter events."""
 
@@ -49,46 +50,26 @@ class SuperWidgetMixin:
         for event in event_map:
             self.bind(event, event_map[event], add="+")
 
+    # fmt: off
     def _on_mouse_enter(self, event) -> None:
-        if self.on_mouse_enter:
-            self.on_mouse_enter(event)
-
+        if self.on_mouse_enter: self.on_mouse_enter(event)
     def _on_mouse_leave(self, event) -> None:
-        if self.on_mouse_leave:
-            self.on_mouse_leave(event)
-
+        if self.on_mouse_leave: self.on_mouse_leave(event)
     def _on_mouse_move(self, event) -> None:
-        if self.on_mouse_move:
-            self.on_mouse_move(event)
-
+        if self.on_mouse_move: self.on_mouse_move(event)
     def _on_mouse_wheel(self, event) -> None:
-        if self.on_mouse_wheel:
-            self.on_mouse_wheel(event)
-
+        if self.on_mouse_wheel: self.on_mouse_wheel(event)
     def _on_left_click(self, event) -> None:
-        if self.on_left_click:
-            self.on_left_click(event)
-
+        if self.on_left_click: self.on_left_click(event)
     def _on_double_left_click(self, event) -> None:
-        if self.on_double_left_click:
-            self.on_double_left_click(event)
-
+        if self.on_double_left_click: self.on_double_left_click(event)
     def _on_middle_click(self, event) -> None:
-        if self.on_middle_click:
-            self.on_middle_click(event)
-
+        if self.on_middle_click: self.on_middle_click(event)
     def _on_double_middle_click(self, event) -> None:
-        if self.on_double_middle_click:
-            self.on_double_middle_click(event)
-
+        if self.on_double_middle_click: self.on_double_middle_click(event)
     def _on_right_click(self, event) -> None:
-        if self.on_right_click:
-            self.on_right_click(event)
-
+        if self.on_right_click: self.on_right_click(event)
     def _on_double_right_click(self, event) -> None:
-        if self.on_double_right_click:
-            self.on_double_right_click(event)
-
+        if self.on_double_right_click: self.on_double_right_click(event)
     def _on_configure(self, event) -> None:
-        if self.on_configure:
-            self.on_configure(event)
+        if self.on_configure: self.on_configure(event)

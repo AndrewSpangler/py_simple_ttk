@@ -44,6 +44,7 @@ class ActiveRadiobutton(ttk.Radiobutton, SuperWidgetMixin):
     def disable(self) -> None:
         self.configure(state=tk.DISABLED)
 
+
 class RadioTable(ttk.Frame):
     """A table of ttk.RadioButtons"""
 
@@ -60,8 +61,9 @@ class RadioTable(ttk.Frame):
         pack_args: dict = {},
         **kw,
     ):
-        options = tuple(options)
-        self.default = options[default] if any(options) else None
+        self.options = options = list(options)
+        self.values = [v for t, v in options]
+        self.default = self.values[default] if any(self.values) else None
         self.var = tk.StringVar(value=self.default)
         ttk.Frame.__init__(self, parent, **kw)
         (args := {"fill": "x", "expand": False, "side": "top"}).update(pack_args)
@@ -91,9 +93,13 @@ class RadioTable(ttk.Frame):
         """Get Radiobutton value. `Returns a String`"""
         return self.var.get()
 
-    def set(self, val: bool) -> None:
+    def set(self, val: str) -> None:
         """Set Radiobutton value. `Returns None`"""
         self.var.set(val)
+        print(val)
+        index = self.values.index(val)
+        print(self.buttons[index].state)
+        self.buttons[index].state["selected"] = True
 
     def clear(self) -> None:
         """Sets Radiobutton to its default value. `Returns None`"""
@@ -103,6 +109,7 @@ class RadioTable(ttk.Frame):
         """Propagates current state to children buttons. `Returns None`"""
         for b in self.buttons:
             b.configure(state=self._state)
+
 
 class LabeledRadioTable(Labeler, RadioTable):
     """Labeled RadioTable widget"""
@@ -121,6 +128,7 @@ class LabeledRadioTable(Labeler, RadioTable):
         )
         RadioTable.__init__(self, self.frame, **kw)
         RadioTable.pack(self, fill=tk.BOTH, expand=True, side=tk.LEFT)
+
 
 class LabeledMultiRadioTable(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledRadioTable"""
@@ -147,6 +155,7 @@ class LabeledMultiRadioTable(LabeledMultiWidgetMixin):
             **kw,
         )
 
+
 class SimpleRadioTable(RadioTable):
     """A simplified RadioTable where the text is used at the value."""
 
@@ -156,7 +165,6 @@ class SimpleRadioTable(RadioTable):
         if kw.get("variable_type") and not kw.get("variable_type") is tk.StringVar:
             raise ValueError("SimpleRadioTable variable type must be tk.StringVar")
         RadioTable.__init__(self, parent, options=((o, o) for o in options), **kw)
-
 
 
 class LabeledSimpleRadioTable(Labeler, SimpleRadioTable):
