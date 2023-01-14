@@ -146,9 +146,9 @@ class LabeledMultiRadioTable(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledRadioTable,
             parent,
             labeltext,
+            LabeledRadioTable,
             config,
             is_child,
             labelside,
@@ -204,9 +204,9 @@ class LabeledMultiSimpleRadioTable(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledSimpleRadioTable,
             parent,
             labeltext,
+            LabeledSimpleRadioTable,
             config,
             is_child,
             labelside,

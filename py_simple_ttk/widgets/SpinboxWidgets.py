@@ -105,9 +105,9 @@ class LabeledMultiSpinbox(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledSpinbox,
             parent,
             labeltext,
+            LabeledSpinbox,
             config,
             is_child,
             labelside,

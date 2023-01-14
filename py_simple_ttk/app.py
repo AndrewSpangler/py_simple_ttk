@@ -37,8 +37,13 @@ class App:
     """Main Application Object"""
 
     def __init__(self, ini_file: str):
-        with open(ini_file) as f:
-            self.ini_data = json.load(f)
+        if isinstance(ini_file, str):
+            with open(ini_file, encoding="utf-8") as f:
+                self.ini_data = json.load(f)
+        elif isinstance(ini_file, dict):
+            self.ini_data = ini_file
+        else:
+            raise TypeError(f"Invalid ini_file argument type: {type(ini_file)}")
         self.app_name = self.ini_data.get("application")
         self.version = self.ini_data.get("version")
         self.version_name = "{} Version {}".format(self.app_name, self.version)
@@ -48,20 +53,28 @@ class App:
         print("Using Python {}.{}".format(*sys.version_info[:2]))
         print("Using tkinter version {}".format(tk.Tcl().eval("info patchlevel")))
 
-        self.scaling = self.ini_data["scaling"]
+        self.scaling = self.ini_data.get("scaling", 1.0)
         print(f"Application scaling factor - {self.scaling}")
+        scale_minsize = self.ini_data.get("scale_minsize", False)
+        minsize_factor = self.scaling if scale_minsize else 1
+        self.window_min_width = int(self.ini_data.get("minwidth", 300) * minsize_factor)
+        self.window_min_height = int(
+            self.ini_data.get("minheight", 300) * minsize_factor
+        )
+        print(f"Window min size - {self.window_min_width} x {self.window_min_height}")
         scale_startsize = self.ini_data.get("scale_startsize", False)
-        scale_factor = self.scaling if scale_startsize else 1
-        self.window_start_width = int(self.ini_data["width"] * scale_factor) or 1
-        self.window_start_height = int(self.ini_data["height"] * scale_factor) or 1
+        startsize_factor = self.scaling if scale_startsize else 1
+        self.window_start_width = max(
+            int(self.ini_data.get("width", 300) * startsize_factor) or 300,
+            self.window_min_width,
+        )
+        self.window_start_height = max(
+            int(self.ini_data.get("height", 300) * startsize_factor) or 300,
+            self.window_min_height,
+        )
         print(
             f"Window start size - {self.window_start_width} x {self.window_start_height}"
         )
-        scale_minsize = self.ini_data.get("scale_minsize", False)
-        scale_factor = self.scaling if scale_minsize else 1
-        self.window_min_width = int(self.ini_data.get("minwidth", 300) * scale_factor)
-        self.window_min_height = int(self.ini_data.get("minheight", 300) * scale_factor)
-        print(f"Window min size - {self.window_min_width} x {self.window_min_height}")
         self.window = tk.Tk()  # Instantiate tk instance.
         self.focused_window = None  # Placeholder
         enable_dpi_awareness(self, self.scaling)  # Enable Windows DPI Scaling
@@ -72,8 +85,10 @@ class App:
 
         # This toolkit is designed around the idea of "Tabs"
         # This is the highest level tab available.
-        self.notebook = ttk.Notebook(self.window)
-        self.notebook.pack(fill=tk.BOTH, expand=tk.YES)
+        # Disable in config for non-tabular applications.
+        if not self.ini_data.get("disable_notebook", False):
+            self.notebook = ttk.Notebook(self.window)
+            self.notebook.pack(fill=tk.BOTH, expand=tk.YES)
 
         # Add a shared menu
         self.menu = tk.Menu(self.window)
@@ -152,12 +167,9 @@ class App:
                 raise e
         self.full_screen_state = False
         self.zoomed_screen_state = False
-        self.default_font = fnt = tkFont.nametofont("TkDefaultFont").actual()
-        self.bold_font = (fnt["family"], fnt["size"], "bold")
-        self.small_font = (fnt["family"], int(fnt["size"]) - 2, "normal")
-        self.small_bold_font = (fnt["family"], int(fnt["size"]) - 2, "bold")
-        self.large_font = (fnt["family"], int(fnt["size"]) + 2, "normal")
-        self.large_bold_font = (fnt["family"], int(fnt["size"]) + 2, "bold")
+
+        # Build application fonts
+        self._build_fonts()
 
         # Application Menu
         if self.profiles_enabled:
@@ -190,17 +202,18 @@ class App:
         self.use_theme(theme)
         self.update_default_title()
 
-    def create_profile(self, name: str = None):
+    def create_profile(self, name: str = None) -> str | None:
         """Calling with no name brings up a popup, the popup calls this function \
-again with name kw which instead makes a new profile or asks again for a name if \
-the supplied name was invalid"""
+        again with name kw which instead makes a new profile or asks again for a \
+        name if the supplied name was invalid. `Returns the current theme as a \
+        String on success or None`"""
         if self.focused_window:
             self.focused_window.destroy()
         if not name:
             self.focused_window = PromptWindow(
                 window=self.window,
                 text="Enter New Profile Name",
-                on_yes=self.create_profile,
+                on_yes=self.create_profile,  # Call again with name and do below
                 yes_text="Make New Profile",
             )
         else:
@@ -208,9 +221,10 @@ the supplied name was invalid"""
             self.update_default_title()
             self.apply_profile(self.profiles.current_profile)
 
-    def select_profile(self, name: str = None):
+    def select_profile(self, name: str = None) -> str:
         """Calling with no name brings up a popup, the popup calls this function \
-again with the name which instead calls the Profiles System to use a certain profile"""
+        again with the name which instead calls the Profiles System to use a \
+        certain profile. `Returns the current theme as a String`"""
         if self.focused_window:
             self.focused_window.destroy()
         if not name:
@@ -226,32 +240,103 @@ again with the name which instead calls the Profiles System to use a certain pro
             self.update_default_title()
             self.apply_profile(self.profiles.current_profile)
 
-    def _select_profile(self, profile: UserProfile):
+    def _select_profile(self, profile: UserProfile) -> str:
+        """Set the currently selected profile and update title. `Returns the current theme as a String`"""
         self.profiles.select_profile(profile)
         self.update_default_title()
-        self.apply_profile(profile)
+        return self.apply_profile(profile)
 
-    def apply_profile(self, profile: UserProfile):
+    def apply_profile(self, profile: UserProfile) -> str:
         """Apply settings from the current profile. For more complicated profile systems \
-override this function."""
+override this function. `Returns the current theme as a String`"""
         theme = profile.get_preference("theme")
         if not theme or not theme in self.available_themes:
             print(f"User had invalid theme selected in profile - {theme}, repairing...")
             profile.set_preference("theme", "default")
-        self.use_theme(profile.get_preference("theme"))
+        return self.use_theme(profile.get_preference("theme"))
 
-    def toggle_maximized(self, event=None):
-        """Toggles maximized window."""
+    def toggle_maximized(self, event=None) -> None:
+        """Toggles maximized window. Returns None`"""
         self.zoomed_screen_state = not self.zoomed_screen_state
         self.window.state("normal" if self.zoomed_screen_state else "zoomed")
 
-    def toggle_full_screen(self, event=None):
-        """Toggles full screen."""
+    def toggle_full_screen(self, event=None) -> None:
+        """Toggles full screen. Returns None`"""
         self.full_screen_state = not self.full_screen_state
         self.window.attributes("-fullscreen", self.full_screen_state)
 
-    def use_theme(self, theme: str = None, verbose: bool = False):
-        """Updates the app to use a certain theme."""
+    def _build_fonts(self) -> list:
+        """Generates the app's font styles for a number of widgets. `Returns a List of style names`"""
+        self.default_font = fnt = tkFont.nametofont("TkDefaultFont").actual()
+        self.bold_font = (fnt["family"], fnt["size"], "bold")
+        self.xxsmall_font = (fnt["family"], int(fnt["size"]) - 4, "normal")
+        self.xxsmall_bold_font = (fnt["family"], int(fnt["size"]) - 4, "bold")
+        self.xsmall_font = (fnt["family"], int(fnt["size"]) - 3, "normal")
+        self.xsmall_bold_font = (fnt["family"], int(fnt["size"]) - 3, "bold")
+        self.small_font = (fnt["family"], int(fnt["size"]) - 2, "normal")
+        self.small_bold_font = (fnt["family"], int(fnt["size"]) - 2, "bold")
+        self.large_font = (fnt["family"], int(fnt["size"]) + 2, "normal")
+        self.large_bold_font = (fnt["family"], int(fnt["size"]) + 2, "bold")
+        self.xlarge_font = (fnt["family"], int(fnt["size"]) + 6, "normal")
+        self.xlarge_bold_font = (fnt["family"], int(fnt["size"]) + 6, "bold")
+        self.xxlarge_font = (fnt["family"], int(fnt["size"]) + 12, "normal")
+        self.xxlarge_bold_font = (fnt["family"], int(fnt["size"]) + 12, "bold")
+        self.generated_styles = []
+        for prefix, fg in zip(
+            ("", "Good", "Great", "Warn", "Error", "Critical"),
+            (
+                self.style.lookup("TEntry", "foreground") or "#000000",
+                "#339900",
+                "#4091d7",
+                "#ffcc00",
+                "#dd6600",
+                "#ff3311",
+            ),
+        ):
+            for size, font in zip(
+                (
+                    "XXSmall",
+                    "XXSmallBold",
+                    "XSmall",
+                    "XSmallBold",
+                    "Small",
+                    "SmallBold",
+                    "",
+                    "Bold",
+                    "Large",
+                    "LargeBold",
+                    "XLarge",
+                    "XLargeBold",
+                    "XXLarge",
+                    "XXLargeBold",
+                ),
+                (
+                    self.xxsmall_font,
+                    self.xxsmall_bold_font,
+                    self.xsmall_font,
+                    self.xsmall_bold_font,
+                    self.small_font,
+                    self.small_bold_font,
+                    self.default_font,
+                    self.bold_font,
+                    self.large_font,
+                    self.large_bold_font,
+                    self.xlarge_font,
+                    self.xlarge_bold_font,
+                    self.xxlarge_font,
+                    self.xxlarge_bold_font,
+                ),
+            ):
+                if prefix or size:  # Don't need to configure base styles
+                    for widget in ("TLabel", "TLabelframe.Label", "TButton"):
+                        s = f"{prefix}{size}.{widget}"
+                        self.generated_styles.append(s)
+                        # print(s)
+                        self.style.configure(s, font=font, foreground=fg)
+        return self.generated_styles
+
+    def use_theme(self, theme: str = None, verbose: bool = False) -> str:
+        """Updates the app to use a certain theme. `Returns the current theme as a String`"""
         if not theme:
             theme = self.current_theme
         if self.profiles_enabled:
@@ -264,21 +349,12 @@ override this function."""
                 )
         self.current_theme = theme
         self.style.theme_use(theme)
-        self.default_font = fnt = tkFont.nametofont("TkDefaultFont").actual()
-        self.bold_font = (fnt["family"], fnt["size"], "bold")
-        self.small_font = (fnt["family"], int(fnt["size"]) - 2, "normal")
-        self.small_bold_font = (fnt["family"], int(fnt["size"]) - 2, "bold")
-        self.large_font = (fnt["family"], int(fnt["size"]) + 2, "normal")
-        self.large_bold_font = (fnt["family"], int(fnt["size"]) + 2, "bold")
+        self._build_fonts()
+
         bg = self.style.lookup("TFrame", "background") or "#ffffff"
         text_fg = self.style.lookup("TEntry", "foreground") or "#000000"
         text_bg = self.style.lookup("TEntry", "fieldbackground") or "white"
-        self.style.configure("Bold.TLabel", font=self.bold_font)
-        self.style.configure("LargeBold.TLabel", font=self.large_bold_font)
-        self.style.configure("Bold.TLabelframe.Label", font=self.bold_font)
-        self.style.configure("LargeBold.TLabelframe.Label", font=self.large_bold_font)
-        self.style.configure("Bold.TButton", font=self.bold_font)
-        self.style.configure("LargeBold.TButton", font=self.large_bold_font)
+
         self.style.configure(
             "NoPad.TButton",
             padding=0,
@@ -304,28 +380,29 @@ override this function."""
             w.use_style(self.style)
         for w in widgets[Table]:
             w.use_style(self.style)
+        return theme
 
-    def copy_to_user_clipboard(self, val: str):
-        """Copys a text val to the user's keyboard"""
+    def copy_to_user_clipboard(self, val: str) -> None:
+        """Copys a text val to the user's keyboard. `Returns None`"""
         self.window.clipboard_clear()
         self.window.clipboard_append(str(val))
 
-    def bell(self):
-        """Largely redundant as all widgets have access to this method but allows other tools to make the system bell sound."""
+    def bell(self) -> None:
+        """Largely redundant as all widgets have access to this method but allows other tools to make the system bell sound. `Returns None`"""
         self.window.bell()
 
-    def update_default_title(self, indicate_profile=True):
-        """Update the window title with the default string, optionally with a profile indicator."""
+    def update_default_title(self, indicate_profile=True) -> None:
+        """Update the window title with the default string, optionally with a profile indicator. `Returns None`"""
         title = self.version_name
         if indicate_profile and self.profiles_enabled:
             if self.profiles.current_profile:
                 title += f" - {self.profiles.current_profile.username}"
         self.window.title(title)
 
-    def update_title(self, title):
-        """Updates the window title"""
+    def update_title(self, title) -> None:
+        """Updates the window title. `Returns None`"""
         self.window.title(self.version_name)
 
-    def mainloop(self):
-        """Starts the application mainloop"""
+    def mainloop(self) -> None:
+        """Starts the application mainloop. `Never returns.`"""
         self.window.mainloop()

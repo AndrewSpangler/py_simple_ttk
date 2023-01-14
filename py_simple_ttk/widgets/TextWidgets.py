@@ -28,6 +28,17 @@ class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
         self.bind("<Control-Key-a>", self.select_all, "+")
         Scroller.__init__(self, parent)
         SuperWidgetMixin.__init__(self, **widgetargs)
+        # Create widget proxy
+        self._orig = self._w + "_orig"
+        self.tk.call("rename", self._w, self._orig)
+        self.tk.createcommand(self._w, self._event_generate)
+
+    def _event_generate(self, tk_call: str, *args) -> tk.Event:
+        """Proxy method to generate an event when text contents change"""
+        result = self.tk.call((self._orig, tk_call) + args)
+        if tk_call in ("insert", "delete", "replace"):
+            self.event_generate("<<Modified>>")
+        return result
 
     def select_all(self, event=None) -> None:
         """Selects all text. `Returns None`"""
@@ -141,9 +152,9 @@ class LabeledMultiCopyBox(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            CopyBox,
             parent,
             labeltext,
+            CopyBox,
             config,
             is_child,
             labelside,

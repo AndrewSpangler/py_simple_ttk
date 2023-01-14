@@ -55,6 +55,51 @@ def export_py(items: list):
             f.write(out)
 
 
+# # Version without export buttons
+# class ListManipulator(ttk.Frame):
+#     def __init__(self, parent: ttk.Frame, disable_entry: bool = False, **kwargs):
+#         ttk.Frame.__init__(self, parent, **kwargs)
+#         default_pack(entry_frame := ttk.Frame(self))
+#         ttk.Button(entry_frame, text="Load", command=self.load, width=6).pack(
+#             side=tk.RIGHT
+#         )
+#         ttk.Button(entry_frame, text="Clear", command=self.clear, width=6).pack(
+#             side=tk.RIGHT
+#         )
+#         self.entry = LabeledButtonEntry(
+#             entry_frame, labeltext="Add item", button_text="Add>", command=self.add
+#         )
+#         self.entry.button.configure(width=6)
+#         self.entry.pack(fill="x", expand=True)
+#         self.listbox = OrderedListbox(self, height=7)
+#         self.listbox.pack(fill="both", expand=True)
+#         default_pack(export_frame := ttk.Frame(self))
+
+#     def clear(self) -> None:
+#         """Clear Listbox. `Returns None`"""
+#         self.listbox.delete(0, "end")
+
+#     def load(self) -> None:
+#         """Load file, clear Listbox, insert each line from file into listbox. `Returns None`"""
+#         file = tk.filedialog.askopenfilename(
+#             filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+#         )
+#         if file:
+#             self.entry.clear()
+#             with open(file) as f:
+#                 for l in f.readlines():
+#                     self.listbox.insert("end", l)
+
+#     def add(self, val: str) -> None:
+#         if not val:
+#             return
+#         self.entry.clear()
+#         self.listbox.insert("end", val)
+
+#     def get(self) -> list:
+#         return self.listbox.get(0, "end")
+
+
 class ListManipulator(ttk.Frame):
     def __init__(self, parent, **kwargs):
         ttk.Frame.__init__(self, parent, **kwargs)

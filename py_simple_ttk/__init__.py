@@ -29,7 +29,6 @@ from .widgets import (
     check_entry_type,
     check_in_bounds,
     ColumnFrame,
-    ColumnFrame,
     CommandLauncherTab,
     complex_widget_search,
     ConsoleTab,
@@ -114,6 +113,7 @@ from .widgets import (
     LabeledMultiSpinbox,
     LabeledMultiUppercaseDigitsEntry,
     LabeledMultiUppercaseEntry,
+    LabeledMultiWidgetMixin,
     LabeledOctdigitsEntry,
     LabeledOptionMenu,
     LabeledPasswordEntry,
@@ -135,6 +135,7 @@ from .widgets import (
     LowercaseDigitsEntry,
     LowercaseEntry,
     make_aspect_frames,
+    make_temp_config_file,
     MultiWidgetMixin,
     NoticeWindow,
     OctdigitsEntry,
@@ -165,6 +166,8 @@ from .widgets import (
     UppercaseDigitsEntry,
     UppercaseEntry,
     YesNoCancelWindow,
+    ListManipulator,
+    TextWindow,
 )
 
 from .utils.color import (
@@ -223,6 +226,7 @@ from .mega_widgets.wattage_calculator import WattageTab, WattageCalculator
 from .mega_widgets.shopping_list import ShoppingListTab, ShoppingList
 from .mega_widgets.launcher import ConfigurableLauncher, LauncherTools
 from .app import App
+from .form import FormApp
 
 if not check_if_module_installed("pillow"):
     PILLOW_AVAILABLE = False

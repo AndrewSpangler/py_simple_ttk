@@ -106,6 +106,9 @@ from py_simple_ttk import (
     LabeledSimpleRadioTable,
     LabeledMultiSimpleRadioTable,
     get_generated_font_images,
+    ListManipulator,
+    ActiveLabel,
+    TextWindow,
 )
 
 from examples.tic_tac_toe import TicTacToeTab
@@ -705,12 +708,14 @@ class PopupsTab(Tab):
             window=app.window,
             instruction_text="Logging in to nothing, this is a test...",
         )
+        text = lambda: TextWindow(window=app.window)
 
         for b in [
             ttk.Button(self, text="Notice Window", command=notice),
             ttk.Button(self, text="YesNo Window", command=yesno),
             ttk.Button(self, text="Prompt Window", command=prompt),
             ttk.Button(self, text="Password Window", command=password),
+            ttk.Button(self, text="Text Window", command=text),
         ]:
             b.pack(side=tk.TOP, fill="x", padx=10, pady=0)
 
@@ -856,11 +861,23 @@ class ListboxTab(Tab):
         Tab.__init__(self, notebook, "Listboxes")
         self.frame = ttk.Frame(self)
         self.frame.pack(fill=tk.BOTH, expand=True)
+
+        default_pack(
+            ActiveLabel(self.frame, default="OrderedListbox", style="LargeBold.TLabel")
+        )
         lb = OrderedListbox(self.frame)
         lb.pack(fill="x", side="top")
+
+        default_pack(
+            ActiveLabel(self.frame, default="ListManipulator", style="LargeBold.TLabel")
+        )
+        lb2 = ListManipulator(self.frame)
+        lb2.pack(fill="x", side="top")
+
         for l in [lb]:
             for i in range(300):
-                l.insert("end", i)
+                l.add(i)
+        lb.disable()
 
 
 # class CounterTab(Tab):
@@ -897,6 +914,32 @@ class CopyBoxTab(Tab):
         # LabeledMultiCopyBox
 
 
+class FontTab(Tab):
+    def __init__(self, notebook: ttk.Notebook, app: App):
+        Tab.__init__(self, notebook, "Fonts")
+        styles = app.generated_styles
+        great = [s for s in styles if s.startswith("Great")]
+        good = [s for s in styles if s.startswith("Good")]
+        warn = [s for s in styles if s.startswith("Warn")]
+        error = [s for s in styles if s.startswith("Error")]
+        critical = [s for s in styles if s.startswith("Critical")]
+        normal = [
+            s
+            for s in styles
+            if not any((s in i for i in (great, good, warn, error, critical)))
+        ]
+        (colsa := ColumnFrame(self, 3)).pack(fill="x")
+        (colsb := ColumnFrame(self, 3)).pack(fill="x")
+        for (stys, f) in zip(
+            (great, good, normal, warn, error, critical), (*colsa.frames, *colsa.frames)
+        ):
+            for s in stys:
+                if s.endswith("TLabel"):
+                    ActiveLabel(f, default=s.replace(".TLabel", ""), style=s).pack(
+                        fill="x"
+                    )
+
+
 # class SpinboxTab(Tab):
 #     def __init__(self, notebook: ttk.Notebook):
 #         Tab.__init__(self, notebook, "Spinboxes")
@@ -919,7 +962,7 @@ class CopyBoxTab(Tab):
 
 
 class BasicWidgetsTab(Tab):
-    def __init__(self, notebook: ttk.Notebook):
+    def __init__(self, notebook: ttk.Notebook, app):
         Tab.__init__(self, notebook, "Basic Widgets")
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill="both", expand=True)
@@ -936,7 +979,7 @@ class BasicWidgetsTab(Tab):
         self.textbox_tab = TextBoxTestTab(self.notebook)
         self.loading_bar = LoadingBarDemo(self.notebook)
         # self.combo_tab = ComboRadioTab(self.notebook)
-        self.popups_tab = PopupsTab(self.notebook, self)
+        self.popups_tab = PopupsTab(self.notebook, app)
         self.password_tab = PasswordEntryTab(self.notebook)
 
 
@@ -946,7 +989,8 @@ class ExampleApp(App):
     def __init__(self):
         App.__init__(self, "ini.json")
 
-        self.basic = BasicWidgetsTab(self.notebook)
+        self.basic = BasicWidgetsTab(self.notebook, self)
+        self.fonts = FontTab(self.notebook, self)
         self.tictactoe = TicTacToeTab(self.notebook)
         self.shopping_list = ShoppingListTab(self.notebook, self)
         if PILLOW_AVAILABLE:

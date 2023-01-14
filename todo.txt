@@ -16,6 +16,7 @@ PieMeter
 SpeedMeter
 RGB/RGBA buttons
 Remake MessageBox widgets
+ini config editor gui
 
 detect if tooltip is below screen
 

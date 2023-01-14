@@ -20,20 +20,21 @@ from .WidgetsCore import focus_next, get_asset
 from .ToolTip import ToolTip
 import sys
 
+
 class ActiveEntry(ttk.Entry, SuperWidgetMixin):
     """Active ttk.Entry with added features and the SuperWidgetMixin"""
 
     def __init__(
-            self,
-            parent: ttk.Frame,
-            command: Callable = None,
-            default: str = "",
-            on_keystroke: bool = False,
-            bind_enter: bool = True,
-            bind_escape_clear: bool = True,
-            widgetargs: dict={},
-            **kw
-        ):
+        self,
+        parent: ttk.Frame,
+        command: Callable = None,
+        default: str = "",
+        on_keystroke: bool = False,
+        bind_enter: bool = True,
+        bind_escape_clear: bool = True,
+        widgetargs: dict = {},
+        **kw,
+    ):
         self.var = tk.StringVar(value=default)
         ttk.Entry.__init__(self, parent, textvariable=self.var, **kw)
         SuperWidgetMixin.__init__(self, **widgetargs)
@@ -73,6 +74,7 @@ class ActiveEntry(ttk.Entry, SuperWidgetMixin):
         if self._command:
             self._command(self.get())
 
+
 class ScrolledEntry(Scroller, ActiveEntry):
     """Scrolled ttk.Entry with SuperWidgetMixin"""
 
@@ -87,7 +89,8 @@ want to use the ScrolledText widget. Used when you need a scrollable text entry 
             **kw,
         )
         Scroller.__init__(self, parent)
-        
+
+
 class LabeledEntry(Labeler, ActiveEntry):
     """Labeled ActiveEntry"""
 
@@ -98,7 +101,7 @@ class LabeledEntry(Labeler, ActiveEntry):
         parent: ttk.Frame,
         labeltext: str,
         labelside: str = tk.LEFT,
-        is_child: bool = False,        
+        is_child: bool = False,
         **kw,
     ):
         Labeler.__init__(
@@ -107,7 +110,8 @@ class LabeledEntry(Labeler, ActiveEntry):
         self.is_child = is_child
         ActiveEntry.__init__(self, self.frame, **kw)
         ActiveEntry.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        
+
+
 class LabeledMultiEntry(LabeledMultiWidgetMixin):
     """Labeled MultiWidget LabeledEntry"""
 
@@ -124,9 +128,9 @@ class LabeledMultiEntry(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledEntry,
             parent,
             labeltext,
+            LabeledEntry,
             config,
             is_child,
             labelside,
@@ -161,9 +165,9 @@ class LabeledMultiButtonEntry(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledButtonEntry,
             parent,
             labeltext,
+            LabeledButtonEntry,
             config,
             is_child,
             labelside,
@@ -218,9 +222,9 @@ class LabeledMultiPathEntry(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledPathEntry,
             parent,
             labeltext,
+            LabeledPathEntry,
             config,
             is_child,
             labelside,
@@ -347,9 +351,9 @@ class LabeledMultiPasswordEntry(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledPasswordEntry,
             parent,
             labeltext,
+            LabeledPasswordEntry,
             config,
             is_child,
             labelside,

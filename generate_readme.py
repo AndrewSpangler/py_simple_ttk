@@ -24,6 +24,7 @@ CORE_FUNCTIONS = [
     get_local_appdata_folder,
     get_themes_folder,
     make_aspect_frames,
+    make_temp_config_file,
     open_link,
     recursive_widget_search,
     run_cl,
@@ -53,7 +54,12 @@ RADIOBUTTON_WIDGETS = (
 )
 PROGRESSBAR_WIDGETS = (ActiveProgressbar, LabeledProgressbar, LabeledMultiProgressbar)
 OPTIONMENU_WIDGETS = (ActiveOptionMenu, LabeledOptionMenu, LabeledMultiOptionMenu)
-LISTBOX_WIDGETS = (ScrolledListBox, OrderedListbox, Table)
+LISTBOX_WIDGETS = (
+    ScrolledListBox,
+    OrderedListbox,
+    ListManipulator,
+    Table,
+)
 KEYPAD_WIDGETS = (KeypadButton, BaseKeypad, DialerKeypad)
 ENTRY_WIDGETS = [
     ActiveEntry,
@@ -137,6 +143,7 @@ TOPLEVEL_WIDGETS = [
     PromptWindow,
     PasswordWindow,
     ListWindow,
+    TextWindow,
 ]
 
 MEGA_WIDGETS = [ConversationsTab, NotesTab, ConfigurableLauncher, LauncherTools]
@@ -250,13 +257,14 @@ ini_conf = """
 | start_fullscreen       | Start Window in Fullscreen mode (Boolean) |
 | enable_fullscreen      | Enable Window Fullscreen option (Boolean) |
 | ignored_themes         | Themes to not display in menu (List)      |
+| disable_notebook       | Disable default ttk.Notebook (Boolean)    |
 | enable_themes_menu     | Enable Themes Dropdown (Boolean)          |
 | enable_launcher        | Enable Dynamic Launcher System (Boolean)  |
 | movable_tabs           | Enable Moveable Notebook Tabs (Boolean)   |
 | enable_profiles        | Enable a User Profiles System (Boolean)   |
 | conversations_enabled  | Enable Convo System (Boolean)             |
 | notes_enabled          | Enable Note System (Boolean)              |
-| theme_textboxes        | Apply theme colors to tk.Text (Boolean)   ||
+| theme_textboxes        | Apply theme colors to tk.Text (Boolean)   |
 +------------------------+-------------------------------------------+
 """.strip()
 

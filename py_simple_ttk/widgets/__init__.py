@@ -20,6 +20,7 @@ from .WidgetsCore import (
     get_local_appdata_folder,
     get_themes_folder,
     make_aspect_frames,
+    make_temp_config_file,
     open_link,
     recursive_widget_search,
     run_cl,
@@ -133,7 +134,7 @@ from .RadiobuttonWidgets import (
 
 from .TextWidgets import ScrolledText, CopyBox, LabeledCopyBox, LabeledMultiCopyBox
 from .ConsoleWidgets import ConsoleWidget
-from .ListBoxWidgets import ScrolledListBox, OrderedListbox, Table
+from .ListBoxWidgets import ScrolledListBox, OrderedListbox, Table, ListManipulator
 from .TreeviewWidgets import TreeTable, ScrolledTree
 from .ToplevelWidgets import (
     FocusedToplevel,
@@ -142,6 +143,7 @@ from .ToplevelWidgets import (
     PromptWindow,
     PasswordWindow,
     ListWindow,
+    TextWindow,
 )
 from .Labeler import Labeler
 from .MultiWidget import MultiWidgetMixin
@@ -171,5 +173,74 @@ from .SpinboxWidgets import (
     LabeledMultiSpinbox,
 )
 from .SuperWidget import SuperWidgetMixin
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
 from .FrameWidgets import ColumnFrame, HamburgerFrame
 from .LabelWidgets import ActiveLabel, LabeledValue
+
+"""
+A collection of all of the FormApp compatible Widgets
+"""
+form_widgets_list = [
+    BrowserLauncherTab,
+    CommandLauncherTab,
+    LabeledButton,
+    LabeledButtonEntry,
+    LabeledCheckbutton,
+    LabeledCombobox,
+    LabeledCopyBox,
+    LabeledCounter,
+    LabeledCycleButton,
+    LabeledDigitsEntry,
+    LabeledEntry,
+    LabeledFloatCounter,
+    LabeledFloatEntry,
+    LabeledHexdigitsEntry,
+    LabeledIntEntry,
+    LabeledLettersDigitsEntry,
+    LabeledLettersEntry,
+    LabeledLowercaseDigitsEntry,
+    LabeledLowercaseEntry,
+    LabeledMultiButton,
+    LabeledMultiButtonEntry,
+    LabeledMultiCheckbutton,
+    LabeledMultiCombobox,
+    LabeledMultiConstrainedEntry,
+    LabeledMultiConstrainedEntry,
+    LabeledMultiCounter,
+    LabeledMultiCycleButton,
+    LabeledMultiDigitsEntry,
+    LabeledMultiEntry,
+    LabeledMultiFloatCounter,
+    LabeledMultiFloatEntry,
+    LabeledMultiHexdigitsEntry,
+    LabeledMultiIntEntry,
+    LabeledMultiLettersDigitsEntry,
+    LabeledMultiLettersEntry,
+    LabeledMultiLowercaseDigitsEntry,
+    LabeledMultiLowercaseEntry,
+    LabeledMultiOctdigitsEntry,
+    LabeledMultiOptionMenu,
+    LabeledMultiPasswordEntry,
+    LabeledMultiPathEntry,
+    LabeledMultiPrintableEntry,
+    LabeledMultiProgressbar,
+    LabeledMultiRadioTable,
+    LabeledMultiSimpleRadioTable,
+    LabeledMultiSpinbox,
+    LabeledMultiUppercaseDigitsEntry,
+    LabeledMultiUppercaseEntry,
+    LabeledOctdigitsEntry,
+    LabeledOptionMenu,
+    LabeledPasswordEntry,
+    LabeledPathEntry,
+    LabeledPrintableEntry,
+    LabeledProgressbar,
+    LabeledRadioTable,
+    LabeledSimpleRadioTable,
+    LabeledSpinbox,
+    LabeledUppercaseDigitsEntry,
+    LabeledUppercaseEntry,
+    LabeledValue,
+    LauncherTab,
+    Tab,
+]

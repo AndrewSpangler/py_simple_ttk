@@ -46,6 +46,14 @@ class ActiveButton(ttk.Button, SuperWidgetMixin):
         """Set button text to default"""
         self.set(self.default)
 
+    def enable(self) -> None:
+        """Enable button"""
+        self["state"] = tk.NORMAL
+
+    def disable(self) -> None:
+        """Disable button"""
+        self["state"] = tk.DISABLED
+
 
 class LabeledButton(Labeler, ActiveButton):
     """Labeled ActiveButton widget"""
@@ -54,7 +62,8 @@ class LabeledButton(Labeler, ActiveButton):
         self,
         parent: ttk.Frame,
         labeltext: str,
-        command: str = "",
+        command: Callable = "",
+        default: str = "",
         is_child: bool = False,
         labelside: str = tk.LEFT,
         **kw,
@@ -85,9 +94,9 @@ class LabeledMultiButton(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledButton,
             parent,
             labeltext,
+            LabeledButton,
             config,
             is_child,
             labelside,
@@ -161,9 +170,9 @@ class LabeledMultiCycleButton(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledCycleButton,
             parent,
             labeltext,
+            LabeledCycleButton,
             config,
             is_child,
             labelside,

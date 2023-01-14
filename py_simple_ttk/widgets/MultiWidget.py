@@ -14,22 +14,35 @@ and then calling multiwidget.add() with different classes after is \
 acceptable assuming the widget supports being added and .get / .set / \
 .enable / .disable / .clear methods."""
 
-    def __init__(self, widget_type: type, config: dict):
+    def __init__(self, widget_type: type, config: dict = {}, default_kwargs: dict = {}):
         """Provide a widget type and a configuration dictionary in kwargs format"""
         self.widget_type = widget_type
         self.widgets = {}
+        self.default_kwargs = default_kwargs
         for k in config:
             args, kwargs = config[k]
-            kwargs["is_child"] = True
+            if not kwargs.get("is_child"):
+                kwargs["is_child"] = True
             self.add(self, k, args, kwargs)
 
     def add(
-        self, parent, key: str, args: list, kwargs: dict, widget_type: type = None
+        self,
+        parent: ttk.Frame,
+        key: str,
+        args: list = [],
+        kwargs: dict = {},
+        widget_type: type = None,
+        fill: str = "x",
+        padx: tuple = (20, 0),
+        pady: tuple = (5, 0),
+        side: str = tk.TOP,
+        expand: bool = False,
     ) -> object:
         """Method for adding different widgets to a multiwidget post-instantiation"""
+        (kw := self.default_kwargs.copy()).update(kwargs)
         widget_type = widget_type or self.widget_type
-        w = widget_type(parent, key, *args, **kwargs)
-        w.pack(fill="x", expand=False, side=tk.TOP, padx=(20, 0), pady=(5, 0))
+        w = widget_type(parent, key, *args, **kw)
+        w.pack(fill=fill, expand=expand, side=side, padx=padx, pady=pady)
         self.widgets[key] = w
         return w
 

@@ -5,10 +5,11 @@ import platform
 import subprocess
 import sys
 import time
-import tkinter as tk
+import tempfile
 import webbrowser
 import zipfile
 from typing import Callable
+import tkinter as tk
 from tkinter import ttk
 
 from .MultiWidget import MultiWidgetMixin
@@ -49,6 +50,18 @@ def get_bundled_themes_list(verbose: bool = False) -> list:
     if verbose:
         print(f"Found {len(themes)} bundled themes: {json.dumps(themes, indent=4)}")
     return themes
+
+
+def make_temp_config_file(config: dict):
+    """Make a one-time-use app config file from a dict in the same form as a normal config json. `Returns file path as String`"""
+    (tp := tempfile.NamedTemporaryFile(delete=False)).write(
+        bytes(
+            json.dumps(config),
+            "utf-8",
+        )
+    )
+    tp.flush()
+    return tp.name
 
 
 def force_aspect(

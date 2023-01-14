@@ -139,9 +139,9 @@ class LabeledMultiCounter(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledCounter,
             parent,
             labeltext,
+            LabeledCounter,
             config,
             is_child,
             labelside,
@@ -224,7 +224,7 @@ class FloatCounter(ttk.Frame):
         self.buttons.remove(l)
 
     def get(self) -> float:
-        return self.val
+        return self._val
 
     def set(self, val: float, adjust: float = 0.0) -> float:
         if not self.state == "normal":
@@ -311,9 +311,9 @@ class LabeledMultiFloatCounter(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledFloatCounter,
             parent,
             labeltext,
+            LabeledFloatCounter,
             config,
             is_child,
             labelside,

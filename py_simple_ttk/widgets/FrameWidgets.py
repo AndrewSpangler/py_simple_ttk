@@ -34,7 +34,7 @@ class ColumnFrame(ttk.Frame):
     def yield_frame(self):
         """Cyclically returns frames"""
         self.index += 1
-        yield self.frames[(self.index - 1) % len(self.frames)]
+        return self.frames[(self.index - 1) % len(self.frames)]
 
 
 class HamburgerFrame(ttk.Frame):

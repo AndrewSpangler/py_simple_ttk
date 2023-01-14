@@ -99,9 +99,9 @@ class LabeledMultiCombobox(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledCombobox,
             parent,
             labeltext,
+            LabeledCombobox,
             config,
             is_child,
             labelside,

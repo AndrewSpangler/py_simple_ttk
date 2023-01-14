@@ -28,6 +28,7 @@ def check_entry_contents(val: str, limiter: list | str) -> bool:
             return False
     return True
 
+
 # This class is used as a base for every class below
 class ConstrainedEntry(ActiveEntry):
     """Constrained ActiveEntry"""
@@ -85,7 +86,7 @@ class LabeledMultiConstrainedEntry(LabeledMultiWidgetMixin):
         labelside: str = tk.TOP,
         **kw,
     ):
-        LabeledMultiWidgetMixin.__init__(self,LabeledConstrainedEntry,parent,labeltext,config,is_child,labelside,**kw,)
+        LabeledMultiWidgetMixin.__init__(self, parent, labeltext, LabeledConstrainedEntry, config, is_child, labelside, **kw)
 
 
 def check_entry_int(val: str) -> bool:
@@ -94,15 +95,21 @@ def check_entry_int(val: str) -> bool:
 class IntEntry(ConstrainedEntry):
     """Int Entry Widget"""
     def __init__(self, parent, *args, **kwargs):
+        # Ignore the fact that int is passed as get method is overridden
         ConstrainedEntry.__init__(self, parent, check_entry_int, int, *args, **kwargs)
+    def get(self) -> int:
+        """Get IntEntry value, `Returns an Int`"""
+        return None if not (val := self.var.get()) else int(val)
 class LabeledIntEntry(LabeledConstrainedEntry):
     """Labeled Int Entry Widget"""
-
     def __init__(self, parent, labeltext, *args, **kwargs):
         kwargs.update({"return_type": int})
         LabeledConstrainedEntry.__init__(
             self, parent, labeltext, check_entry_int, **kwargs
         )
+    def get(self) -> int:
+        """Get IntEntry value, `Returns an Int`"""
+        return None if not (val := self.var.get()) else int(val)
 class LabeledMultiIntEntry(LabeledMultiWidgetMixin):
     def __init__(
         self,
@@ -114,7 +121,7 @@ class LabeledMultiIntEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledIntEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledIntEntry, config, is_child, labelside, **kw
         )
 
 
@@ -145,7 +152,7 @@ class LabeledMultiFloatEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledFloatEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledFloatEntry, config, is_child, labelside, **kw
         )
 
 
@@ -173,7 +180,7 @@ class LabeledMultiLowercaseEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledLowercaseEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledLowercaseEntry, config, is_child, labelside, **kw
         )
 
 
@@ -201,7 +208,7 @@ class LabeledMultiUppercaseEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledUppercaseEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledUppercaseEntry, config, is_child, labelside, **kw
         )
 
 
@@ -229,7 +236,7 @@ class LabeledMultiLettersEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledLettersEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledLettersEntry, config, is_child, labelside, **kw
         )
 
 
@@ -257,7 +264,7 @@ class LabeledMultiDigitsEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledDigitsEntry, config, is_child, labelside, **kw
         )
 
 
@@ -285,7 +292,7 @@ class LabeledMultiUppercaseDigitsEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledUppercaseDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledUppercaseDigitsEntry, config, is_child, labelside, **kw
         )
 
 
@@ -313,7 +320,7 @@ class LabeledMultiLowercaseDigitsEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledLowercaseDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledLowercaseDigitsEntry, config, is_child, labelside, **kw
         )
 
 
@@ -341,7 +348,7 @@ class LabeledMultiLettersDigitsEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledLettersDigitsEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledLettersDigitsEntry, config, is_child, labelside, **kw
         )
 
 
@@ -369,7 +376,7 @@ class LabeledMultiHexdigitsEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledHexdigitsEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledHexdigitsEntry, config, is_child, labelside, **kw
         )
 
 
@@ -397,7 +404,7 @@ class LabeledMultiOctdigitsEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledOctdigitsEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, labeltext, LabeledOctdigitsEntry, config, is_child, labelside, **kw
         )
 
 
@@ -425,5 +432,5 @@ class LabeledMultiPrintableEntry(LabeledMultiWidgetMixin):
         **kw,
     ):
         LabeledMultiWidgetMixin.__init__(
-            self, LabeledPrintableEntry, parent, labeltext, config, is_child, labelside, **kw
+            self, parent, LabeledPrintableEntry, labeltext, config, is_child, labelside, **kw
         )

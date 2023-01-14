@@ -10,9 +10,9 @@ class LabeledMultiWidgetMixin(Labeler, ttk.Frame, MultiWidgetMixin):
 
     def __init__(
         self,
-        widget_class: type,
         parent: ttk.Frame,
         labeltext: str,
+        widget_type: type,
         config: dict,
         is_child: bool = False,
         labelside: str = tk.TOP,
@@ -23,5 +23,5 @@ class LabeledMultiWidgetMixin(Labeler, ttk.Frame, MultiWidgetMixin):
         )
         ttk.Frame.__init__(self, self.frame, **kw)
         ttk.Frame.pack(self, fill=tk.BOTH, expand=True, side=tk.TOP)
-        MultiWidgetMixin.__init__(self, widget_class, config)
-        self.widget_class, self.is_child = widget_class, is_child
+        MultiWidgetMixin.__init__(self, widget_type, config)
+        self.is_child = is_child

@@ -4,7 +4,7 @@ from .WidgetsCore import center_window, default_pack
 from .EntryWidgets import PasswordEntry
 from .ListBoxWidgets import Table
 from .RadiobuttonWidgets import LabeledRadioTable
-
+from .TextWidgets import ScrolledText
 from typing import Callable
 
 
@@ -136,7 +136,6 @@ class YesNoCancelWindow(FocusedToplevel):
             button.pack(side=tk.LEFT, expand=True, fill="x")
             if focus.lower() == "yes":
                 focused_button = button
-                print("Focus Set on Yes")
         self._finish_setup()
         if focused_button:
             self.after(100, focused_button.focus)
@@ -293,6 +292,74 @@ class ListWindow(FocusedToplevel):
     def _on_cancel(self, event=None) -> None:
         if self.on_cancel:
             self.on_cancel(self.var.get())
+        if not self.no_destroy:
+            self.destroy()
+
+
+class TextWindow(FocusedToplevel):
+    """Provides the user a cancelable Scrolled Text window"""
+
+    __desc__ = """`no_destroy` can be set to `True` to allow the window to remain open after a submission is made. on_yes callback must take the text value as a String."""
+
+    def __init__(
+        self,
+        *args,
+        text: str = "Enter Text",
+        on_yes: Callable = None,
+        yes_text: str = "Submit",
+        on_cancel: Callable = None,
+        cancel_text: str = "Cancel",
+        no_destroy: bool = False,
+        focus: str = "",  # "yes", "cancel"
+        default: str = "",
+        height: int = 32,
+        width: int = 88,
+        **kwargs,
+    ):
+        FocusedToplevel.__init__(self, *args, **kwargs)
+        self.on_yes = on_yes
+        self.on_cancel = on_cancel
+        self.no_destroy = no_destroy
+        focused_button = None
+        ttk.Label(
+            self.frame,
+            text=f"\n{text}\n",
+            justify=tk.CENTER,
+            anchor="n",
+            style="XLargeBold.TLabel",
+        ).pack(side=tk.TOP, fill="x", padx=10, pady=0)
+        self.text = ScrolledText(self.frame, height=height, width=width)
+        self.text.pack(fill="both", padx=10, pady=0)
+        self.text.set(default)
+        button_frame = ttk.Frame(self.frame)
+        button_frame.pack(side=tk.TOP, fill="x", expand=True, padx=10)
+        self.cancel_button = ttk.Button(
+            button_frame, text=cancel_text, command=self._on_cancel
+        )
+        self.cancel_button.pack(side=tk.LEFT, expand=True, fill="x")
+        if focus.lower() == "cancel":
+            self.after(100, self.cancel_button.focus)
+        self.yes_button = ttk.Button(button_frame, text=yes_text, command=self._on_yes)
+        self.yes_button.pack(side=tk.LEFT, expand=True, fill="x")
+        if focus.lower() == "yes":
+            self.after(100, self.yes_button.focus)
+        self._finish_setup()
+
+    def _on_yes(self, event=None) -> None:
+        if self.on_yes:
+            self.on_yes(self.text.get())
+        if not self.no_destroy:
+            self.destroy()
+
+    def _on_no(self, event=None) -> None:
+        if self.on_no:
+            self.on_no()
+        if not self.no_destroy:
+            self.destroy()
+
+    def _on_cancel(self, event=None) -> None:
+        if self.on_cancel:
+            self.on_cancel()
         if not self.no_destroy:
             self.destroy()
 

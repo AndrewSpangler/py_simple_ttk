@@ -8,6 +8,7 @@ from .LabeledMultiWidget import LabeledMultiWidgetMixin
 from .SuperWidget import SuperWidgetMixin
 from typing import Callable
 
+
 class ActiveOptionMenu(ttk.OptionMenu, SuperWidgetMixin):
     """ttk.OptionMenu with added features and SuperWidgetMixin"""
 
@@ -20,7 +21,7 @@ class ActiveOptionMenu(ttk.OptionMenu, SuperWidgetMixin):
         bind_enter: bool = True,
         bind_escape_clear: bool = True,
         command: Callable = None,
-        widgetargs: dict={}
+        widgetargs: dict = {},
     ):
         self.var = tk.StringVar(value=options[default])
         ttk.OptionMenu.__init__(self, parent, self.var, options[default], *options)
@@ -91,9 +92,9 @@ class LabeledMultiOptionMenu(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledOptionMenu,
             parent,
             labeltext,
+            LabeledOptionMenu,
             config,
             is_child,
             labelside,

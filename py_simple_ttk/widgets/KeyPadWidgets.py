@@ -7,13 +7,7 @@ class KeypadButton(ttk.Button):
 
     __desc__ = """Keypad button that automatically packs itself based on given coordinates. This object is not usually directly instantiated."""
 
-    def __init__(
-            self,
-            frame: ttk.Frame,
-            value: int,
-            coords: tuple,
-            command: Callable
-        ):
+    def __init__(self, frame: ttk.Frame, value: int, coords: tuple, command: Callable):
         ttk.Button.__init__(
             self, frame, text=value, command=lambda: command(self.value)
         )

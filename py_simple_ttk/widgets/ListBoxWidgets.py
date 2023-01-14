@@ -2,9 +2,13 @@ import platform
 import tkinter as tk
 from tkinter import ttk
 from typing import Callable
-from .SuperWidget import SuperWidgetMixin
-from .Scroller import Scroller, _create_container
 from .Labeler import Labeler
+from .Scroller import Scroller, _create_container
+from .SuperWidget import SuperWidgetMixin
+from .WidgetsCore import default_pack
+from .LabeledMultiWidget import LabeledMultiWidgetMixin
+from .ButtonWidgets import ActiveButton
+from .EntryWidgets import LabeledButtonEntry
 
 
 class ScrolledListBox(Scroller, tk.Listbox, SuperWidgetMixin):
@@ -17,6 +21,27 @@ class ScrolledListBox(Scroller, tk.Listbox, SuperWidgetMixin):
         tk.Listbox.__init__(self, parent, **kw)
         Scroller.__init__(self, parent)
         SuperWidgetMixin.__init__(self, **widgetargs)
+
+    def add(self, val: str) -> None:
+        """Add an item to the end of the Listbox. `Returns None`"""
+        self.insert("end", val)
+
+    def add_list(self, items: list) -> None:
+        """Add a list of items to the end of the Listbox. `Returns None`"""
+        for i in items:
+            self.insert("end", i)
+
+    def clear(self) -> None:
+        """Clear Listbox. `Returns None`"""
+        self.delete(0, "end")
+
+    def disable(self):
+        """Disable Listbox. `Returns None`"""
+        self.configure(state=tk.DISABLED)
+
+    def enable(self):
+        """Disable Listbox. `Returns None`"""
+        self.configure(state=tk.NORMAL)
 
 
 class OrderedListbox(ScrolledListBox):
@@ -42,6 +67,91 @@ class OrderedListbox(ScrolledListBox):
         self.delete(index)
         self.insert(index + (1 if index < self._index else -1), i)
         self._index = index
+
+
+class ListManipulator(ttk.Frame):
+    def __init__(
+        self,
+        parent: ttk.Frame,
+        disable_entry: bool = False,
+        load_button_text: str = "Load",
+        load_button_width: int = 6,
+        clear_button_text="Clear",
+        clear_button_width: int = 6,
+        add_button_text: str = "Add>",
+        add_button_width: int = 6,
+        listbox_height: int = 7,
+        entry_text: str = "Add item",
+        **kwargs,
+    ):
+        ttk.Frame.__init__(self, parent, **kwargs)
+        default_pack(entry_frame := ttk.Frame(self))
+        self.load_button = ActiveButton(
+            entry_frame, text=load_button_text, command=self.load, width=6
+        )
+        self.load_button.pack(side=tk.RIGHT)
+
+        self.clear_button = ActiveButton(
+            entry_frame, text=clear_button_text, command=self.clear, width=6
+        )
+        self.clear_button.pack(side=tk.RIGHT)
+
+        self.entry = LabeledButtonEntry(
+            entry_frame,
+            labeltext=entry_text,
+            button_text=add_button_text,
+            command=self.add,
+        )
+        self.entry.button.configure(width=add_button_width)
+        self.entry.pack(fill="x", expand=True)
+        self.listbox = OrderedListbox(self, height=listbox_height)
+        self.listbox.pack(fill="both", expand=True)
+        default_pack(export_frame := ttk.Frame(self))
+
+    def clear(self) -> None:
+        """Clear Entry and Listbox. `Returns None`"""
+        self.entry.clear()
+        self.listbox.clear()
+
+    def load(self) -> None:
+        """Load file, clear Listbox, insert each line from file into listbox. `Returns None`"""
+        file = tk.filedialog.askopenfilename(
+            filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+        )
+        if file:
+            self.entry.clear()
+            with open(file) as f:
+                for l in f.readlines():
+                    self.listbox.add(l)
+
+    def add(self, val: str) -> None:
+        """Add an item to the listbox. `Returns None`"""
+        if not val:
+            return
+        self.entry.clear()
+        self.listbox.add(val)
+
+    def add_list(self, *args) -> None:
+        """Add a list to the listbox. `Returns None`"""
+        self.listbox.add_list(*args)
+
+    def get(self) -> list:
+        """Get the list of items in the listbox. `Returns a list`"""
+        return self.listbox.get(0, "end")
+
+    def enable(self) -> None:
+        """Enable Listbox, Entry, and Buttons. `Returns None`"""
+        self.entry.enable()
+        self.listbox.enable()
+        self.load_button.enable()
+        self.clear_button.enable()
+
+    def disable(self) -> None:
+        """Disable Listbox, Entry, and Buttons. `Returns None`"""
+        self.entry.disable()
+        self.listbox.disable()
+        self.load_button.disable()
+        self.clear_button.disable()
 
 
 class Table(ttk.Frame):

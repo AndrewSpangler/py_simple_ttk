@@ -23,7 +23,7 @@ provide a tuple of length 2 to replace the default True/False return values."""
         self.var = tk.IntVar(value=default)
         self.default, self.replace_output = default, replace_output
         ttk.Checkbutton.__init__(self, parent, variable=self.var)
-        
+
     def enable(self) -> None:
         """Enable Checkbutton. `Returns None`"""
         self["state"] = tk.NORMAL
@@ -34,7 +34,11 @@ provide a tuple of length 2 to replace the default True/False return values."""
 
     def get(self) -> bool:
         """Get Checkbutton value. `Returns a Boolean unless replace_output is set`"""
-        return self.replace_output[self.var.get()] if not self.replace_output is None else self.var.get()
+        return (
+            self.replace_output[self.var.get()]
+            if not self.replace_output is None
+            else self.var.get()
+        )
 
     def set(self, val: bool) -> None:
         """Set Checkbutton value. `Returns None`"""
@@ -43,7 +47,7 @@ provide a tuple of length 2 to replace the default True/False return values."""
     def clear(self) -> None:
         """Sets the Checkbutton to its default value, usually *False* `Returns None`"""
         self.var.set(self.default)
-    
+
 
 class LabeledCheckbutton(Labeler, ActiveCheckbutton):
     """Labeled Checkbutton"""
@@ -60,7 +64,7 @@ class LabeledCheckbutton(Labeler, ActiveCheckbutton):
         self.is_child = is_child
         Labeler.__init__(self, parent, labeltext, header=not is_child)
         ActiveCheckbutton.__init__(self, self.frame, **kw)
-        ActiveCheckbutton.pack(self, fill="x", expand=False, side=tk.TOP)
+        ActiveCheckbutton.pack(self, fill="x", expand=False, side=tk.RIGHT, anchor="w")
 
 
 class LabeledMultiCheckbutton(LabeledMultiWidgetMixin):
@@ -80,9 +84,9 @@ class LabeledMultiCheckbutton(LabeledMultiWidgetMixin):
     ):
         LabeledMultiWidgetMixin.__init__(
             self,
-            LabeledCheckbutton,
             parent,
             labeltext,
+            LabeledCheckbutton,
             config,
             labelside=labelside,
             **kw,
