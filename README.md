@@ -1,4 +1,4 @@
-# py_simple_ttk 0.2.2<a name="mark0"></a>
+# py_simple_ttk 0.2.3<a name="mark0"></a>
 
 ***Themes don't have to be hard.***
 
@@ -240,52 +240,53 @@
 		- [get_profiles_folder](#mark236)
 		- [get_profiles_list](#mark237)
 - [Changelog](#mark238)
-	- [0.2.2](#mark239)
-	- [0.2.1](#mark240)
-	- [0.2.0](#mark241)
-	- [0.1.42](#mark242)
-	- [0.1.41](#mark243)
-	- [0.1.40](#mark244)
-	- [0.1.39](#mark245)
-	- [0.1.38](#mark246)
-	- [0.1.37](#mark247)
-	- [0.1.36](#mark248)
-	- [0.1.35](#mark249)
-	- [0.1.34](#mark250)
-	- [0.1.33](#mark251)
-	- [0.1.32](#mark252)
-	- [0.1.31](#mark253)
-	- [0.1.30](#mark254)
-	- [0.1.29](#mark255)
-	- [0.1.28](#mark256)
-	- [0.1.27](#mark257)
-	- [0.1.26](#mark258)
-	- [0.1.25](#mark259)
-	- [0.1.24](#mark260)
-	- [0.1.23](#mark261)
-	- [0.1.22](#mark262)
-	- [0.1.21](#mark263)
-	- [0.1.20](#mark264)
-	- [0.1.19](#mark265)
-	- [0.1.18](#mark266)
-	- [0.1.17](#mark267)
-	- [0.1.16](#mark268)
-	- [0.1.15](#mark269)
-	- [0.1.14](#mark270)
-	- [0.1.13](#mark271)
-	- [0.1.12](#mark272)
-	- [0.1.11](#mark273)
-	- [0.1.10](#mark274)
-	- [0.1.9](#mark275)
-	- [0.1.8](#mark276)
-	- [0.1.7](#mark277)
-	- [0.1.6](#mark278)
-	- [0.1.5](#mark279)
-	- [0.1.4](#mark280)
-	- [0.1.3](#mark281)
-	- [0.1.2](#mark282)
-	- [0.1.1](#mark283)
-	- [0.1.0](#mark284)
+	- [0.2.3](#mark239)
+	- [0.2.2](#mark240)
+	- [0.2.1](#mark241)
+	- [0.2.0](#mark242)
+	- [0.1.42](#mark243)
+	- [0.1.41](#mark244)
+	- [0.1.40](#mark245)
+	- [0.1.39](#mark246)
+	- [0.1.38](#mark247)
+	- [0.1.37](#mark248)
+	- [0.1.36](#mark249)
+	- [0.1.35](#mark250)
+	- [0.1.34](#mark251)
+	- [0.1.33](#mark252)
+	- [0.1.32](#mark253)
+	- [0.1.31](#mark254)
+	- [0.1.30](#mark255)
+	- [0.1.29](#mark256)
+	- [0.1.28](#mark257)
+	- [0.1.27](#mark258)
+	- [0.1.26](#mark259)
+	- [0.1.25](#mark260)
+	- [0.1.24](#mark261)
+	- [0.1.23](#mark262)
+	- [0.1.22](#mark263)
+	- [0.1.21](#mark264)
+	- [0.1.20](#mark265)
+	- [0.1.19](#mark266)
+	- [0.1.18](#mark267)
+	- [0.1.17](#mark268)
+	- [0.1.16](#mark269)
+	- [0.1.15](#mark270)
+	- [0.1.14](#mark271)
+	- [0.1.13](#mark272)
+	- [0.1.12](#mark273)
+	- [0.1.11](#mark274)
+	- [0.1.10](#mark275)
+	- [0.1.9](#mark276)
+	- [0.1.8](#mark277)
+	- [0.1.7](#mark278)
+	- [0.1.6](#mark279)
+	- [0.1.5](#mark280)
+	- [0.1.4](#mark281)
+	- [0.1.3](#mark282)
+	- [0.1.2](#mark283)
+	- [0.1.1](#mark284)
+	- [0.1.0](#mark285)
 
 ---
 
@@ -3998,187 +3999,191 @@ def get_profiles_list(path: str = './Profiles', verbose: bool = False) -> list:
 ```
 # Changelog<a name="mark238"></a>[^](#mark0)
 
-## 0.2.2<a name="mark239"></a>[^](#mark238)
+## 0.2.3<a name="mark239"></a>[^](#mark238)
+
+Fix missing theme and font assets
+
+## 0.2.2<a name="mark240"></a>[^](#mark238)
 
 Fix readme, remove pkg_resources in favor of importlib
 
-## 0.2.1<a name="mark240"></a>[^](#mark238)
+## 0.2.1<a name="mark241"></a>[^](#mark238)
 
 Fix pkg_resources dependency
 
-## 0.2.0<a name="mark241"></a>[^](#mark238)
+## 0.2.0<a name="mark242"></a>[^](#mark238)
 
 Restructure for better pep compliance, breaks some imports.
 
-## 0.1.42<a name="mark242"></a>[^](#mark238)
+## 0.1.42<a name="mark243"></a>[^](#mark238)
 
 Add <<Modified>> custom event to ScrolledText
 
-## 0.1.41<a name="mark243"></a>[^](#mark238)
+## 0.1.41<a name="mark244"></a>[^](#mark238)
 
 Add enable / disable to ActiveButton
 
-## 0.1.40<a name="mark244"></a>[^](#mark238)
+## 0.1.40<a name="mark245"></a>[^](#mark238)
 
 Fix bug with TextWindow
 
-## 0.1.39<a name="mark245"></a>[^](#mark238)
+## 0.1.39<a name="mark246"></a>[^](#mark238)
 
 Add TextWindow to ToplevelWidgets.py
 
-## 0.1.38<a name="mark246"></a>[^](#mark238)
+## 0.1.38<a name="mark247"></a>[^](#mark238)
 
 Add 16px python icons to assets
 
-## 0.1.37<a name="mark247"></a>[^](#mark238)
+## 0.1.37<a name="mark248"></a>[^](#mark238)
 
 Multi-Widgets packing can be customized through multiwidget.add() kwargs
 
-## 0.1.36<a name="mark248"></a>[^](#mark238)
+## 0.1.36<a name="mark249"></a>[^](#mark238)
 
 More improvements to the font system, added font tab to test.py
 
-## 0.1.35<a name="mark249"></a>[^](#mark238)
+## 0.1.35<a name="mark250"></a>[^](#mark238)
 
 Added more label styles
 
-## 0.1.34<a name="mark250"></a>[^](#mark238)
+## 0.1.34<a name="mark251"></a>[^](#mark238)
 
 Add init option to disable default notebook. Add function to make config file from dict (for testing, parent applications launching apps with custom args, etc.). Add handling when no ini width / height specified. Added ListManipulator widget.
 
-## 0.1.33<a name="mark251"></a>[^](#mark238)
+## 0.1.33<a name="mark252"></a>[^](#mark238)
 
 Fix labeled checkbutton packing
 
-## 0.1.32<a name="mark252"></a>[^](#mark238)
+## 0.1.32<a name="mark253"></a>[^](#mark238)
 
 Cleanup
 
-## 0.1.31<a name="mark253"></a>[^](#mark238)
+## 0.1.31<a name="mark254"></a>[^](#mark238)
 
 Add ActiveLabel and LabeledValue, add image_encoder.py and list_compare.py to demos
 
-## 0.1.30<a name="mark254"></a>[^](#mark238)
+## 0.1.30<a name="mark255"></a>[^](#mark238)
 
 Cleanup, bug fixes, add HamburgerFrame
 
-## 0.1.29<a name="mark255"></a>[^](#mark238)
+## 0.1.29<a name="mark256"></a>[^](#mark238)
 
 Move TicTacToe to examples
 
-## 0.1.28<a name="mark256"></a>[^](#mark238)
+## 0.1.28<a name="mark257"></a>[^](#mark238)
 
 Move SuperWidgetMixin from WidgetsCore.py to SuperWidget.py
 
-## 0.1.27<a name="mark257"></a>[^](#mark238)
+## 0.1.27<a name="mark258"></a>[^](#mark238)
 
 Add ActiveButton, ActiveCheckButton, ActiveComboBox, ActiveEntry, ActiveOptionMenu, ActiveProgressbar, ActiveRadioButton, ActiveScale, ColumnFrame, CycleButton, LabeledButton, LabeledMultiButton, LabeledCycleButton, LabeledMultiCycleButton, LabeledMultiRadioTable, LabeledMultiSimpleRadioTable, LabeledRadioTable, LabeledSimpleRadioTable, RadioTable, SimpleRadioTable, Remove: LabeledRadioButton, LabeledMultiRadioButton
 
-## 0.1.26<a name="mark258"></a>[^](#mark238)
+## 0.1.26<a name="mark259"></a>[^](#mark238)
 
 Add Spinbox widgets, fix Copybox
 
-## 0.1.25<a name="mark259"></a>[^](#mark238)
+## 0.1.25<a name="mark260"></a>[^](#mark238)
 
 Reduce packaged fonts color pallete
 
-## 0.1.24<a name="mark260"></a>[^](#mark238)
+## 0.1.24<a name="mark261"></a>[^](#mark238)
 
 Update readme generator with more config keys, fix ini readme md code block being marked as python
 
-## 0.1.23<a name="mark261"></a>[^](#mark238)
+## 0.1.23<a name="mark262"></a>[^](#mark238)
 
 Add columns to Configurable Launcher
 
-## 0.1.22<a name="mark262"></a>[^](#mark238)
+## 0.1.22<a name="mark263"></a>[^](#mark238)
 
 Fix readme
 
-## 0.1.21<a name="mark263"></a>[^](#mark238)
+## 0.1.21<a name="mark264"></a>[^](#mark238)
 
 Fix readme
 
-## 0.1.20<a name="mark264"></a>[^](#mark238)
+## 0.1.20<a name="mark265"></a>[^](#mark238)
 
 Add counter widget.
 
-## 0.1.19<a name="mark265"></a>[^](#mark238)
+## 0.1.19<a name="mark266"></a>[^](#mark238)
 
 Add dynamic launcher system.
 
-## 0.1.18<a name="mark266"></a>[^](#mark238)
+## 0.1.18<a name="mark267"></a>[^](#mark238)
 
 Add Ordered Listbox, add more bindings to SuperWidget, cleanup
 
-## 0.1.17<a name="mark267"></a>[^](#mark238)
+## 0.1.17<a name="mark268"></a>[^](#mark238)
 
 Add set_desktop_background to WidgetsCore.py
 
-## 0.1.16<a name="mark268"></a>[^](#mark238)
+## 0.1.16<a name="mark269"></a>[^](#mark238)
 
 Add needs_white_text to color.py, add pyinstaller compatibility to WidgetsCore.get_asset
 
-## 0.1.15<a name="mark269"></a>[^](#mark238)
+## 0.1.15<a name="mark270"></a>[^](#mark238)
 
 Fix misnamed function in color.py
 
-## 0.1.14<a name="mark270"></a>[^](#mark238)
+## 0.1.14<a name="mark271"></a>[^](#mark238)
 
 Fix missing import in app.py
 
-## 0.1.13<a name="mark271"></a>[^](#mark238)
+## 0.1.13<a name="mark272"></a>[^](#mark238)
 
 reduced variety of packaged font images, fixed bug with constrained widgets command not triggering
 
-## 0.1.12<a name="mark272"></a>[^](#mark238)
+## 0.1.12<a name="mark273"></a>[^](#mark238)
 
 Add Constrained + Labeled + Multi Entries (>35 widgets)
 
-## 0.1.11<a name="mark273"></a>[^](#mark238)
+## 0.1.11<a name="mark274"></a>[^](#mark238)
 
 Fix LabeledPathEntry error when no dialog type was specified
 
-## 0.1.10<a name="mark274"></a>[^](#mark238)
+## 0.1.10<a name="mark275"></a>[^](#mark238)
 
 Add LabeledPathEntry to EntryWidgets.py
 
-## 0.1.9<a name="mark275"></a>[^](#mark238)
+## 0.1.9<a name="mark276"></a>[^](#mark238)
 
 Add pencil icons to assets
 
-## 0.1.8<a name="mark276"></a>[^](#mark238)
+## 0.1.8<a name="mark277"></a>[^](#mark238)
 
 Fix labeled button not running command on press
 
-## 0.1.7<a name="mark277"></a>[^](#mark238)
+## 0.1.7<a name="mark278"></a>[^](#mark238)
 
 add labeled button
 
-## 0.1.6<a name="mark278"></a>[^](#mark238)
+## 0.1.6<a name="mark279"></a>[^](#mark238)
 
 Fix missing Labeler import
 
-## 0.1.5<a name="mark279"></a>[^](#mark238)
+## 0.1.5<a name="mark280"></a>[^](#mark238)
 
 Fix broken package
 
-## 0.1.4<a name="mark280"></a>[^](#mark238)
+## 0.1.4<a name="mark281"></a>[^](#mark238)
 
 Fix broken package
 
-## 0.1.3<a name="mark281"></a>[^](#mark238)
+## 0.1.3<a name="mark282"></a>[^](#mark238)
 
 More cleanup, input fixes.py
 
-## 0.1.2<a name="mark282"></a>[^](#mark238)
+## 0.1.2<a name="mark283"></a>[^](#mark238)
 
 Cleanup, move type lists to generate_readme.py
 
-## 0.1.1<a name="mark283"></a>[^](#mark238)
+## 0.1.1<a name="mark284"></a>[^](#mark238)
 
 Fix missing 'ListWindow' import in app.py
 
-## 0.1.0<a name="mark284"></a>[^](#mark238)
+## 0.1.0<a name="mark285"></a>[^](#mark238)
 
 Modulize
 

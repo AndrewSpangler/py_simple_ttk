@@ -1,4 +1,6 @@
 {
+	"0.2.4": "Use recursive import on asset folders to fix ALL missing assets.",
+	"0.2.3": "Fix missing theme and font assets",
 	"0.2.2": "Fix readme, remove pkg_resources in favor of importlib",
 	"0.2.1": "Fix pkg_resources dependency",
 	"0.2.0": "Restructure for better pep compliance, breaks some imports.",
