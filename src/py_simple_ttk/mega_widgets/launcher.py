@@ -1,7 +1,6 @@
 import os, sys, platform, subprocess, webbrowser
 import tkinter as tk
 from tkinter import ttk
-from py_simple_ttk import Tab
 from typing import Callable
 
 from .. import (
@@ -15,6 +14,7 @@ from .. import (
     YesNoCancelWindow,
     OrderedListbox,
     Counter,
+    Tab,
 )
 
 

@@ -194,7 +194,7 @@ from .utils.utils import (
     format_SI,
     get_friendly_modified_time,
     get_friendly_time,
-    get_installed_packages,
+    # get_installed_packages,
     get_unix_timestamp,
     get_unix_timestring,
     get_user_home_folder,
@@ -227,8 +227,9 @@ from .mega_widgets.shopping_list import ShoppingListTab, ShoppingList
 from .mega_widgets.launcher import ConfigurableLauncher, LauncherTools
 from .app import App
 from .form import FormApp
+from .version import version, __version__
 
-if not check_if_module_installed("pillow"):
+if not check_if_module_installed("PIL"):
     PILLOW_AVAILABLE = False
     print("Pillow not detected, not importing pillow-only widgets")
 else:

@@ -111,8 +111,6 @@ from src import (
     TextWindow,
 )
 
-from examples.tic_tac_toe import TicTacToeTab
-
 from math import sin
 
 from py_simple_lorem import lorem
@@ -991,7 +989,6 @@ class ExampleApp(App):
 
         self.basic = BasicWidgetsTab(self.notebook, self)
         self.fonts = FontTab(self.notebook, self)
-        self.tictactoe = TicTacToeTab(self.notebook)
         self.shopping_list = ShoppingListTab(self.notebook, self)
         if PILLOW_AVAILABLE:
             self.pillow_tab = PillowTab(self.notebook)

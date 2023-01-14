@@ -48,6 +48,8 @@ try:
     from py_simple_readme import readme_generator
     from src import *
 
+    print(version)
+
     CORE_FUNCTIONS = [
         bbox_to_width_and_height,
         center_window,
@@ -205,7 +207,7 @@ try:
         check_string_contains,
         dummy_function,
         get_friendly_time,
-        get_installed_packages,
+        # get_installed_packages,
         get_unix_timestamp,
         get_unix_timestring,
         get_user_home_folder,

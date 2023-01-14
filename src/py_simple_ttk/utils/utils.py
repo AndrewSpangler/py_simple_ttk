@@ -1,5 +1,8 @@
 import os, sys, time, json, platform
-import pkg_resources
+
+import importlib.util
+
+# import pkg_resources
 from collections import OrderedDict
 from typing import Callable
 
@@ -18,14 +21,19 @@ def check_string_contains(string: str, contains_list: tuple) -> tuple:
     return (False, None)
 
 
-def get_installed_packages() -> list:
-    """Get an alphabetized list of available packages. `Returns a List`"""
-    return sorted([i.key for i in pkg_resources.working_set])
-
-
 def check_if_module_installed(package: str) -> bool:
     """Indicates if a packages is installed. `Returns a Boolean`"""
-    return package in get_installed_packages()
+    return importlib.util.find_spec(package) is not None
+
+
+# pkg_resources is not available on all platforms so importlib is used instead
+# def get_installed_packages() -> list:
+#     """Get an alphabetized list of available packages. `Returns a List`"""
+#     return sorted([i.key for i in pkg_resources.working_set])
+
+# def check_if_module_installed(package: str) -> bool:
+#     """Indicates if a packages is installed. `Returns a Boolean`"""
+#     return package in get_installed_packages()
 
 
 def dummy_function(*args, **kwargs) -> bool:
