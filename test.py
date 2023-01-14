@@ -2,7 +2,7 @@ import json
 import tkinter as tk
 from tkinter import ttk
 
-from py_simple_ttk import (
+from src import (
     ActiveSpinbox,
     App,
     BrowserLauncherTab,

@@ -1,17 +1,49 @@
 [build-system]
-requires = ['setuptools>=61.0']
+requires = [
+    "setuptools",
+    "py_simple_readme",
+    "py_simple_lorem",
+]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "py_simple_ttk"
-version = "0.1.40"
-description = "Themes don't have to be hard."
 readme = "README.md"
-requires-python = ">=3.8"
-classifiers = ['Development Status :: 1 - Planning', 'Environment :: Console', 'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)', 'Natural Language :: English', 'Operating System :: OS Independent', 'Programming Language :: Python :: 3', 'Programming Language :: Python :: 3.8', 'Programming Language :: Python :: 3.9', 'Programming Language :: Python :: 3.10']
-dependencies = ['py_simple_lorem']
+dynamic = [
+    "version",
+]
+description = "Tkinter themes don't have to be hard.\n"
+authors = [
+    { name = "Andrew Spangler", email = "AndrewSpangler@users.noreply.github.com" },
+]
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Environment :: Console",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = []
 keywords = []
 
+[project.license]
+text = "LICENSE"
+
 [project.urls]
-"Homepage" = "https://github.com/AndrewSpangler/"
-"Bug Tracker" = "https://github.com/AndrewSpangler/issues"
+homepage = "https://GitHub.com/AndrewSpangler/py_simple_ttk/"
+"bug tracker" = "https://GitHub.com/AndrewSpangler/py_simple_ttk/issues"
+documentation = "https://GitHub.com/AndrewSpangler/py_simple_ttk/"
+repository = "https://GitHub.com/AndrewSpangler/py_simple_ttk/"
+
+[tool.setuptools.dynamic.version]
+attr = "py_simple_ttk.version"
+
+[tool.setuptools.packages.find]
+where = [
+    "src",
+]
+include = [
+    "*",
+]
