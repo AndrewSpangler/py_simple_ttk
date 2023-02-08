@@ -108,6 +108,7 @@ def _unbound_to_mousewheel(event, widget) -> None:
 
 
 def _on_mousewheel(event, widget) -> None:
+    """Simple event binding for shift+mousewheel to scroll vertically"""
     if platform.system() == "Windows":
         widget.yview_scroll(-1 * int(event.delta / 120), "units")
     elif platform.system() == "Darwin":
@@ -120,6 +121,7 @@ def _on_mousewheel(event, widget) -> None:
 
 
 def _on_shiftmouse(event, widget) -> None:
+    """Simple event binding for shift+mousewheel to scroll horizontally"""
     if platform.system() == "Windows":
         widget.xview_scroll(-1 * int(event.delta / 120), "units")
     elif platform.system() == "Darwin":

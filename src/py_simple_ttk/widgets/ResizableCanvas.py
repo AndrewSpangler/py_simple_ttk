@@ -30,13 +30,13 @@ class ResizableCanvas(Canvas):
             self, x1, y1, x2, y2, r=r, fill=fill, outline=outline, **kwargs
         )
 
-    def _resize(self, newwidth, newheight) -> None:
-        wscale = newwidth / self.width
-        hscale = newheight / self.height
-        self.config(width=newwidth, height=newheight)
+    def _resize(self, width: int, height: int) -> None:
+        wscale = width / self.width
+        hscale = width / self.height
+        self.config(width=width, height=height)
         self.scale("all", 0, 0, wscale, hscale)
-        self.width = newwidth
-        self.height = newheight
+        self.width = width
+        self.height = height
 
     def _on_resize(self, event) -> None:
         self._resize(event.width, event.height)

@@ -22,32 +22,33 @@ def rgba_to_hex(rgba: tuple) -> str:
 
 def hex_to_rgb(hex: str) -> tuple:
     """Converts hex to rgb tuple"""
-    return (int(hex[i : i + 2], 16) for i in range(1, 6, 2))
+    return [int(hex[i : i + 2], 16) for i in range(1, 6, 2)]
 
 
 def hex_to_rgba(hex: str) -> tuple:
     """Tries to convert rgba hex to rgba, on failure converts rgb hex to rgb and sets a full opacity"""
     try:
-        return (int(hex[i : i + 2], 16) for i in range(1, 8, 2))
+        return [int(hex[i : i + 2], 16) for i in range(1, 8, 2)]
     except ValueError as e:
-        return (*hex_to_rgb(hex), 255)
+        return [*hex_to_rgb(hex), 255]
 
 
 def get_gradient(steps: int) -> tuple:
     """Generates a black / white gradient with a given number of steps"""
-    return (
-        rgb_to_hex(v) for v in reversed(linear_gradient("#FFFFFF", "#000000", steps))
-    )
+    return [
+        rgb_to_hex(v)
+        for v in list(reversed(linear_gradient("#FFFFFF", "#000000", steps)))
+    ]
 
 
 def rgb_to_scalar(rgb: tuple) -> tuple:
     """Converts an rgb itterable to scalar list"""
-    return (int(x / 255.0) for x in rgb)
+    return [int(x / 255.0) for x in rgb]
 
 
 def scalar_to_rgb(rgb: tuple) -> tuple:
     """Converts rgb scalar to rgb list"""
-    return (int(x * 255.0) for x in rgb)
+    return [int(x * 255.0) for x in rgb]
 
 
 def linear_gradient(
@@ -65,11 +66,14 @@ def linear_gradient(
 
 def get_rainbow(steps: int) -> tuple:
     """Generates a rainbow with a given number of steps. Steps must be divisible by 4)"""
-    rainbow = [linear_gradient("#FF0000", "#FFFF00", step := int(steps / 4))]
+    step, rem = divmod(steps, 4)
+    if rem:
+        raise ValueError("Steps must be divisible by 4")
+    rainbow = linear_gradient("#FF0000", "#FFFF00", step)
     rainbow.extend(linear_gradient("#7FFF00", "#00FF7F", step))
     rainbow.extend(linear_gradient("#00FFF", "#0000FF", step))
     rainbow.extend(linear_gradient("#7F00FF", "#FF007f", step))
-    return (rgb_to_hex(v) for v in reversed(rainbow))
+    return [rgb_to_hex(v) for v in reversed(rainbow)]
 
 
 def needs_white_text(color: str, barrier: int = 384) -> bool:

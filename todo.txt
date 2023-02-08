@@ -1,3 +1,4 @@
+Message Widget
 Drawing canvas 
 Calculator
 Help Manual Object
@@ -20,7 +21,7 @@ ini config editor gui
 
 detect if tooltip is below screen
 
-add option to lowercase and upwercase contraained entries that will apply .lower() / .upper() on the value before processing it to see if it can be entered
+add option to lowercase and upwercase constrained entries that will apply .lower() / .upper() on the value before processing it to see if it can be entered
 
 add labeled listbox and add clear/enable/disable, form widgets can still take the varying contents too I guess so lets do it
 

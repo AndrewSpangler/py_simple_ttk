@@ -21,11 +21,12 @@ class ScrolledTree(Scroller, ttk.Treeview, SuperWidgetMixin):
         SuperWidgetMixin.__init__(self, **kw)
         self.column("#0", width=0, stretch="no")
         # self['show'] = 'headings'
-        for c in tree_config["columns"]:
-            self.heading(c, text=c, anchor=tk.W)
-            self.column(c, minwidth=min_column_width)
-            if not set_width is None:
-                self.column(c, width=set_width)
+        if tree_config:
+            for c in tree_config["columns"]:
+                self.heading(c, text=c, anchor=tk.W)
+                self.column(c, minwidth=min_column_width)
+                if not set_width is None:
+                    self.column(c, width=set_width)
 
 
 class TreeTable(ScrolledTree):  # Each kw in the dict is a table header

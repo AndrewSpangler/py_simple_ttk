@@ -1,3 +1,1 @@
 py_simple_lorem
-py_simple_readme
-pkg_resources

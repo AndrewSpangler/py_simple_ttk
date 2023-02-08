@@ -1,4 +1,9 @@
 {
+	"0.2.9": "Add more scroller imports to toplevel namespace",
+	"0.2.8": "Add get_scaling and bind_mousewheel to toplevel namespace import. Fix theme defaulting to winnative to fix unix system crash when theme not configured in ini.json",
+	"0.2.7": "Fix missing ImageDraw import in ImageCore.py",
+	"0.2.6": "Add more functions to pillow_widgets/ImageCore.py and cleaned up typehinting, added pillow widgets to readme",
+	"0.2.5": "Add utils/tcl_commands.py with tcl_bell, tcl_center_window, and tcl_choose_font functions",
 	"0.2.4": "Use recursive import on asset folders to fix ALL missing assets.",
 	"0.2.3": "Fix missing theme and font assets",
 	"0.2.2": "Fix readme, remove pkg_resources in favor of importlib",

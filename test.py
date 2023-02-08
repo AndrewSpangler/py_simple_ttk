@@ -3,11 +3,12 @@ import tkinter as tk
 from tkinter import ttk
 
 from src import (
+    ActiveLabel,
     ActiveSpinbox,
     App,
     BrowserLauncherTab,
-    CommandLauncherTab,
     ColumnFrame,
+    CommandLauncherTab,
     ConsoleTab,
     ConstrainedEntry,
     ConversationsTab,
@@ -23,6 +24,7 @@ from src import (
     FloatCounter,
     FloatEntry,
     get_asset,
+    get_generated_font_images,
     GifLoader,
     GifViewer,
     HexdigitsEntry,
@@ -62,7 +64,9 @@ from src import (
     LabeledMultiOptionMenu,
     LabeledMultiPrintableEntry,
     LabeledMultiProgressbar,
+    LabeledMultiRadioTable,
     LabeledMultiScale,
+    LabeledMultiSimpleRadioTable,
     LabeledMultiSpinbox,
     LabeledMultiUppercaseDigitsEntry,
     LabeledMultiUppercaseEntry,
@@ -71,7 +75,9 @@ from src import (
     LabeledPathEntry,
     LabeledPrintableEntry,
     LabeledProgressbar,
+    LabeledRadioTable,
     LabeledScale,
+    LabeledSimpleRadioTable,
     LabeledSpinbox,
     LabeledUppercaseDigitsEntry,
     LabeledUppercaseEntry,
@@ -79,6 +85,7 @@ from src import (
     LauncherTools,
     LettersDigitsEntry,
     LettersEntry,
+    ListManipulator,
     LowercaseDigitsEntry,
     LowercaseEntry,
     NotesTab,
@@ -93,6 +100,11 @@ from src import (
     ScrolledText,
     ShoppingListTab,
     Tab,
+    tcl_bell,
+    tcl_center_window,
+    tcl_choose_font,
+    tcl_download_file,
+    TextWindow,
     TiledCanvas,
     TimecardTab,
     ToolTip,
@@ -101,14 +113,6 @@ from src import (
     UppercaseEntry,
     WattageTab,
     YesNoCancelWindow,
-    LabeledRadioTable,
-    LabeledMultiRadioTable,
-    LabeledSimpleRadioTable,
-    LabeledMultiSimpleRadioTable,
-    get_generated_font_images,
-    ListManipulator,
-    ActiveLabel,
-    TextWindow,
 )
 
 from math import sin
@@ -915,6 +919,7 @@ class CopyBoxTab(Tab):
 class FontTab(Tab):
     def __init__(self, notebook: ttk.Notebook, app: App):
         Tab.__init__(self, notebook, "Fonts")
+        self.app = app
         styles = app.generated_styles
         great = [s for s in styles if s.startswith("Great")]
         good = [s for s in styles if s.startswith("Good")]
@@ -936,6 +941,19 @@ class FontTab(Tab):
                     ActiveLabel(f, default=s.replace(".TLabel", ""), style=s).pack(
                         fill="x"
                     )
+
+        (chooser_frame := ttk.LabelFrame(self, text="font_chooser")).pack(
+            fill="x", expand=True
+        )
+        ttk.Button(chooser_frame, command=self.set_font, text="Select Font").pack(
+            side="top"
+        )
+        self.font_var = tk.StringVar(value="Selected Font: None")
+        self.font_label = ttk.Label(chooser_frame, textvariable=self.font_var)
+        self.font_label.pack(side="top")
+
+    def set_font(self):
+        self.font_var.set(f"Selected Font: {tcl_choose_font(self.app.window)}")
 
 
 # class SpinboxTab(Tab):
@@ -981,6 +999,13 @@ class BasicWidgetsTab(Tab):
         self.password_tab = PasswordEntryTab(self.notebook)
 
 
+# class MessageTab(Tab):
+#     def __init__(self, notebook: ttk.Notebook):
+#         Tab.__init__(self, notebook, "Message Widget")
+
+#         tk.Message(self, text="Test").pack(fill="x")
+
+
 class ExampleApp(App):
     """Example Implementation"""
 
@@ -1001,7 +1026,17 @@ class ExampleApp(App):
         self.apps_tab = CommandLauncherTab(self.notebook, "Applications", apps)
         self.console_tab = ConsoleTab(self.notebook)
         self.console_tab.console.command = self.console_tab.console.print
+        # self.message_tab = MessageTab(self.notebook)
         self.use_theme()  # Do this last to apply theme to text boxes
+        # Center window
+        tcl_center_window(self.window)
+        # play bell to indicate window is loaded
+        tcl_bell(self.window)
+        # print(tcl_font_chooser(self.window))
+
+        # tcl_download_file(
+        #     self.window, "http://file-examples.com/", "example.html", loadafter=True
+        # )
 
 
 app = ExampleApp()

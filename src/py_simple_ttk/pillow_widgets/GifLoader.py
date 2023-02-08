@@ -9,7 +9,8 @@ RUNNING = True
 
 
 class GifLoader:
-    def __init__(self, path: str, load_tk_frames: bool = True):
+    def __init__(self, path: str, defer_load: bool = False):
+        """Handles gif frame loading. Set load_tk_frames to false to defer tk.frame loading and caching"""
         self.image = Image.open(path)
         self.frames = []
         # pallet = self.image.getpalette()
@@ -26,10 +27,11 @@ class GifLoader:
                 self.image.seek(self.image.tell() + 1)
         except EOFError:
             pass
-        if load_tk_frames:  # Can chose to defer load
+        if not defer_load:  # Can chose to defer load
             self.load_tk_frames()
 
     def load_tk_frames(self) -> None:
+        """Called during instantiation unless defer_load was set to False"""
         if self.tk_frames_loaded:
             raise ValueError("Tk frames already loaded")
         self.tk_frames = [ImageTk.PhotoImage(f) for f in self.frames]
@@ -38,6 +40,7 @@ class GifLoader:
 
 class GifViewer(ttk.Frame):
     def __init__(self, loader: GifLoader, *args, **kwargs):
+        """A basic gif viewer with playback controls"""
         ttk.Frame.__init__(self, *args, **kwargs)
         self.loader = loader
         self.image = None
@@ -72,16 +75,12 @@ class GifViewer(ttk.Frame):
             self,
             "Playback Speed ",
             command=self.set_delay,
-            default=int(self.delay / 1000),
+            default=self.delay // 1000,
             orient="horizontal",
             from_=0,
             to=60,
         )
         self.playback_scale.pack(fill="both", expand=False, padx=4, pady=4)
-        # self.playback_scale = ttk.Scale(self, orient = "horizontal", from_ = 0, to = 30, command = self.set_delay)
-        # self.playback_scale.set(int(self.delay/1000))
-        # self.playback_scale.pack(fill = "both", expand = False, padx = 4, pady = 4)
-
         self.display_loop()
 
     def set_delay(self, fps) -> None:
@@ -91,11 +90,11 @@ class GifViewer(ttk.Frame):
         self.delay = int(1000.0 / float(fps))
 
     """
-	Approximates an fps, milage will vary, it would be 
-	better for to run this as a thread spawned by a
-	timer thread that acts as the loop, so the fps 
-	would more closely match the one selected with the menu bar
-	"""
+    Approximates an fps, milage will vary, it would be 
+    better for to run this as a thread spawned by a
+    timer thread that acts as the loop, so the fps 
+    would more closely match the one selected with the menu bar
+    """
 
     def display_loop(self) -> None:
         if self.index > len(self.loader.tk_frames) - 1:

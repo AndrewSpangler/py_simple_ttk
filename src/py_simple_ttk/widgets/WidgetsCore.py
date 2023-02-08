@@ -56,7 +56,7 @@ def make_temp_config_file(config: dict):
     """Make a one-time-use app config file from a dict in the same form as a normal config json. `Returns file path as String`"""
     (tp := tempfile.NamedTemporaryFile(delete=False)).write(
         bytes(
-            json.dumps(config),
+            json.dumps(config, indent=4),
             "utf-8",
         )
     )
@@ -210,17 +210,22 @@ def bbox_to_width_and_height(bbox: tuple) -> tuple:
 def recursive_widget_search(
     node_widget, widget_type_to_find: type, found_list: list = []
 ) -> list:
-    """Adds widgets of a given type to a list as it travels up, away from the root of a widget tree. This method can be slow on large widget trees but is useful for retheming tk widgets with ttk formatting on theme changes. `Returns a list of widgets`"""
+    """
+    Adds widgets of a given type to a list as it travels up,
+    away from the root of a widget tree. This method can be slow on
+    large widget trees but is useful for retheming tk widgets with
+    ttk formatting on theme changes. `Returns a list of widgets`
+    """
     for w in node_widget.winfo_children():
         if isinstance(w, widget_type_to_find):
             found_list.append(w)
         else:
             recursive_widget_search(w, widget_type_to_find, found_list)
-    return found_list  # The only time this return is ever used is at the end of the first call
+    return found_list  # Returns list at end of initial call
 
 
 def complex_widget_search(
-    node_widget, widget_types_to_find: list, found_lists: dict = {}
+    node_widget, widget_types_to_find: list | tuple, found_lists: dict = {}
 ) -> dict:
     """A more robust version of the widget search with lists for multiple widget types found in one go"""
     if not found_lists:
@@ -366,7 +371,28 @@ def create_round_rectangle(
     y2mr = y2 - r
 
     # fmt: off
-    points = (x1r,y1,x1r,y1,x2mr,y1,x2mr,y1,x2,y1,x2,y1r,x2,y1r,x2,y2mr,x2,y2mr,x2,y2,x2mr,y2,x2mr,y2,x1r,y2,x1r,y2,x1,y2,x1,y2mr,x1,y2mr,x1,y1r,x1,y1r,x1,y1)
+    points = (
+        x1r,    y1,
+        x1r,    y1,
+        x2mr,   y1,
+        x2mr,   y1,
+        x2,     y1,
+        x2,     y1r,
+        x2,     y1r,
+        x2,     y2mr,
+        x2,     y2mr,
+        x2,     y2,
+        x2mr,   y2,
+        x2mr,   y2,
+        x1r,    y2,
+        x1r,    y2,
+        x1,     y2,
+        x1,     y2mr,
+        x1,     y2mr,
+        x1,     y1r,
+        x1,     y1r,
+        x1,     y1
+    )
     # fmt: on
 
     return canvas.create_polygon(

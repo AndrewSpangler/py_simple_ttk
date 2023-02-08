@@ -177,6 +177,8 @@ from .LabeledMultiWidget import LabeledMultiWidgetMixin
 from .FrameWidgets import ColumnFrame, HamburgerFrame
 from .LabelWidgets import ActiveLabel, LabeledValue
 
+from .Scroller import bind_mousewheel
+
 """
 A collection of all of the FormApp compatible Widgets
 """

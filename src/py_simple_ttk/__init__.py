@@ -11,6 +11,7 @@ from .widgets import (
     ActiveSpinbox,
     BaseKeypad,
     bbox_to_width_and_height,
+    bind_mousewheel,
     BrowserLauncherTab,
     center_window,
     check_entry_ascii_digits,
@@ -204,7 +205,7 @@ from .utils.utils import (
     timer_decorator,
 )
 from .utils.History import HistoryMixin
-from .utils.scaling import enable_dpi_awareness
+from .utils.scaling import enable_dpi_awareness, get_scaling
 from .utils.ProfilesSystem import (
     ProfilesSystem,
     UserProfile,
@@ -216,6 +217,12 @@ from .utils.zip_packager import (
     get_package_file,
     get_package_manifest,
     get_package_manifest_json,
+)
+from .utils.tcl_commands import (
+    tcl_bell,
+    tcl_center_window,
+    tcl_choose_font,
+    tcl_download_file,
 )
 
 from .mega_widgets.chat import ConversationsTab
@@ -236,4 +243,10 @@ else:
     PILLOW_AVAILABLE = True
     print("Pillow detected, importing pillow-only widgets")
     from .pillow_widgets.GifLoader import GifLoader, GifViewer
-    from .pillow_widgets.ImageCore import load_tk_image_from_bytes_array
+    from .pillow_widgets.ImageCore import (
+        convert_image_to_blackandwhite,
+        convert_image_to_grayscale,
+        load_image_from_byte_array,
+        load_tk_image_from_bytes_array,
+        make_checkerboard,
+    )

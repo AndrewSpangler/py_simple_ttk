@@ -15,7 +15,8 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 
-from .utils.scaling import enable_dpi_awareness
+from .utils.scaling import enable_dpi_awareness, get_scaling
+from .utils.tcl_commands import tcl_center_window
 from .utils.ProfilesSystem import ProfilesSystem, UserProfile
 from .widgets import (
     complex_widget_search,
@@ -95,7 +96,7 @@ class App:
         self.window.configure(menu=self.menu)
 
         # Application Theming
-        self.current_theme = "winnative"
+        self.current_theme = self.ini_data.get("default_theme", "default")
         print(f"Themes folder located at {get_themes_folder()}")
         self.themes = get_bundled_themes_list(verbose=True)
         print(f"Loading bundled themes...")
@@ -197,10 +198,13 @@ class App:
             theme = profile.get_preference("theme") if profile else theme
         if not theme in self.available_themes:
             print(
-                f'Unable to find loaded user\'s selected theme {theme}. Defaulting to theme "Default"'
+                f"Unable to find loaded user's selected theme {theme}. Using default theme."
             )
         self.use_theme(theme)
         self.update_default_title()
+
+        if self.ini_data.get("start_centered"):
+            self.window.after_idle(lambda: tcl_center_window(self.window))
 
     def create_profile(self, name: str = None) -> str | None:
         """Calling with no name brings up a popup, the popup calls this function \
@@ -388,7 +392,7 @@ override this function. `Returns the current theme as a String`"""
         self.window.clipboard_append(str(val))
 
     def bell(self) -> None:
-        """Largely redundant as all widgets have access to this method but allows other tools to make the system bell sound. `Returns None`"""
+        """Largely redundant as all widgets have access to this method. `Returns None`"""
         self.window.bell()
 
     def update_default_title(self, indicate_profile=True) -> None:
@@ -403,6 +407,13 @@ override this function. `Returns the current theme as a String`"""
         """Updates the window title. `Returns None`"""
         self.window.title(self.version_name)
 
+    def get_scaling(self) -> None:
+        return get_scaling(self.window)
+
     def mainloop(self) -> None:
         """Starts the application mainloop. `Never returns.`"""
         self.window.mainloop()
+
+    def start(self) -> None:
+        """Alias for App.mainloop(). `Never returns.`"""
+        self.mainloop()
