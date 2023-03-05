@@ -14,7 +14,5 @@
     "enable_themes_menu": false,
     "enable_profiles": false,
     "enable_launcher": false,
-    "movable_tabs": false,
-    "conversations_enabled": false,
-    "notes_enabled": false
+    "movable_tabs": false
 }

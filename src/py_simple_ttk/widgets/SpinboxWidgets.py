@@ -33,6 +33,7 @@ class ActiveSpinbox(ttk.Spinbox, SuperWidgetMixin):
         SuperWidgetMixin.__init__(self, **widgetargs)
         self._command = command
         self._state = "normal" if custom_values else "readonly"
+        self["state"] = self._state
 
         if on_keystroke:
             self.bind("<KeyRelease>", self._on_execute_command)

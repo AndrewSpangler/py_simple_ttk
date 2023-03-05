@@ -3,8 +3,8 @@
 
 import sys
 
-if sys.hexversion < 0x03060000:
-    sys.exit("Python 3.6 or greater is required to run this program.")
+if not sys.version_info >= (3, 11, 0):
+    sys.exit("Python 3.11 or greater is required to run this program.")
 
 import json
 import os
@@ -15,6 +15,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 
+from .version import version
 from .utils.scaling import enable_dpi_awareness, get_scaling
 from .utils.tcl_commands import tcl_center_window
 from .utils.ProfilesSystem import ProfilesSystem, UserProfile
@@ -51,8 +52,9 @@ class App:
         self.os = platform.system()
         self.os_version = platform.version()
         print(self.version_name)
-        print("Using Python {}.{}".format(*sys.version_info[:2]))
+        print("Using Python version {}.{}.{}".format(*sys.version_info[:3]))
         print("Using tkinter version {}".format(tk.Tcl().eval("info patchlevel")))
+        print("Using py_simple_ttk version {}".format(version))
 
         self.scaling = self.ini_data.get("scaling", 1.0)
         print(f"Application scaling factor - {self.scaling}")
@@ -129,6 +131,10 @@ class App:
             print(f"Loading most recently used profile")
             self._select_profile(self.profiles.get_last_used_profile())
 
+        self.profiles_menu_enabled = False
+        if self.profiles_enabled:
+            self.profiles_menu_enabled = self.ini_data.get("enable_profiles_menu", True)
+
         # Window Geometry and Bindings
         self.window.geometry(f"{self.window_start_width}x{self.window_start_height}")
         self.window.minsize(width=self.window_min_width, height=self.window_min_height)
@@ -173,7 +179,7 @@ class App:
         self._build_fonts()
 
         # Application Menu
-        if self.profiles_enabled:
+        if self.profiles_menu_enabled:
             prof_menu = tk.Menu(self.menu, tearoff=0)
             prof_menu.add_command(label="New Profile", command=self.create_profile)
             prof_menu.add_command(label="Select Profile", command=self.select_profile)
@@ -395,7 +401,7 @@ override this function. `Returns the current theme as a String`"""
         """Largely redundant as all widgets have access to this method. `Returns None`"""
         self.window.bell()
 
-    def update_default_title(self, indicate_profile=True) -> None:
+    def update_default_title(self, indicate_profile: bool = True) -> None:
         """Update the window title with the default string, optionally with a profile indicator. `Returns None`"""
         title = self.version_name
         if indicate_profile and self.profiles_enabled:

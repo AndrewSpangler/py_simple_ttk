@@ -23,8 +23,6 @@ json_data = {
     "enable_launcher": True,
     "movable_tabs": True,
     "enable_profiles": True,  # Enables a user profiles system.
-    "conversations_enabled": False,
-    "notes_enabled": False,
     "theme_textboxes": True,
     "ignored_themes": ["kroc"],
 }

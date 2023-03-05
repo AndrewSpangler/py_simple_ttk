@@ -15,7 +15,7 @@ description = "Tkinter themes don't have to be hard.\n"
 authors = [
     { name = "Andrew Spangler", email = "AndrewSpangler@users.noreply.github.com" },
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 classifiers = [
     "Development Status :: 1 - Planning",
     "Environment :: Console",

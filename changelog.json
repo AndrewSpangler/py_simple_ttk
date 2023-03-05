@@ -1,4 +1,5 @@
 {
+	"0.2.10": "Fixed spinbox custom states not applying, fixed tk call exception in text proxy widget for certain update types, updated ini generator",
 	"0.2.9": "Add more scroller imports to toplevel namespace",
 	"0.2.8": "Add get_scaling and bind_mousewheel to toplevel namespace import. Fix theme defaulting to winnative to fix unix system crash when theme not configured in ini.json",
 	"0.2.7": "Fix missing ImageDraw import in ImageCore.py",

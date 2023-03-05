@@ -35,7 +35,10 @@ class ScrolledText(Scroller, tk.Text, SuperWidgetMixin):
 
     def _event_generate(self, tk_call: str, *args) -> tk.Event:
         """Proxy method to generate an event when text contents change"""
-        result = self.tk.call((self._orig, tk_call) + args)
+        try:
+            result = self.tk.call((self._orig, tk_call) + args)
+        except:
+            return "break"
         if tk_call in ("insert", "delete", "replace"):
             self.event_generate("<<Modified>>")
         return result
